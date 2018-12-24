@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 支付
+ */
 @RestController
 public class WxPayController {
 
