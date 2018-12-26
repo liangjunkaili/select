@@ -2,7 +2,6 @@ package com.course.selection.bean;
 
 import lombok.*;
 
-import java.io.Serializable;
 
 /**
  * @ClassName Goods
@@ -12,7 +11,6 @@ import java.io.Serializable;
  * @Version 1.0
  **/
 @Data
-@ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

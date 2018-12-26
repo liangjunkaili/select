@@ -72,4 +72,28 @@ VALUES
     #{goods.num,jdbcType=INTEGER})
    on  DUPLICATE key update id=#{goods.id,jdbcType=INTEGER}
     </insert>
+
+<update id="update" >
+    UPDATE
+  `goods`
+SET
+  `title` = #{goods.title,jdbcType=VARCHAR},
+  `detail` = #{goods.detail,jdbcType=VARCHAR},
+  `img1` = #{goods.img1,jdbcType=VARCHAR},
+  `img2` = #{goods.img2,jdbcType=VARCHAR},
+  `img3` = #{goods.img3,jdbcType=VARCHAR},
+  `icard` = #{goods.icard,jdbcType=VARCHAR},
+  `img` = #{goods.img,jdbcType=VARCHAR},
+  `oprice` = #{goods.oprice,jdbcType=INTEGER},
+  `price` = #{goods.price,jdbcType=INTEGER},
+  `label` = #{goods.label,jdbcType=VARCHAR},
+  `intro` = #{goods.intro,jdbcType=VARCHAR},
+  `bamount` = #{goods.bamount,jdbcType=INTEGER},
+  `flag` = #{goods.flag,jdbcType=INTEGER},
+  `weight` = #{goods.weight,jdbcType=INTEGER},
+  `num` = #{goods.num,jdbcType=INTEGER}
+WHERE `id` = #{goods.id,jdbcType=INTEGER} ;
+
+
+</update>
 </mapper>

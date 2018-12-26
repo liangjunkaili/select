@@ -23,12 +23,12 @@ SET
   `reply` = #{message.reply,jdbcType=VARCHAR},
   `reply_time` =   #{message.replyTime,jdbcType=VARCHAR},
   `nick` =#{message.nick,jdbcType=VARCHAR}
-WHERE `id` = #{message.uid,jdbcType=INTEGER} ;
+WHERE `id` = #{message.id,jdbcType=INTEGER} ;
 
 
     </update>
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="message.uid">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="message.id">
         INSERT INTO `message` (
   `id`,
   `goods_id`,
@@ -42,7 +42,7 @@ WHERE `id` = #{message.uid,jdbcType=INTEGER} ;
 )
 VALUES
   (
-   #{message.uid,jdbcType=INTEGER},
+   #{message.id,jdbcType=INTEGER},
    #{message.goodsId,jdbcType=INTEGER},
    #{message.img,jdbcType=VARCHAR},
    #{message.content,jdbcType=VARCHAR},

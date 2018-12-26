@@ -46,6 +46,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Result orderGoods(Integer uid, Integer gid, Integer num, Integer price, String type1, String type2) {
         Goods goods = goodsDao.queryGoodsById(gid);
+        goods.setNum(goods.getNum() + num);
+        goodsDao.update(goods);
         Order order = Order.builder()
                 .uid(uid)
                 .gid(gid)
