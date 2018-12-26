@@ -3,9 +3,11 @@ package com.course.selection.service.impl;
 import com.course.selection.bean.Coupons;
 import com.course.selection.bean.Goods;
 import com.course.selection.bean.Message;
+import com.course.selection.bean.UserCoupon;
 import com.course.selection.dao.CouponsDao;
 import com.course.selection.dao.GoodsDao;
 import com.course.selection.dao.MessageDao;
+import com.course.selection.dao.UserCouponDao;
 import com.course.selection.dto.*;
 import com.course.selection.service.GoodsService;
 import com.course.selection.util.ResultUtil;
@@ -25,13 +27,16 @@ import java.util.Map;
  * @Version 1.0
  **/
 @Service
-public class GoodsServicImpl implements GoodsService{
+public class GoodsServicImpl implements GoodsService {
     @Autowired
     private GoodsDao goodsDao;
     @Autowired
     private CouponsDao couponsDao;
     @Autowired
     private MessageDao messageDao;
+    @Autowired
+    private UserCouponDao userCouponDao;
+
     @Override
     public List<Goods> queryGoods(Map<String, Object> param) {
         return goodsDao.queryGoods(param);
@@ -78,13 +83,43 @@ public class GoodsServicImpl implements GoodsService{
     }
 
     @Override
-    public Result getGoodById(Integer id) {
+    public Result getGoodById(Integer id, Integer uid) {
         Map<String, Object> map = new HashMap<>();
-        map.put("id", id);
+//        map.put("id", id);
         List<Goods> goods = goodsDao.queryGoods(map);
-        Coupons coupons = couponsDao.findById(goods.get(0).getFlag());
-        List<Message> messages = messageDao.findByGoodId(goods.get(0).getId());
-        Goods good = goods.get(0);
+        List<GoodDto> goodDtos = new ArrayList<>();
+        int i = 0;
+        Goods good = null;
+        for (Goods goods1 : goods
+        ) {
+            if (goods1.getId() == id) {
+                good = goods1;
+            } else {
+                if (i >= 3) {
+                    break;
+                }
+                goodDtos.add(GoodDto.builder()
+                        .price(goods1.getPrice())
+                        .id(goods1.getId())
+                        .img(goods1.getImg())
+                        .intro(goods1.getIntro())
+                        .label(goods1.getLabel().split("\\|"))
+                        .title(goods1.getTitle())
+                        .build());
+                i++;
+            }
+        }
+        Coupons coupons = couponsDao.findById(good.getFlag());
+        List<Message> messages = messageDao.findByGoodId(good.getId());
+        List<UserCoupon> myCoupons = userCouponDao.findByUid(uid);
+        boolean myCp = false;
+        for (UserCoupon userCoupon : myCoupons
+        ) {
+            if (userCoupon.getCpid() == coupons.getId()) {
+                myCp = true;
+            }
+
+        }
         String[] split = good.getLabel().split("\\|");
         GoodsDto goodsDto = GoodsDto.builder()
                 .bamount(good.getBamount())
@@ -108,6 +143,8 @@ public class GoodsServicImpl implements GoodsService{
                 .goods(goodsDto)
                 .coupons(coupons)
                 .message(messages)
+                .myCp(myCp)
+                .list(goodDtos)
                 .build();
         return ResultUtil.success(goodDetails);
     }

@@ -41,9 +41,11 @@ public class GoodsController {
     @ApiOperation("获取商品详情")
     @GetMapping("getGoodById")
     public Result getGoodById(
-            @RequestParam(value = "id",required = false) Integer id) {
+            @RequestParam(value = "id",required = false) Integer id,
+            @RequestParam(value = "uid",required = false) Integer uid
+            ) {
 
-        return goodsService.getGoodById(id);
+        return goodsService.getGoodById(id,uid);
     }
 
     /**
