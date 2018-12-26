@@ -16,4 +16,9 @@ public class GoodDetails {
     private GoodsDto goods;
     private Coupons coupons;
     private List<Message> message;
+    /**
+     * 相关推荐
+     */
+    private List<GoodDto> list;
+    private boolean myCp;
 }
