@@ -17,7 +17,7 @@ public class GoodsDto {
     /**
      * 轮播图
      */
-    private String img1;
+    private String[] img1;
     private String img2;
     private String img3;
     /**

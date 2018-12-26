@@ -127,7 +127,7 @@ public class GoodsServicImpl implements GoodsService {
                 .flag(good.getFlag())
                 .icard(good.getIcard())
                 .img(good.getImg())
-                .img1(good.getImg1())
+                .img1(good.getImg1().split("\\|"))
                 .img2(good.getImg2())
                 .img3(good.getImg3())
                 .intro(good.getIntro())
