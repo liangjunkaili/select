@@ -8,10 +8,7 @@ import com.course.selection.dto.Result;
 import com.course.selection.dto.UserDto;
 import com.course.selection.enums.ResultEnum;
 import com.course.selection.service.UserService;
-import com.course.selection.util.AESUtil;
-import com.course.selection.util.HttpUtil;
-import com.course.selection.util.ResultUtil;
-import com.course.selection.util.StringUtil;
+import com.course.selection.util.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +43,7 @@ public class UserServiceImpl implements UserService {
 //            channel = AppUtil.getChannel(channel);
             channel = "Other";
         }
-        String wxUser = HttpUtil.get(App.LOGIN_API, loginMap(code));
+        String wxUser = HttpUtil.get(WXConfiguration.LOGIN_API, loginMap(code));
         if (!StringUtil.isNullOrEmpty(wxUser)) {
             Map<String, Object> userMap = objectMapper.readValue(wxUser, Map.class);
             String sessionKey = (String) userMap.get("session_key");
@@ -120,8 +117,8 @@ public class UserServiceImpl implements UserService {
 
     private Map<String, String> loginMap(String code) {
         Map<String, String> loginMap = new HashMap<>(4);
-        loginMap.put("appid", App.APP_ID);
-        loginMap.put("secret", App.APP_SECRET);
+        loginMap.put("appid", WXConfiguration.APPID);
+        loginMap.put("secret", WXConfiguration.APPSECRET);
         loginMap.put("js_code", code);
         loginMap.put("grant_type", "authorization_code");
         log.info("loginMap:{}", loginMap);

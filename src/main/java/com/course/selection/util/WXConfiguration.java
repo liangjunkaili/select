@@ -10,4 +10,10 @@ public class WXConfiguration {
     public static final String device_info = "WEB";//自定义参数,PC网页或公众号内支付可以传"WEB
     public static final String unifiedorder = "https://api.mch.weixin.qq.com/pay/unifiedorder";
     public static final String wxpay_success = MYSERVER+"wxpay_success";
+    public static final String LOGIN_API = "https://api.weixin.qq.com/sns/jscode2session";
+    public static final String CUSTOMER_TOKEN = "shan1";
+    public static final String SEND_MSG = "https://api.weixin.qq.com/cgi-bin/message/custom/send";
+    public static final String TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token";
+    public static final String SEND_MEDIA = "https://api.weixin.qq.com/cgi-bin/media/upload";
+
 }
