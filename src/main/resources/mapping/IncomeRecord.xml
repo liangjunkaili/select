@@ -10,13 +10,13 @@
         <result column="type" property="type" jdbcType="INTEGER"/>
         <result column="img" property="img" jdbcType="VARCHAR"/>
     </resultMap>
-    <select id="queryIncomeRecords" resultMap="incomeRT" parameterType="java.util.Map">
+    <select id="queryIncomeRecords" resultMap="incomeRT">
         SELECT
          *
         FROM
           `income_record`
           <where>
-              <if test="uid!=null and uid != ''">
+              <if test="uid!=null and uid != '' and uid != 0">
                   uid=#{uid}
               </if>
           </where>

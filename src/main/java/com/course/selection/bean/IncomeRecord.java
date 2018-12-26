@@ -16,6 +16,7 @@ import lombok.*;
 @NoArgsConstructor
 public class IncomeRecord {
     private int id;
+    private int uid;
     private int type;
     private int price;
     private String other;
