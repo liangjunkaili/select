@@ -13,7 +13,7 @@ public class WxPayUtil {
         String out_trade_no = StringUtil.getGlobalId();
         param.put("appid",WXConfiguration.APPID);
         param.put("mch_id",WXConfiguration.mch_id);
-        param.put("device_info",WXConfiguration.device_info);
+//        param.put("device_info",WXConfiguration.device_info);
         param.put("nonce_str",nonce_str);
         param.put("out_trade_no",out_trade_no);
         param.put("notify_url",WXConfiguration.wxpay_success);
@@ -27,13 +27,13 @@ public class WxPayUtil {
                 "<appid>"+WXConfiguration.APPID+"</appid>"+
                 "<attach>"+param.get("attach")+"</attach>"+
                 "<body>"+param.get("body")+"</body>"+
-                "<device_info>"+WXConfiguration.device_info+"</device_info>"+
+//                "<device_info>"+WXConfiguration.device_info+"</device_info>"+
                 "<mch_id>"+WXConfiguration.mch_id+"</mch_id>"+
                 "<nonce_str>"+nonce_str+"</nonce_str>"+
                 "<notify_url>"+WXConfiguration.wxpay_success+"</notify_url>"+
                 "<openid>"+param.get("openid")+"</openid>"+
                 "<out_trade_no>"+out_trade_no+"</out_trade_no>"+
-                "<spbill_create_ip>"+param.get("ip")+"</spbill_create_ip>"+
+                "<spbill_create_ip>"+param.get("spbill_create_ip")+"</spbill_create_ip>"+
                 "<total_fee>"+param.get("total_fee")+"</total_fee>"+
                 "<trade_type>"+TradeType.JSAPI.toString()+"</trade_type>"+
                 "<sign>"+sign+"</sign>"+
@@ -107,5 +107,23 @@ public class WxPayUtil {
                 "</xml>";
         String result = HttpRequest.sendPost(WXConfiguration.unifiedorder,xmlStr);
         return XmlUtil.xmlStrToMap(result).get("code_url");
+    }
+
+    public static void main(String[] args) {
+        String x = "<xml>" +
+                "<appid>wx0dd23ad0cfebd824</appid>" +
+                "<attach>123</attach>" +
+                "<body>body</body>" +
+                "<mch_id>1517597181</mch_id>" +
+                "<nonce_str>b37faac0b07f4dd889de9c1ed4441239</nonce_str>" +
+                "<notify_url>https://selection.ucharmedu.com/wxpay_success</notify_url>" +
+                "<openid>oBOE3455PH4Xj2Hf_8pwa0wG2d4M</openid>" +
+                "<out_trade_no>8b8e6fc1243e4b6983f36225151eba32</out_trade_no>" +
+                "<spbill_create_ip>null</spbill_create_ip>" +
+                "<total_fee>1</total_fee>" +
+                "<trade_type>JSAPI</trade_type>" +
+                "<sign>A68F97DEAA233A1A6653A3847DA4171A</sign></xml>";
+        String result = HttpRequest.sendPost(WXConfiguration.unifiedorder,x);
+        System.out.println(result);
     }
 }

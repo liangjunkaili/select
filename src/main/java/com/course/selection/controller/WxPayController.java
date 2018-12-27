@@ -69,7 +69,7 @@ public class WxPayController {
         String body = request.getParameter("body");
         String openid = request.getParameter("openid");
         Map<String, String> map = new HashMap<>();
-        map.put("ip", ip);
+        map.put("spbill_create_ip", ip);
         map.put("total_fee", total_fee);
         map.put("attach", attach);
         map.put("body", body);
