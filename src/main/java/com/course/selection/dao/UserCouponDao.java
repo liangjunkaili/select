@@ -9,4 +9,6 @@ import java.util.List;
 @Mapper
 public interface UserCouponDao {
     List<UserCoupon> findByUid(@Param("uid") Integer uid);
+
+    void insert(@Param("userCoupon") UserCoupon userCoupon);
 }

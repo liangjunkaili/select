@@ -4,6 +4,9 @@ import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
+
+import java.time.LocalDateTime;
+
 @Data
 @ToString
 @Builder
@@ -12,6 +15,6 @@ public class UserCouponDto {
     private Integer price;
     private String reason;
     private String type;
-    private String invalidDate;
+    private LocalDateTime invalidDate;
     private Integer state;
 }

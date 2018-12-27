@@ -38,4 +38,6 @@ public class UserDto {
      * 用户海报
      */
     private String poster;
+    private String openId;
+
 }

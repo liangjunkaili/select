@@ -1,7 +1,6 @@
 package com.course.selection.service.impl;
 
 import com.course.selection.bean.User;
-import com.course.selection.config.App;
 import com.course.selection.dao.GoodsDao;
 import com.course.selection.dao.UserDao;
 import com.course.selection.dto.Result;
@@ -90,6 +89,7 @@ public class UserServiceImpl implements UserService {
                     .uid(user.getUid())
                     .income(user.getIncome())
                     .poster(user.getPoster())
+                    .openId(user.getOpenId())
                     .build();
             return ResultUtil.success(userDTO);
         }
