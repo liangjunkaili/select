@@ -1,11 +1,15 @@
 package com.course.selection.util;
 
+import lombok.extern.log4j.Log4j2;
+
 import java.util.Map;
 
+@Log4j2
 public class WxPayUtil {
 
     //attach total_fee ip body openid
     public static String get_prepay_id(Map<String,String> param) throws Exception {
+        log.info("param:{}",param);
         String nonce_str = StringUtil.getGlobalId();
         String out_trade_no = StringUtil.getGlobalId();
         param.put("appid",WXConfiguration.APPID);
@@ -34,6 +38,7 @@ public class WxPayUtil {
                 "<sign>"+sign+"</sign>"+
                 "</xml>";
         String result = HttpRequest.sendPost(WXConfiguration.unifiedorder,xmlStr);
+        log.info("result:{}",result);
         return XmlUtil.xmlStrToMap(result).get("prepay_id");
     }
 
