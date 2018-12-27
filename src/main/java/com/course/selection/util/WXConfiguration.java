@@ -6,7 +6,8 @@ public class WXConfiguration {
     public static final String MYSERVER = "http://demo.magicabc.com.cn/";
     public static final String mch_id = "1435696002";
     public static final String sub_mch_id = "子商户号";
-    public static final String key="361662e6dc3a43bbb754ea6acabd751a";
+//    public static final String key="361662e6dc3a43bbb754ea6acabd751a";
+    public static final String key="5ApCn4hSHDoM8HCsjWZJlMEXnAUd51sd";
     public static final String token="magicabc";
     //获取access_token
     public static final String ACCESS_TOKEN = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+APPID+"&secret="+APPSECRET;
