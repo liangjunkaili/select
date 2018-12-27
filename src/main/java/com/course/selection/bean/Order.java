@@ -21,8 +21,8 @@ public class Order {
     private Integer state;
     private Integer num;
     private Integer price;
-    private String type1;
-    private String type2;
+    private Integer type1;
+    private Integer type2;
     private String img;
     private String title;
 }

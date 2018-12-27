@@ -1,14 +1,18 @@
 package com.course.selection.service.impl;
 
+import com.course.selection.bean.Coupons;
 import com.course.selection.bean.Goods;
 import com.course.selection.bean.Order;
 import com.course.selection.bean.OrderPeopleList;
+import com.course.selection.dao.CouponsDao;
 import com.course.selection.dao.GoodsDao;
 import com.course.selection.dao.OrderDao;
 import com.course.selection.dao.OrderPeopleListDao;
 import com.course.selection.dto.OrderDto;
+import com.course.selection.dto.OrderGoodsDto;
 import com.course.selection.dto.Result;
 import com.course.selection.service.OrderService;
+import com.course.selection.special.SUtil;
 import com.course.selection.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +28,8 @@ public class OrderServiceImpl implements OrderService {
     private GoodsDao goodsDao;
     @Autowired
     private OrderPeopleListDao orderPeopleListDao;
+    @Autowired
+    private CouponsDao couponsDao;
     @Override
     public Result getMyOrders(Integer uid) {
         List<Order> orders =  orderDao.findByUid(uid);
@@ -35,8 +41,8 @@ public class OrderServiceImpl implements OrderService {
                     .num(order.getNum())
                     .price(order.getPrice())
                     .state(order.getState())
-                    .type1(order.getType1())
-                    .type2(order.getType2())
+                    .type1(SUtil.attributes.get(order.getType1()))
+                    .type2(SUtil.services.get(order.getType2()))
                     .build();
             dtos.add(orderDto);
         });
@@ -44,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Result orderGoods(Integer uid, Integer gid, Integer num, Integer price, String type1, String type2) {
+    public Result orderGoods(Integer uid, Integer gid, Integer num, Integer price, Integer type1, Integer type2, Integer cid) {
         Goods goods = goodsDao.queryGoodsById(gid);
         goods.setNum(goods.getNum() + num);
         goodsDao.update(goods);
@@ -59,8 +65,17 @@ public class OrderServiceImpl implements OrderService {
                 .img(goods.getImg())
                 .state(0)
                 .build();
+        Coupons coupons = couponsDao.findById(cid);
+        OrderGoodsDto orderGoodsDto = OrderGoodsDto.builder()
+                .gid(goods.getId())
+                .img(goods.getImg())
+                .intro(goods.getIntro())
+                .attribute(SUtil.attributes.get(type1))
+                .service(SUtil.services.get(type2))
+                .coupons(coupons)
+                .build();
         orderDao.insert(order);
-        return ResultUtil.success();
+        return ResultUtil.success(orderGoodsDto);
     }
 
     @Override
@@ -68,6 +83,7 @@ public class OrderServiceImpl implements OrderService {
         try {
             orderDao.paySuccess(oid);
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
         return true;

@@ -8,8 +8,8 @@
         <result column="state" property="state" jdbcType="INTEGER"/>
         <result column="num" property="num" jdbcType="INTEGER"/>
         <result column="price" property="price" jdbcType="INTEGER"/>
-        <result column="type1" property="type1" jdbcType="VARCHAR"/>
-        <result column="type2" property="type2" jdbcType="VARCHAR"/>
+        <result column="type1" property="type1" jdbcType="INTEGER"/>
+        <result column="type2" property="type2" jdbcType="INTEGER"/>
         <result column="img" property="img" jdbcType="VARCHAR"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>
     </resultMap>
@@ -48,8 +48,8 @@ VALUES
    #{order.state,jdbcType=INTEGER},
    #{order.num,jdbcType=INTEGER},
    #{order.price,jdbcType=INTEGER},
-   #{order.type1,jdbcType=VARCHAR},
-   #{order.type2,jdbcType=VARCHAR},
+   #{order.type1,jdbcType=INTEGER},
+   #{order.type2,jdbcType=INTEGER},
    #{order.img,jdbcType=VARCHAR},
    #{order.title,jdbcType=VARCHAR} )
       on  DUPLICATE key update oid=#{order.oid,jdbcType=INTEGER}

@@ -1,5 +1,7 @@
 package com.course.selection.dto;
 
+import com.course.selection.special.Attribute;
+import com.course.selection.special.Service;
 import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +16,7 @@ public class OrderDto {
     private Integer state;
     private Integer price;
     private Integer num;
-    private String type1;
-    private String type2;
+    private Attribute type1;
+    private Service type2;
     private String title;
 }
