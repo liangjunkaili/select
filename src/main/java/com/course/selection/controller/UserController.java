@@ -67,6 +67,13 @@ public class UserController {
     ) {
         return orderService.getMyOrders(uid);
     }
+    @ApiOperation("我的收益")
+    @PostMapping("getMyIncome")
+    public Result getMyIncome(
+            @RequestParam(value = "uid", required = false) Integer uid
+    ) {
+        return incomeRecordService.getMyIncome(uid);
+    }
 
     @ApiOperation("我的报告")
     @PostMapping("getMyPoster")

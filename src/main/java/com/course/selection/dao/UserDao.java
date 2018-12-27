@@ -14,7 +14,7 @@ public interface UserDao {
 
     void update(@Param("avatar") String avatar,@Param("nickname") String nickname,@Param("gender") Integer gender,@Param("uid") Integer uid);
 
-    User findOneByUid(@Param("uid") int uid);
+    User findOneByUid(@Param("uid") Integer uid);
 
     void updateActiveTime(@Param("uids") Set<Integer> activeUids);
 }

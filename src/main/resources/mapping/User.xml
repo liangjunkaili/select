@@ -34,7 +34,9 @@ WHERE `uid` = #{uid} ;
 
 
 </update>
-
+<select id="findOneByUid" resultMap="userResultMap">
+    SELECT * from user where uid =#{uid}
+</select>
     <update id="updateActiveTime">
         update user
         set active_time = now() where

@@ -1,11 +1,12 @@
 package com.course.selection.util;
 
 public class WXConfiguration {
-    public static final String APPID = "wxb56f5819ae6376d8";
-    public static final String APPSECRET = "2d6ec128245185c8bc90ce34075a3fff";
-    public static final String MYSERVER = "http://demo.magicabc.com.cn/";
-    public static final String mch_id = "1435696002";
+    public static final String APPID = "wx0dd23ad0cfebd824";
+    public static final String APPSECRET = "14c94e3c2e05cc9f9544702b9f01bbe6";
+    public static final String MYSERVER = "https://selection.ucharmedu.com/";
+    public static final String mch_id = "1517597181";
     public static final String sub_mch_id = "子商户号";
+
 //    public static final String key="361662e6dc3a43bbb754ea6acabd751a";
     public static final String key="5ApCn4hSHDoM8HCsjWZJlMEXnAUd51sd";
     public static final String token="magicabc";
@@ -74,33 +75,16 @@ public class WXConfiguration {
     public static final String user_info= "https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN";
     public static final String user_info_batchget= "https://api.weixin.qq.com/cgi-bin/user/info/batchget?access_token=ACCESS_TOKEN";
     //公众号支付
+
+//    public static final String key="";
+
     public static final String device_info = "WEB";//自定义参数,PC网页或公众号内支付可以传"WEB
     public static final String unifiedorder = "https://api.mch.weixin.qq.com/pay/unifiedorder";
-    public static final String refund = "https://api.mch.weixin.qq.com/secapi/pay/refund";
     public static final String wxpay_success = MYSERVER+"wxpay_success";
-    //H5支付
+    public static final String LOGIN_API = "https://api.weixin.qq.com/sns/jscode2session";
+    public static final String CUSTOMER_TOKEN = "shan1";
+    public static final String SEND_MSG = "https://api.weixin.qq.com/cgi-bin/message/custom/send";
+    public static final String TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token";
+    public static final String SEND_MEDIA = "https://api.weixin.qq.com/cgi-bin/media/upload";
 
-    //微信电子发票
-    public static final String s_pappid = "开票平台标识";
-    public static final String getauthurl = "https://api.weixin.qq.com/card/invoice/getauthurl?access_token={access_token}";
-    public static final String getauthdata = "https://api.weixin.qq.com/card/invoice/getauthdata?access_token={access_token}";
-    public static final String rejectinsert = "https://api.weixin.qq.com/card/invoice/rejectinsert?access_token={access_token}";
-    public static final String setbizattr_set_auth_field = "https://api.weixin.qq.com/card/invoice/setbizattr?action=set_auth_field&access_token={access_token}";
-    public static final String setbizattr_get_auth_field = "https://api.weixin.qq.com/card/invoice/setbizattr?action=get_auth_field&access_token={access_token}";
-    public static final String setbizattr_set_pay_mch = "https://api.weixin.qq.com/card/invoice/setbizattr?action=set_pay_mch&access_token={access_token}";
-    public static final String setbizattr_get_pay_mch = "https://api.weixin.qq.com/card/invoice/setbizattr?action=get_pay_mch&access_token={access_token}";
-    public static final String makeoutinvoice = "https://api.weixin.qq.com/card/invoice/makeoutinvoice?access_token={access_token}";
-    public static final String clearoutinvoice = "https://api.weixin.qq.com/card/invoice/clearoutinvoice?access_token={access_token}";
-    public static final String queryinvoceinfo = "https://api.weixin.qq.com/card/invoice/queryinvoceinfo?access_token={access_token}";
-    public static final String seturl = "https://api.weixin.qq.com/card/invoice/seturl?access_token={access_token}";
-    public static final String platform_setpdf = "https://api.weixin.qq.com/card/invoice/platform/setpdf?access_token={access_token}";
-    public static final String platform_getpdf = "https://api.weixin.qq.com/card/invoice/platform/getpdf?access_token={access_token}";
-    public static final String platform_createcard = "https://api.weixin.qq.com/card/invoice/platform/createcard?access_token={access_token}";
-    public static final String insert = "https://api.weixin.qq.com/card/invoice/insert?access_token={access_token}";
-    public static final String updatestatus = "https://api.weixin.qq.com/card/invoice/platform/updatestatus?access_token={access_token}";
-    public static final String card_code_decrypt = "https://api.weixin.qq.com/card/code/decrypt?access_token={access_token}";
-    public static final String reimburse_getinvoiceinfo = "https://api.weixin.qq.com/card/invoice/reimburse/getinvoiceinfo?access_token={access_token}";
-    public static final String reimburse_getinvoicebatch = "https://api.weixin.qq.com/card/invoice/reimburse/getinvoicebatch?access_token={access_token}";
-    public static final String reimburse_updateinvoicestatus = "https://api.weixin.qq.com/card/invoice/reimburse/updateinvoicestatus?access_token={access_token}";
-    public static final String reimburse_updatestatusbatch = "https://api.weixin.qq.com/card/invoice/reimburse/updatestatusbatch?access_token={access_token}";
 }

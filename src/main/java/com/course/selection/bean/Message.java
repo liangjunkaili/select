@@ -13,7 +13,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
 public class Message {
     private Integer id;
     private Integer goodsId;
