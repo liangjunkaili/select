@@ -9,7 +9,6 @@ public class WxPayUtil {
 
     //attach total_fee ip body openid
     public static String get_prepay_id(Map<String,String> param) throws Exception {
-        log.info("param:{}",param);
         String nonce_str = StringUtil.getGlobalId();
         String out_trade_no = StringUtil.getGlobalId();
         param.put("appid",WXConfiguration.APPID);
@@ -22,6 +21,8 @@ public class WxPayUtil {
         String tmp = EncryptUtil.sortForMap(param);
         String signTmp = tmp + "&key="+WXConfiguration.key;
         String sign = EncryptUtil.Encrypt(signTmp,"MD5").toUpperCase();
+        log.info("param:{}",param);
+        log.info("tmp:{},signTmp:{},sign:{}", tmp, signTmp, sign);
         String xmlStr = "<xml>"+
                 "<appid>"+WXConfiguration.APPID+"</appid>"+
                 "<attach>"+param.get("attach")+"</attach>"+
@@ -37,6 +38,7 @@ public class WxPayUtil {
                 "<trade_type>"+TradeType.JSAPI.toString()+"</trade_type>"+
                 "<sign>"+sign+"</sign>"+
                 "</xml>";
+        log.info("xmlStr:{}",xmlStr);
         String result = HttpRequest.sendPost(WXConfiguration.unifiedorder,xmlStr);
         log.info("result:{}",result);
         return XmlUtil.xmlStrToMap(result).get("prepay_id");
