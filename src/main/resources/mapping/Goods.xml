@@ -18,6 +18,9 @@
         <result column="detail" property="detail" jdbcType="VARCHAR"/>
         <result column="icard" property="icard" jdbcType="VARCHAR"/>
         <result column="bamount" property="bamount" jdbcType="INTEGER"/>
+        <result column="iprice" property="iprice" jdbcType="INTEGER"/>
+        <result column="attribute" property="attribute" jdbcType="INTEGER"/>
+        <result column="service" property="service" jdbcType="INTEGER"/>
     </resultMap>
     <select id="queryGoods" resultMap="goodsRT" parameterType="java.util.Map">
         select * from goods
@@ -50,7 +53,10 @@ INSERT INTO `goods` (
   `bamount`,
   `flag`,
   `weight`,
-  num
+  num,
+  iprice,
+  attribute,
+  service
 )
 VALUES
   (
@@ -69,7 +75,10 @@ VALUES
     #{goods.bamount,jdbcType=INTEGER},
     #{goods.flag,jdbcType=INTEGER},
     #{goods.weight,jdbcType=INTEGER},
-    #{goods.num,jdbcType=INTEGER})
+    #{goods.num,jdbcType=INTEGER}),
+    #{goods.iprice,jdbcType=INTEGER}),
+    #{goods.attribute,jdbcType=INTEGER}),
+    #{goods.service,jdbcType=INTEGER})
    on  DUPLICATE key update id=#{goods.id,jdbcType=INTEGER}
     </insert>
 
@@ -91,7 +100,10 @@ SET
   `bamount` = #{goods.bamount,jdbcType=INTEGER},
   `flag` = #{goods.flag,jdbcType=INTEGER},
   `weight` = #{goods.weight,jdbcType=INTEGER},
-  `num` = #{goods.num,jdbcType=INTEGER}
+  `num` = #{goods.num,jdbcType=INTEGER},
+  `iprice` = #{goods.iprice,jdbcType=INTEGER},
+  `attribute` = #{goods.attribute,jdbcType=INTEGER},
+  `service` = #{goods.service,jdbcType=INTEGER}
 WHERE `id` = #{goods.id,jdbcType=INTEGER} ;
 
 

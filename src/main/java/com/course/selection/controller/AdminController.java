@@ -75,7 +75,10 @@ public class AdminController {
             @RequestParam(value = "bamount") Integer bamount,
             @RequestParam(value = "flag") Integer flag,
             @RequestParam(value = "weight") Integer weight,
-            @RequestParam(value = "num") Integer num
+            @RequestParam(value = "num") Integer num,
+            @RequestParam(value = "iprice") Integer iprice,
+            @RequestParam(value = "attribute") Integer attribute,
+            @RequestParam(value = "service") Integer service
     ) {
         String img1 = null;
         String img2 = null;

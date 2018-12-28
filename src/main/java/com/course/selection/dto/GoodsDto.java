@@ -1,6 +1,10 @@
 package com.course.selection.dto;
 
+import com.course.selection.special.Attribute;
+import com.course.selection.special.Service;
 import lombok.*;
+
+import java.util.List;
 
 
 @Data
@@ -61,4 +65,16 @@ public class GoodsDto {
      * 轮播图的权重
      */
     private int weight;
+    /**
+     * 递增价
+     */
+    private int iprice;
+    /**
+     * 属性
+     */
+    private List<Attribute> attribute;
+    /**
+     * 服务
+     */
+    private List<Service>  service;
 }

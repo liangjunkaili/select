@@ -67,4 +67,7 @@ public class Goods {
      * 轮播图的权重
      */
     private int weight;
+    private int iprice;
+    private int attribute;
+    private int service;
 }

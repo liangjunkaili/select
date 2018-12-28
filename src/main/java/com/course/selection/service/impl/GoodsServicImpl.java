@@ -10,6 +10,7 @@ import com.course.selection.dao.MessageDao;
 import com.course.selection.dao.UserCouponDao;
 import com.course.selection.dto.*;
 import com.course.selection.service.GoodsService;
+import com.course.selection.special.SUtil;
 import com.course.selection.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -138,6 +139,9 @@ public class GoodsServicImpl implements GoodsService {
                 .title(good.getTitle())
                 .oprice(good.getOprice())
                 .price(good.getPrice())
+                .iprice(good.getIprice())
+                .attribute(SUtil.toListA())
+                .service(SUtil.toListS())
                 .build();
         GoodDetails goodDetails = GoodDetails.builder()
                 .goods(goodsDto)
