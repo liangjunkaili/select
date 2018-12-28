@@ -50,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Result orderGoods(Integer uid, Integer gid, Integer num, Integer price, String type1, String type2, Integer cid) {
+    public Result orderGoods(Integer uid, Integer gid, Integer num, Integer price, String type1, String type2) {
         Goods goods = goodsDao.queryGoodsById(gid);
         goods.setNum(goods.getNum() + num);
         goodsDao.update(goods);
@@ -65,17 +65,17 @@ public class OrderServiceImpl implements OrderService {
                 .img(goods.getImg())
                 .state(0)
                 .build();
-        Coupons coupons = couponsDao.findById(cid);
-        OrderGoodsDto orderGoodsDto = OrderGoodsDto.builder()
-                .gid(goods.getId())
-                .img(goods.getImg())
-                .intro(goods.getIntro())
-                .attribute(SUtil.attributes.get(type1))
-                .service(SUtil.services.get(type2))
-                .coupons(coupons)
-                .build();
+//        Coupons coupons = couponsDao.findById(cid);
+//        OrderGoodsDto orderGoodsDto = OrderGoodsDto.builder()
+//                .gid(goods.getId())
+//                .img(goods.getImg())
+//                .intro(goods.getIntro())
+//                .attribute(SUtil.attributes.get(type1))
+//                .service(SUtil.services.get(type2))
+//                .coupons(coupons)
+//                .build();
         orderDao.insert(order);
-        return ResultUtil.success(orderGoodsDto);
+        return ResultUtil.success();
     }
 
     @Override
