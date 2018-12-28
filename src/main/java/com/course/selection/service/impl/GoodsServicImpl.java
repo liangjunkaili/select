@@ -12,6 +12,7 @@ import com.course.selection.dto.*;
 import com.course.selection.service.GoodsService;
 import com.course.selection.special.SUtil;
 import com.course.selection.util.ResultUtil;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,7 @@ import java.util.Map;
  * @Version 1.0
  **/
 @Service
+@Log4j2
 public class GoodsServicImpl implements GoodsService {
     @Autowired
     private GoodsDao goodsDao;
@@ -87,26 +89,28 @@ public class GoodsServicImpl implements GoodsService {
     public Result getGoodById(Integer id, Integer uid) {
         Map<String, Object> map = new HashMap<>();
 //        map.put("id", id);
+        log.info(map);
         List<Goods> goods = goodsDao.queryGoods(map);
+        log.info(goods);
         List<GoodDto> goodDtos = new ArrayList<>();
         int i = 0;
         Goods good = null;
         for (Goods goods1 : goods
         ) {
+            log.info(goods1.getId()+"="+id);
             if (goods1.getId() == id) {
                 good = goods1;
             } else {
-                if (i >= 3) {
-                    break;
+                if (i <= 2) {
+                    goodDtos.add(GoodDto.builder()
+                            .price(goods1.getPrice())
+                            .id(goods1.getId())
+                            .img(goods1.getImg())
+                            .intro(goods1.getIntro())
+                            .label(goods1.getLabel().split("\\|"))
+                            .title(goods1.getTitle())
+                            .build());
                 }
-                goodDtos.add(GoodDto.builder()
-                        .price(goods1.getPrice())
-                        .id(goods1.getId())
-                        .img(goods1.getImg())
-                        .intro(goods1.getIntro())
-                        .label(goods1.getLabel().split("\\|"))
-                        .title(goods1.getTitle())
-                        .build());
                 i++;
             }
         }
@@ -116,8 +120,10 @@ public class GoodsServicImpl implements GoodsService {
         boolean myCp = false;
         for (UserCoupon userCoupon : myCoupons
         ) {
-            if (userCoupon.getCpid() == coupons.getId()) {
-                myCp = true;
+            if (coupons!=null){
+                if (userCoupon.getCpid() == coupons.getId()) {
+                    myCp = true;
+                }
             }
 
         }
@@ -140,9 +146,13 @@ public class GoodsServicImpl implements GoodsService {
                 .oprice(good.getOprice())
                 .price(good.getPrice())
                 .iprice(good.getIprice())
-                .attribute(SUtil.toListA())
-                .service(SUtil.toListS())
+//                .attribute(SUtil.toListA())
+//                .service(SUtil.toListS())
                 .build();
+        if (good.getId()==7){
+            goodsDto.setAttribute(SUtil.toListA());
+            goodsDto.setService(SUtil.toListS());
+        }
         GoodDetails goodDetails = GoodDetails.builder()
                 .goods(goodsDto)
                 .coupons(coupons)
