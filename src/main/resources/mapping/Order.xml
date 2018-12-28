@@ -29,7 +29,6 @@
 
     <insert id="insert"  useGeneratedKeys="true" keyProperty="order.oid">
         INSERT INTO `selection`.`order` (
-  `oid`,
   `uid`,
   `gid`,
   `state`,
@@ -42,7 +41,6 @@
 )
 VALUES
   (
-   #{order.oid,jdbcType=INTEGER},
    #{order.uid,jdbcType=INTEGER},
    #{order.gid,jdbcType=INTEGER},
    #{order.state,jdbcType=INTEGER},

@@ -75,7 +75,7 @@ public class OrderServiceImpl implements OrderService {
 //                .coupons(coupons)
 //                .build();
         orderDao.insert(order);
-        return ResultUtil.success();
+        return ResultUtil.success(order.getOid());
     }
 
     @Override
