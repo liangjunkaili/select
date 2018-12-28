@@ -50,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Result orderGoods(Integer uid, Integer gid, Integer num, Integer price, Integer type1, Integer type2, Integer cid) {
+    public Result orderGoods(Integer uid, Integer gid, Integer num, Integer price, String type1, String type2, Integer cid) {
         Goods goods = goodsDao.queryGoodsById(gid);
         goods.setNum(goods.getNum() + num);
         goodsDao.update(goods);
