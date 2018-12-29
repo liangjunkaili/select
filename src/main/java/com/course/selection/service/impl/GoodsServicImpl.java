@@ -149,10 +149,16 @@ public class GoodsServicImpl implements GoodsService {
 //                .attribute(SUtil.toListA())
 //                .service(SUtil.toListS())
                 .build();
-        if (good.getId()==7){
-            goodsDto.setAttribute(SUtil.toListA());
+        if(good.getAttribute()!=0){
+            goodsDto.setAttribute(SUtil.attributes.get(good.getAttribute()));
+        }
+        if(good.getService()!=0){
             goodsDto.setService(SUtil.toListS());
         }
+//        if (good.getId()==7){
+//            goodsDto.setAttribute(SUtil.toListA());
+//            goodsDto.setService(SUtil.toListS());
+//        }
         GoodDetails goodDetails = GoodDetails.builder()
                 .goods(goodsDto)
                 .coupons(coupons)
