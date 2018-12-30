@@ -12,8 +12,8 @@ public class SUtil {
         attributes1.add(new Attribute(1, "线上：皮纹测试（指纹拍照）", 580, 100));
         attributes1.add(new Attribute(2, "线下：皮纹测试（指纹+脑波仪器测量）", 1980, 800));
         attributes1.add(new Attribute(3, "线下：基因测试（唾液）", 7980, 4000));
-        attributes2.add(new Attribute(1, "小学版", 380, 0));
-        attributes2.add(new Attribute(2, "中学版", 380, 0));
+        attributes2.add(new Attribute(1, "小学版", 380, 380));
+        attributes2.add(new Attribute(2, "中学版", 380, 380));
         attributes.put(1,attributes1);
         attributes.put(2,attributes2);
 
