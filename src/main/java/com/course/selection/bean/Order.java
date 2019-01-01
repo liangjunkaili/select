@@ -2,6 +2,8 @@ package com.course.selection.bean;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 /**
  * @ClassName Order
  * @Description TODO
@@ -25,4 +27,5 @@ public class Order {
     private String type2;
     private String img;
     private String title;
+    private LocalDateTime creattime;
 }

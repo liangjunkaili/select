@@ -13,10 +13,12 @@ import com.course.selection.dto.OrderGoodsDto;
 import com.course.selection.dto.Result;
 import com.course.selection.service.OrderService;
 import com.course.selection.special.SUtil;
+import com.course.selection.util.DateUtil;
 import com.course.selection.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +46,7 @@ public class OrderServiceImpl implements OrderService {
                     .state(order.getState())
                     .type1(order.getType1())
                     .type2(order.getType2())
+                    .creattime(DateUtil.localDateTimeFormat(order.getCreattime(),DateUtil.FORMAT_PATTERN1))
                     .build();
             dtos.add(orderDto);
         });
@@ -65,6 +68,7 @@ public class OrderServiceImpl implements OrderService {
                 .title(goods.getTitle())
                 .img(goods.getImg())
                 .state(0)
+                .creattime(LocalDateTime.now())
                 .build();
 //        Coupons coupons = couponsDao.findById(cid);
 //        OrderGoodsDto orderGoodsDto = OrderGoodsDto.builder()

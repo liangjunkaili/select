@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+
 @Data
 @ToString
 @Builder
@@ -20,4 +22,5 @@ public class OrderDto {
     private String type1;
     private String type2;
     private String title;
+    private String creattime;
 }

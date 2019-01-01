@@ -12,6 +12,7 @@
         <result column="type2" property="type2" jdbcType="INTEGER"/>
         <result column="img" property="img" jdbcType="VARCHAR"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="creattime" property="creattime" jdbcType="TIMESTAMP"/>
     </resultMap>
     <select id="findByUid" resultMap="orderRT">
         select * from `order`
@@ -37,7 +38,8 @@
   `type1`,
   `type2`,
   `img`,
-  `title`
+  `title`,
+  creattime
 )
 VALUES
   (
@@ -49,19 +51,21 @@ VALUES
    #{order.type1,jdbcType=INTEGER},
    #{order.type2,jdbcType=INTEGER},
    #{order.img,jdbcType=VARCHAR},
-   #{order.title,jdbcType=VARCHAR} )
+   #{order.title,jdbcType=VARCHAR},
+   #{order.creattime,jdbcType=TIMESTAMP}
+    )
       on  DUPLICATE key update oid=#{order.oid,jdbcType=INTEGER}
 
 
     </insert>
 
     <update id="paySuccess">
-        UPDATE order SET
+        UPDATE `order` SET
         state = 1
         where oid =#{oid}
     </update>
     <update id="testSuccess">
-        UPDATE order SET
+        UPDATE `order` SET
         state = 2
         where oid =#{oid}
     </update>
