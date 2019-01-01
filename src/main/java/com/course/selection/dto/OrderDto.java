@@ -17,7 +17,7 @@ public class OrderDto {
     private Integer state;
     private Integer price;
     private Integer num;
-    private Attribute type1;
-    private Service type2;
+    private String type1;
+    private String type2;
     private String title;
 }

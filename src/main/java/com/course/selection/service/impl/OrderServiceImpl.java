@@ -42,8 +42,8 @@ public class OrderServiceImpl implements OrderService {
                     .num(order.getNum())
                     .price(order.getPrice())
                     .state(order.getState())
-                    .type1(SUtil.attributes.get(order.getType1()))
-                    .type2(SUtil.services.get(order.getType2()))
+                    .type1(order.getType1())
+                    .type2(order.getType2())
                     .build();
             dtos.add(orderDto);
         });
@@ -76,7 +76,7 @@ public class OrderServiceImpl implements OrderService {
 //                .coupons(coupons)
 //                .build();
         orderDao.insert(order);
-        return ResultUtil.success();
+        return ResultUtil.success(order.getOid());
     }
 
     @Override
