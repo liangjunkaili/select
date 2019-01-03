@@ -63,11 +63,11 @@ public class AdminController {
     public Result addGoods(
             @RequestParam(value = "title") String title,
             @RequestParam(value = "detail") String detail,
-            @RequestParam(value = "file1") MultipartFile file1,//轮播图1
-            @RequestParam(value = "file2") MultipartFile file2,//轮播图2
-            @RequestParam(value = "file3") MultipartFile file3,//轮播图3
-            @RequestParam(value = "file4") MultipartFile file4,//主图
-            @RequestParam(value = "file5") MultipartFile file5,//邀请卡
+            @RequestParam(value = "file1",required = false) MultipartFile file1,//轮播图1
+            @RequestParam(value = "file2",required = false) MultipartFile file2,//轮播图2
+            @RequestParam(value = "file3",required = false) MultipartFile file3,//轮播图3
+            @RequestParam(value = "file4",required = false) MultipartFile file4,//主图
+            @RequestParam(value = "file5",required = false) MultipartFile file5,//邀请卡
             @RequestParam(value = "oprice") Integer oprice,
             @RequestParam(value = "price") Integer price,
             @RequestParam(value = "label") String label,
@@ -77,8 +77,8 @@ public class AdminController {
             @RequestParam(value = "weight") Integer weight,
             @RequestParam(value = "num") Integer num,
             @RequestParam(value = "iprice") Integer iprice,
-            @RequestParam(value = "attribute") Integer attribute,
-            @RequestParam(value = "service") Integer service
+            @RequestParam(value = "attribute") Integer attribute,//有就1没有就0
+            @RequestParam(value = "service") Integer service//有就1没有就0
     ) {
         String img1 = null;
         String img2 = null;
@@ -86,14 +86,25 @@ public class AdminController {
         String img = null;
         String icard = null;
         try {
-            img1 = CosUtil.getImgUrl(file1);
-            img2 = CosUtil.getImgUrl(file2);
-            img3 = CosUtil.getImgUrl(file3);
-            img = CosUtil.getImgUrl(file4);
-            icard = CosUtil.getImgUrl(file5);
+            if(file1!=null) {
+                img1 = CosUtil.getImgUrl(file1);
+            }
+            if(file2!=null) {
+                img2 = CosUtil.getImgUrl(file2);
+            }
+            if(file3!=null) {
+                img3 = CosUtil.getImgUrl(file3);
+            }
+            if(file4!=null) {
+                img = CosUtil.getImgUrl(file4);
+            }
+            if(file5!=null) {
+                icard = CosUtil.getImgUrl(file5);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        img1 = img1 + "|" + img2 + "|" + img3;
         Goods goods = Goods.builder()
                 .bamount(bamount)
                 .detail(detail)
@@ -101,8 +112,8 @@ public class AdminController {
                 .icard(icard)
                 .img(img)
                 .img1(img1)
-                .img2(img2)
-                .img3(img3)
+                .img2(null)
+                .img3(null)
                 .intro(intro)
                 .label(label)
                 .num(num)
@@ -110,6 +121,9 @@ public class AdminController {
                 .price(price)
                 .weight(weight)
                 .title(title)
+                .iprice(iprice)
+                .attribute(attribute)
+                .service(service)
                 .build();
         goodsService.addGoods(goods);
         return ResultUtil.success();
