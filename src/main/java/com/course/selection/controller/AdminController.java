@@ -104,30 +104,35 @@ public class AdminController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        img1 = img1 + "|" + img2 + "|" + img3;
-        Goods goods = Goods.builder()
-                .bamount(bamount)
-                .detail(detail)
-                .flag(flag)
-                .icard(icard)
-                .img(img)
-                .img1(img1)
-                .img2(null)
-                .img3(null)
-                .intro(intro)
-                .label(label)
-                .num(num)
-                .oprice(oprice)
-                .price(price)
-                .weight(weight)
-                .title(title)
-                .iprice(iprice)
-                .attribute(attribute)
-                .service(service)
-                .build();
-        goodsService.addGoods(goods);
-        return ResultUtil.success();
-    }
+        if (img3 == null) {
+            img1 = img1 + "|" + img2 ;
+        } else if (img2 == null) {
+        }else {
+            img1 = img1 + "|" + img2 + "|" + img3;
+        }
+            Goods goods = Goods.builder()
+                    .bamount(bamount)
+                    .detail(detail)
+                    .flag(flag)
+                    .icard(icard)
+                    .img(img)
+                    .img1(img1)
+                    .img2(null)
+                    .img3(null)
+                    .intro(intro)
+                    .label(label)
+                    .num(num)
+                    .oprice(oprice)
+                    .price(price)
+                    .weight(weight)
+                    .title(title)
+                    .iprice(iprice)
+                    .attribute(attribute)
+                    .service(service)
+                    .build();
+            goodsService.addGoods(goods);
+            return ResultUtil.success();
+        }
 
 
     @PostMapping("addReason")
