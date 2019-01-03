@@ -67,6 +67,7 @@ public class UserServiceImpl implements UserService {
             if (user == null) {
                 //数据库插入一条新数据
                 user = buildUser(userMap, channel, ip, shareId);
+                log.info("user:{}", user);
                 userDao.insert(user);
             } else {
                 log.info("avatarUrl:{}", String.valueOf(userMap.get("avatarUrl")));
