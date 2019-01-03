@@ -122,6 +122,7 @@ public class GoodsServicImpl implements GoodsService {
             if (coupons!=null){
                 if (userCoupon.getCpid() == coupons.getId()) {
                     myCp = true;
+                    coupons.setVaildTimeStr(userCoupon.getInvalidDate());
                 }
             }
 

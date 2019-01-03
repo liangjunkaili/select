@@ -2,7 +2,7 @@ package com.course.selection.bean;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  * @ClassName UserCoupon
@@ -20,6 +20,6 @@ public class UserCoupon {
     private Integer id;
     private Integer uid;
     private Integer cpid;
-    private LocalDateTime invalidDate;
+    private LocalDate invalidDate;
     private Integer state;
 }
