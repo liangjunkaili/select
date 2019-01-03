@@ -67,6 +67,7 @@ public class UserController {
     ) {
         return orderService.getMyOrders(uid);
     }
+
     @ApiOperation("我的收益")
     @PostMapping("getMyIncome")
     public Result getMyIncome(
@@ -94,6 +95,7 @@ public class UserController {
     @ApiOperation("添加测试人员")
     @PostMapping("addPeople")
     public Result addPeople(
+            @RequestParam(value = "id", required = true) Integer id,
             @RequestParam(value = "oid", required = true) Integer oid,
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "gender", required = false) Integer gender,
@@ -102,23 +104,15 @@ public class UserController {
             @RequestParam(value = "address", required = false) String address
     ) {
         log.info("oid:{}", oid);
-        return orderPeopleListService.addPeople(oid, name, gender, phone, birthdayTime, address);
-    }
-
-
-    @ApiOperation("修改测试人员")
-    @PostMapping("updatePeople")
-    public Result updatePeople(
-            @RequestParam(value = "id", required = true) Integer id,
-            @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "gender", required = false) Integer gender,
-            @RequestParam(value = "phone", required = false) String phone,
-            @RequestParam(value = "birthdayTime", required = false) String birthdayTime,
-            @RequestParam(value = "address", required = false) String address
-    ) {
         log.info("id:{}", id);
-        return orderPeopleListService.updatePeople(id, name, gender, phone, birthdayTime, address);
+        if (id == 0) {
+            return orderPeopleListService.addPeople(oid, name, gender, phone, birthdayTime, address);
+        } else {
+            return orderPeopleListService.updatePeople(id, name, gender, phone, birthdayTime, address);
+        }
     }
+
+
 
 
 //    public Result queryIncomeByUid(){
