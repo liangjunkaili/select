@@ -7,16 +7,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+
 @Data
 @ToString
 @Builder
 @ApiModel("我的订单对象")
 public class OrderDto {
+    private Integer id;
     private String img;
     private Integer state;
     private Integer price;
     private Integer num;
-    private Attribute type1;
-    private Service type2;
+    private String type1;
+    private String type2;
     private String title;
+    private String creattime;
 }

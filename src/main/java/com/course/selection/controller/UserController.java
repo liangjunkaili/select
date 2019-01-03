@@ -133,10 +133,9 @@ public class UserController {
             @RequestParam(value = "gid") Integer gid,
             @RequestParam(value = "num") Integer num,
             @RequestParam(value = "price") Integer price,
-            @RequestParam(value = "type1") Integer type1,
-            @RequestParam(value = "type2") Integer type2,
-            @RequestParam(value = "cid") Integer cid
+            @RequestParam(value = "type1") String type1,
+            @RequestParam(value = "type2") String type2
     ) {
-        return orderService.orderGoods(uid, gid, num, price, type1, type2,cid);
+        return orderService.orderGoods(uid, gid, num, price, type1, type2);
     }
 }

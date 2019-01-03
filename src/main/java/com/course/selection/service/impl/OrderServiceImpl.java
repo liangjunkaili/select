@@ -13,10 +13,12 @@ import com.course.selection.dto.OrderGoodsDto;
 import com.course.selection.dto.Result;
 import com.course.selection.service.OrderService;
 import com.course.selection.special.SUtil;
+import com.course.selection.util.DateUtil;
 import com.course.selection.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,13 +38,15 @@ public class OrderServiceImpl implements OrderService {
         List<OrderDto> dtos = new ArrayList<>();
         orders.forEach(order -> {
             OrderDto orderDto = OrderDto.builder()
+                    .id(order.getOid())
                     .img(order.getImg())
                     .title(order.getTitle())
                     .num(order.getNum())
                     .price(order.getPrice())
                     .state(order.getState())
-                    .type1(SUtil.attributes.get(order.getType1()))
-                    .type2(SUtil.services.get(order.getType2()))
+                    .type1(order.getType1())
+                    .type2(order.getType2())
+                    .creattime(DateUtil.localDateTimeFormat(order.getCreattime(),DateUtil.FORMAT_PATTERN1))
                     .build();
             dtos.add(orderDto);
         });
@@ -50,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Result orderGoods(Integer uid, Integer gid, Integer num, Integer price, Integer type1, Integer type2, Integer cid) {
+    public Result orderGoods(Integer uid, Integer gid, Integer num, Integer price, String type1, String type2) {
         Goods goods = goodsDao.queryGoodsById(gid);
         goods.setNum(goods.getNum() + num);
         goodsDao.update(goods);
@@ -64,18 +68,19 @@ public class OrderServiceImpl implements OrderService {
                 .title(goods.getTitle())
                 .img(goods.getImg())
                 .state(0)
+                .creattime(LocalDateTime.now())
                 .build();
-        Coupons coupons = couponsDao.findById(cid);
-        OrderGoodsDto orderGoodsDto = OrderGoodsDto.builder()
-                .gid(goods.getId())
-                .img(goods.getImg())
-                .intro(goods.getIntro())
-                .attribute(SUtil.attributes.get(type1))
-                .service(SUtil.services.get(type2))
-                .coupons(coupons)
-                .build();
+//        Coupons coupons = couponsDao.findById(cid);
+//        OrderGoodsDto orderGoodsDto = OrderGoodsDto.builder()
+//                .gid(goods.getId())
+//                .img(goods.getImg())
+//                .intro(goods.getIntro())
+//                .attribute(SUtil.attributes.get(type1))
+//                .service(SUtil.services.get(type2))
+//                .coupons(coupons)
+//                .build();
         orderDao.insert(order);
-        return ResultUtil.success(orderGoodsDto);
+        return ResultUtil.success(order.getOid());
     }
 
     @Override
