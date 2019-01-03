@@ -8,6 +8,6 @@ import lombok.*;
 @ToString
 @ApiModel("首页轮播图对象")
 public class ImgDto {
-    private Integer id;
+    private String url;
     private String img;
 }

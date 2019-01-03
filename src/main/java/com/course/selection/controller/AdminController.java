@@ -4,6 +4,7 @@ package com.course.selection.controller;
 import com.course.selection.bean.Goods;
 import com.course.selection.dto.Result;
 import com.course.selection.service.GoodsService;
+import com.course.selection.service.HomePageService;
 import com.course.selection.service.IncomeRecordService;
 import com.course.selection.service.ReasonService;
 import com.course.selection.util.CosUtil;
@@ -28,6 +29,8 @@ public class AdminController {
     private GoodsService goodsService;
     @Autowired
     private ReasonService reasonService;
+    @Autowired
+    private HomePageService homePageService;
 
     public static final String IMG_URL = "https://qinmi-1258355325.cos.ap-beijing.myqcloud.com/";
 
@@ -145,5 +148,20 @@ public class AdminController {
     @ApiOperation("获取返现理由")
     public Result getReason() {
         return reasonService.getReason();
+    }
+
+    @PostMapping("upOrDownLine")
+    public Result upOrDownLine(@RequestParam(value = "id") int id,
+                         @RequestParam(value = "img",required = false) String img,
+                         @RequestParam(value = "state") int state,
+                         @RequestParam(value = "weight",required = false) int weight,
+                         @RequestParam(value = "url",required = false) String url){
+        return homePageService.updateHomePage(id,state,weight,url,img);
+    }
+
+    @GetMapping("getHomePage")
+    @ApiOperation("获取首页轮播图")
+    public Result getHomePage() {
+        return ResultUtil.success(homePageService.queryHomePage());
     }
 }

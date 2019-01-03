@@ -1,15 +1,13 @@
 package com.course.selection.service.impl;
 
-import com.course.selection.bean.Coupons;
-import com.course.selection.bean.Goods;
-import com.course.selection.bean.Message;
-import com.course.selection.bean.UserCoupon;
+import com.course.selection.bean.*;
 import com.course.selection.dao.CouponsDao;
 import com.course.selection.dao.GoodsDao;
 import com.course.selection.dao.MessageDao;
 import com.course.selection.dao.UserCouponDao;
 import com.course.selection.dto.*;
 import com.course.selection.service.GoodsService;
+import com.course.selection.service.HomePageService;
 import com.course.selection.special.SUtil;
 import com.course.selection.util.ResultUtil;
 import lombok.extern.log4j.Log4j2;
@@ -39,6 +37,8 @@ public class GoodsServicImpl implements GoodsService {
     private MessageDao messageDao;
     @Autowired
     private UserCouponDao userCouponDao;
+    @Autowired
+    private HomePageService homePageService;
 
     @Override
     public List<Goods> queryGoods(Map<String, Object> param) {
@@ -49,18 +49,17 @@ public class GoodsServicImpl implements GoodsService {
     public Result index() {
         //查询首页信息
         List<Goods> goods = goodsDao.queryGoods(new HashMap<>());
+        List<HomePage> homePages = homePageService.queryHomePage();
         List<GoodDto> goodDtos = new ArrayList<>();
         List<ImgDto> imgDtos = new ArrayList<>();
-        int i = 0;
+        for (HomePage homePage:homePages){
+            ImgDto imgDto = ImgDto.builder()
+                    .url(homePage.getUrl())
+                    .img(homePage.getImg())
+                    .build();
+            imgDtos.add(imgDto);
+        }
         for (Goods good : goods) {
-            if (i < 3) {
-                i++;
-                ImgDto imgDto = ImgDto.builder()
-                        .id(good.getId())
-                        .img(good.getImg())
-                        .build();
-                imgDtos.add(imgDto);
-            }
             String[] split = good.getLabel().split("\\|");
 
             GoodDto goodDto = GoodDto.builder()
