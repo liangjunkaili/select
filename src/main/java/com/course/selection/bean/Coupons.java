@@ -2,6 +2,8 @@ package com.course.selection.bean;
 
 import lombok.*;
 
+import java.time.LocalDate;
+
 /**
  * @ClassName Coupons
  * @Description TODO
@@ -22,4 +24,5 @@ public class Coupons {
     private int num;
     private int state;
     private int vaildTime;
+    private LocalDate vaildTimeStr;
 }

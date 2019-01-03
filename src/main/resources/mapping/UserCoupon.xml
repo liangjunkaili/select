@@ -5,7 +5,7 @@
         <result column="id" property="id" jdbcType="INTEGER"/>
         <result column="uid" property="uid" jdbcType="INTEGER"/>
         <result column="cpid" property="cpid" jdbcType="INTEGER"/>
-        <result column="invalid_date" property="invalidDate" jdbcType="TIMESTAMP"/>
+        <result column="invalid_date" property="invalidDate" jdbcType="DATE"/>
         <result column="state" property="state" jdbcType="INTEGER"/>
     </resultMap>
     <select id="findByUid" resultMap="userCouponRT">

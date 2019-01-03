@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @ToString
@@ -15,6 +15,6 @@ public class UserCouponDto {
     private Integer price;
     private String reason;
     private String type;
-    private LocalDateTime invalidDate;
+    private LocalDate invalidDate;
     private Integer state;
 }

@@ -10,7 +10,7 @@ import com.course.selection.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Service
 public class CouponsServiceImpl implements CouponsService {
@@ -26,8 +26,8 @@ public class CouponsServiceImpl implements CouponsService {
     @Override
     public Result receiveCoupons(Integer uid, Integer cid) {
         Coupons coupons = couponsDao.findById(cid);
-        LocalDateTime localDateTime = LocalDateTime.now();
-        LocalDateTime invalidDate = localDateTime.plusDays(coupons.getVaildTime());
+        LocalDate localDate = LocalDate.now();
+        LocalDate invalidDate = localDate.plusDays(coupons.getVaildTime());
         UserCoupon userCoupon = UserCoupon.builder()
                 .cpid(cid)
                 .uid(uid)
