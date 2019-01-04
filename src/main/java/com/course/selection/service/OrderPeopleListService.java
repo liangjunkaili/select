@@ -8,6 +8,7 @@ public interface OrderPeopleListService {
     Result addPeople( Integer oid, String name, Integer gender, String phone, String birthdayTime, String address);
 
     Result getPeople(Integer oid);
+    Result getPeopleById(Integer id);
 
     Result updatePeople(Integer id, String name, Integer gender, String phone, String birthdayTime, String address);
 

@@ -4,6 +4,7 @@ import com.course.selection.bean.Order;
 import com.course.selection.bean.OrderPeopleList;
 import com.course.selection.dao.OrderDao;
 import com.course.selection.dao.OrderPeopleListDao;
+import com.course.selection.dto.PeopleDto;
 import com.course.selection.dto.Result;
 import com.course.selection.service.OrderPeopleListService;
 import com.course.selection.service.OrderService;
@@ -49,7 +50,31 @@ public class OrderPeopleListServiceImpl implements OrderPeopleListService {
     @Override
     public Result getPeople(Integer oid) {
         List<OrderPeopleList> orderPeopleLists = orderPeopleListDao.findByOid(oid);
-        return ResultUtil.success(orderPeopleLists);
+        Order order = orderDao.findByOid(oid);
+        PeopleDto peopleDto = PeopleDto.builder().num(order.getNum()).orderPeopleLists(orderPeopleLists).build();
+        return ResultUtil.success(peopleDto);
+    }
+
+    @Override
+    public Result getPeopleById(Integer id) {
+        OrderPeopleList orderPeopleList = orderPeopleListDao.findById(id);
+        Order order = orderDao.findByOid(orderPeopleList.getOid());
+        if(order.getGid()==7){
+            orderPeopleList.setCode("XT-01");
+        }else if(order.getGid()==8){
+            if("小学版".equals(order.getType1())){
+                orderPeopleList.setCode("XY-14");
+            }else{
+                orderPeopleList.setCode("XY-11");
+            }
+        }else if(order.getGid()==9){
+            orderPeopleList.setCode("XY-15");
+        }else if(order.getGid()==10){
+            orderPeopleList.setCode("XY-19");
+        }else if(order.getGid()==11){
+            orderPeopleList.setCode("XY-18");
+        }
+        return ResultUtil.success(orderPeopleList);
     }
 
     @Override

@@ -92,6 +92,12 @@ public class UserController {
         return orderPeopleListService.getPeople(oid);
     }
 
+    @PostMapping("getPeopleById")
+    public Result getPeopleById(
+            @RequestParam(value = "id", required = false) Integer id
+    ) {
+        return orderPeopleListService.getPeopleById(id);
+    }
     @ApiOperation("添加测试人员")
     @PostMapping("addPeople")
     public Result addPeople(

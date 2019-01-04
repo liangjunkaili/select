@@ -23,6 +23,7 @@ public class OrderPeopleList {
     private String phone;
     private String birthdayTime;
     private String address;
+    private String code;
     /**
      * 报告链接
      */
