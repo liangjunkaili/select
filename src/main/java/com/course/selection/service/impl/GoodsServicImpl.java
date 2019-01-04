@@ -88,15 +88,12 @@ public class GoodsServicImpl implements GoodsService {
     public Result getGoodById(Integer id, Integer uid) {
         Map<String, Object> map = new HashMap<>();
 //        map.put("id", id);
-        log.info(map);
         List<Goods> goods = goodsDao.queryGoods(map);
-        log.info(goods);
         List<GoodDto> goodDtos = new ArrayList<>();
         int i = 0;
         Goods good = null;
         for (Goods goods1 : goods
         ) {
-            log.info(goods1.getId()+"="+id);
             if (goods1.getId() == id) {
                 good = goods1;
             } else {
