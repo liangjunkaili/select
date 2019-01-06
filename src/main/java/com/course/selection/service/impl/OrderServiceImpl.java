@@ -1,18 +1,12 @@
 package com.course.selection.service.impl;
 
-import com.course.selection.bean.Coupons;
 import com.course.selection.bean.Goods;
 import com.course.selection.bean.Order;
 import com.course.selection.bean.OrderPeopleList;
-import com.course.selection.dao.CouponsDao;
-import com.course.selection.dao.GoodsDao;
-import com.course.selection.dao.OrderDao;
-import com.course.selection.dao.OrderPeopleListDao;
+import com.course.selection.dao.*;
 import com.course.selection.dto.OrderDto;
-import com.course.selection.dto.OrderGoodsDto;
 import com.course.selection.dto.Result;
 import com.course.selection.service.OrderService;
-import com.course.selection.special.SUtil;
 import com.course.selection.util.DateUtil;
 import com.course.selection.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +25,7 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderPeopleListDao orderPeopleListDao;
     @Autowired
-    private CouponsDao couponsDao;
+    private UserCouponDao userCouponDao;
     @Override
     public Result getMyOrders(Integer uid) {
         List<Order> orders =  orderDao.findByUid(uid);
@@ -55,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Result orderGoods(Integer uid, Integer gid, Integer num, Integer price, String type1, String type2) {
+    public Result orderGoods(Integer uid, Integer gid, Integer num, Integer price, String type1, String type2, Integer cid) {
         Goods goods = goodsDao.queryGoodsById(gid);
         goods.setNum(goods.getNum() + num);
         goodsDao.update(goods);
@@ -80,6 +74,7 @@ public class OrderServiceImpl implements OrderService {
 //                .service(SUtil.services.get(type2))
 //                .coupons(coupons)
 //                .build();
+        userCouponDao.update(uid, cid);
         orderDao.insert(order);
         return ResultUtil.success(order.getOid());
     }

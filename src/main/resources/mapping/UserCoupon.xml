@@ -13,11 +13,8 @@
  *
 FROM
   `user_coupon`
-  <where>
-      <if test="uid!=null and uid != ''">
-          uid=#{uid}
-      </if>
-  </where>
+  where uid=#{uid} and state = 0 and invalid_date>NOW()
+
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="userCoupon.id">
@@ -39,6 +36,14 @@ VALUES
 
 
     </insert>
+<update id="update">
+    UPDATE
+  `user_coupon`
+SET
+  `state` = 1
+WHERE `uid` = #{uid} and cpid=#{cid} ;
 
+
+</update>
 
 </mapper>

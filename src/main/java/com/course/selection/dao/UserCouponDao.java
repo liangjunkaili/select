@@ -11,4 +11,6 @@ public interface UserCouponDao {
     List<UserCoupon> findByUid(@Param("uid") Integer uid);
 
     void insert(@Param("userCoupon") UserCoupon userCoupon);
+
+    void update(@Param("uid") Integer uid, @Param("cid") Integer cid);
 }
