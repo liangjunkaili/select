@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @ApiModel("我的订单对象")
 public class OrderDto {
     private Integer id;
+    private Integer gid;
     private String img;
     private Integer state;
     private Integer price;

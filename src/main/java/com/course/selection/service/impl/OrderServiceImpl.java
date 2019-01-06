@@ -39,6 +39,7 @@ public class OrderServiceImpl implements OrderService {
         orders.forEach(order -> {
             OrderDto orderDto = OrderDto.builder()
                     .id(order.getOid())
+                    .gid(order.getGid())
                     .img(order.getImg())
                     .title(order.getTitle())
                     .num(order.getNum())
