@@ -74,7 +74,9 @@ public class OrderServiceImpl implements OrderService {
 //                .service(SUtil.services.get(type2))
 //                .coupons(coupons)
 //                .build();
-        userCouponDao.update(uid, cid);
+        if(cid!=null&&cid!=0) {
+            userCouponDao.update(uid, cid);
+        }
         orderDao.insert(order);
         return ResultUtil.success(order.getOid());
     }

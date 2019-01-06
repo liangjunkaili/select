@@ -29,7 +29,7 @@
     </select>
 
     <insert id="insert"  useGeneratedKeys="true" keyProperty="order.oid">
-        INSERT INTO `selection`.`order` (
+        INSERT INTO `order` (
   `uid`,
   `gid`,
   `state`,
