@@ -20,6 +20,7 @@
     <select id="findByUid" resultMap="orderPeopleListRT">
         select * from `order_people_list` where
                 oid in (select oid from `order` where uid = #{uid})
+                and state = 1
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="orderPeopleList.id">
