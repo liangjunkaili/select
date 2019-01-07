@@ -8,11 +8,13 @@ import com.course.selection.dto.Result;
 import com.course.selection.service.MessageService;
 import com.course.selection.util.DateUtil;
 import com.course.selection.util.ResultUtil;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
+@Log4j2
 @Service
 public class MessageServiceImpl implements MessageService {
     @Autowired
@@ -21,6 +23,7 @@ public class MessageServiceImpl implements MessageService {
     private UserDao userDao;
     @Override
     public Result leaveMessage(Integer uid, Integer gid, String content) {
+        log.info("uid:{},gid:{},message:{}",uid,gid,content);
         User user = userDao.findOneByUid(uid);
         Message message = Message.builder()
                 .content(content)

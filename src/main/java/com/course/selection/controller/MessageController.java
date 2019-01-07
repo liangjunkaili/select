@@ -22,9 +22,9 @@ public class MessageController {
     @PostMapping("leaveMessage")
     @ApiOperation("留言")
     public Result leaveMessage(
-            @RequestParam(value = "uid",required = false) Integer uid,
-            @RequestParam(value = "gid",required = false) Integer gid,
-            @RequestParam(value = "message",required = false) String message
+            @RequestParam(value = "uid",required = true) Integer uid,
+            @RequestParam(value = "gid",required = true) Integer gid,
+            @RequestParam(value = "message",required = true) String message
     ){
         return messageService.leaveMessage(uid, gid, message);
     }
@@ -32,9 +32,9 @@ public class MessageController {
     @PostMapping("reply")
     @ApiOperation("回复留言")
     public Result reply(
-            @RequestParam(value = "id",required = false) Integer id,
-            @RequestParam(value = "nick",required = false) String nick,
-            @RequestParam(value = "reply",required = false) String reply
+            @RequestParam(value = "id") Integer id,
+            @RequestParam(value = "nick") String nick,
+            @RequestParam(value = "reply") String reply
     ){
         return messageService.reply(id,reply,nick);
     }
@@ -42,9 +42,9 @@ public class MessageController {
     @PostMapping("getMessage")
     @ApiOperation("获取留言")
     public Result getMessage(
-            @RequestParam(value = "id",required = false) Integer id,
-            @RequestParam(value = "nick",required = false) String nick,
-            @RequestParam(value = "reply",required = false) String reply
+            @RequestParam(value = "id") Integer id,
+            @RequestParam(value = "nick") String nick,
+            @RequestParam(value = "reply") String reply
     ){
         return messageService.reply(id,reply,nick);
     }
