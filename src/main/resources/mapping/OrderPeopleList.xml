@@ -63,6 +63,7 @@ SET
   `gender` = #{orderPeopleList.gender,jdbcType=INTEGER},
   `phone` = #{orderPeopleList.phone,jdbcType=VARCHAR},
   `birthday_time` = #{orderPeopleList.birthdayTime,jdbcType=VARCHAR},
+  `state` = #{orderPeopleList.state,jdbcType=INTEGER},
   `address` = #{orderPeopleList.address,jdbcType=VARCHAR}
 WHERE `id` = #{orderPeopleList.id,jdbcType=INTEGER} ;
 

@@ -1,7 +1,11 @@
 package com.course.selection.controller;
 
+import com.course.selection.dto.Result;
+import com.course.selection.service.OrderPeopleListService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,16 +22,13 @@ import java.util.Enumeration;
 @Log4j2
 public class YiChengZhang {
 
+    @Autowired
+    private OrderPeopleListService orderPeopleListService;
     @RequestMapping("urlOk")
-    public void urlOk(HttpServletRequest request){
-        Enumeration<String> stringEnumeration = request.getParameterNames();
-        while (stringEnumeration.hasMoreElements()){
-            String param = stringEnumeration.nextElement();
-            log.info(param);
-            log.info(request.getParameter(param));
-
-        }
-        log.info("第三方成功回调");
+    public Result urlOk(@RequestParam(value = "id", required = false) Integer id,
+                        HttpServletRequest request){
+        log.info("第三方成功回调"+id);
+        return orderPeopleListService.test(id);
     }
     @RequestMapping("urlNg")
     public void urlNg(HttpServletRequest request){
