@@ -24,9 +24,10 @@ public class MessageController {
     public Result leaveMessage(
             @RequestParam(value = "uid",required = true) Integer uid,
             @RequestParam(value = "gid",required = true) Integer gid,
+            @RequestParam(value = "oid",required = true) Integer oid,
             @RequestParam(value = "message",required = true) String message
     ){
-        return messageService.leaveMessage(uid, gid, message);
+        return messageService.leaveMessage(uid, gid,oid, message);
     }
 
     @PostMapping("reply")

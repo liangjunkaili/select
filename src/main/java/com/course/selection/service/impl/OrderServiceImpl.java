@@ -1,6 +1,7 @@
 package com.course.selection.service.impl;
 
 import com.course.selection.bean.Goods;
+import com.course.selection.bean.Message;
 import com.course.selection.bean.Order;
 import com.course.selection.bean.OrderPeopleList;
 import com.course.selection.dao.*;
@@ -23,6 +24,8 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private GoodsDao goodsDao;
     @Autowired
+    private MessageDao messageDao;
+    @Autowired
     private OrderPeopleListDao orderPeopleListDao;
     @Autowired
     private UserCouponDao userCouponDao;
@@ -31,6 +34,13 @@ public class OrderServiceImpl implements OrderService {
         List<Order> orders =  orderDao.findByUid(uid);
         List<OrderDto> dtos = new ArrayList<>();
         orders.forEach(order -> {
+            Message message = messageDao.findByOid(order.getOid());
+            int messageState = 0;
+            if (message == null) {
+                messageState = 0;
+            }else{
+                messageState = 1;
+            }
             OrderDto orderDto = OrderDto.builder()
                     .id(order.getOid())
                     .gid(order.getGid())
@@ -42,6 +52,7 @@ public class OrderServiceImpl implements OrderService {
                     .type1(order.getType1())
                     .type2(order.getType2())
                     .creattime(DateUtil.localDateTimeFormat(order.getCreattime(),DateUtil.FORMAT_PATTERN1))
+                    .messageState(messageState)
                     .build();
             dtos.add(orderDto);
         });

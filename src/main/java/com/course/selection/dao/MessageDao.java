@@ -14,4 +14,6 @@ public interface MessageDao {
     List<Message> findByGoodId(@Param("goodId") Integer goodId);
 
     void update(@Param("message") Message message);
+
+    Message findByOid(@Param("oid") Integer oid);
 }

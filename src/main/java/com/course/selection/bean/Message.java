@@ -15,6 +15,8 @@ import lombok.*;
 @Builder
 public class Message {
     private Integer id;
+    private Integer uid;
+    private Integer oid;
     private Integer goodsId;
     private String img;
     private String  content;

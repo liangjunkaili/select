@@ -3,6 +3,8 @@
 <mapper namespace="com.course.selection.dao.MessageDao">
     <resultMap id="messageRT" type="com.course.selection.bean.Message">
         <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="uid" property="uid" jdbcType="INTEGER"/>
+        <result column="oid" property="oid" jdbcType="INTEGER"/>
         <result column="goods_id" property="goodsId" jdbcType="INTEGER"/>
         <result column="content" property="content" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="INTEGER"/>
@@ -31,6 +33,8 @@ WHERE `id` = #{message.id,jdbcType=INTEGER} ;
     <insert id="insert" useGeneratedKeys="true" keyProperty="message.id">
         INSERT INTO `message` (
   `id`,
+  `uid`,
+  `oid`,
   `goods_id`,
   `img`,
   `content`,
@@ -43,6 +47,8 @@ WHERE `id` = #{message.id,jdbcType=INTEGER} ;
 VALUES
   (
    #{message.id,jdbcType=INTEGER},
+   #{message.uid,jdbcType=INTEGER},
+   #{message.oid,jdbcType=INTEGER},
    #{message.goodsId,jdbcType=INTEGER},
    #{message.img,jdbcType=VARCHAR},
    #{message.content,jdbcType=VARCHAR},
@@ -61,5 +67,8 @@ VALUES
     </select>
     <select id="findByGoodId" resultMap="messageRT">
         select * from message where goods_id = #{goodId}
+    </select>
+    <select id="findByOid" resultMap="messageRT">
+        select * from message where oid =#{oid}
     </select>
 </mapper>

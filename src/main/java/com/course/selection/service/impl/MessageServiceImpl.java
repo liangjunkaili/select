@@ -22,11 +22,13 @@ public class MessageServiceImpl implements MessageService {
  @Autowired
     private UserDao userDao;
     @Override
-    public Result leaveMessage(Integer uid, Integer gid, String content) {
+    public Result leaveMessage(Integer uid, Integer gid, Integer oid, String content) {
         log.info("uid:{},gid:{},message:{}",uid,gid,content);
         User user = userDao.findOneByUid(uid);
         Message message = Message.builder()
                 .content(content)
+                .uid(uid)
+                .oid(oid)
                 .goodsId(gid)
                 .img(user.getAvatar())
                 .name(user.getNickname())

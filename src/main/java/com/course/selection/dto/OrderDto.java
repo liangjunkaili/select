@@ -24,4 +24,5 @@ public class OrderDto {
     private String type2;
     private String title;
     private String creattime;
+    private Integer messageState;
 }
