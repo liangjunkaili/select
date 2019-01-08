@@ -3,10 +3,7 @@ package com.course.selection.controller;
 
 import com.course.selection.bean.Goods;
 import com.course.selection.dto.Result;
-import com.course.selection.service.GoodsService;
-import com.course.selection.service.HomePageService;
-import com.course.selection.service.IncomeRecordService;
-import com.course.selection.service.ReasonService;
+import com.course.selection.service.*;
 import com.course.selection.util.CosUtil;
 import com.course.selection.util.ResultUtil;
 import io.swagger.annotations.ApiOperation;
@@ -31,6 +28,8 @@ public class AdminController {
     private ReasonService reasonService;
     @Autowired
     private HomePageService homePageService;
+    @Autowired
+    private OrderService orderService;
 
     public static final String IMG_URL = "https://qinmi-1258355325.cos.ap-beijing.myqcloud.com/";
 
@@ -163,5 +162,13 @@ public class AdminController {
     @ApiOperation("获取首页轮播图")
     public Result getHomePage() {
         return ResultUtil.success(homePageService.queryHomePage());
+    }
+
+    @PostMapping("getAllOrders")
+    @ApiOperation("后台-我的订单列表")
+    public Result getAllOrders(@RequestParam(value = "gid" ,required = false) Integer gid,@RequestParam(value = "uid" ,required = false) Integer uid,
+                               @RequestParam(value = "state" ,required = false) Integer state,@RequestParam("pageIndex") Integer pageIndex
+                                ,@RequestParam("pageSize") Integer pageSize) {
+        return orderService.getAllOrders(gid, uid, state,pageIndex,pageSize);
     }
 }

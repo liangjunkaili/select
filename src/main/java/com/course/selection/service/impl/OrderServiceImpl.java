@@ -5,6 +5,7 @@ import com.course.selection.bean.Message;
 import com.course.selection.bean.Order;
 import com.course.selection.bean.OrderPeopleList;
 import com.course.selection.dao.*;
+import com.course.selection.dto.OrderDetailDto;
 import com.course.selection.dto.OrderDto;
 import com.course.selection.dto.Result;
 import com.course.selection.service.OrderService;
@@ -15,7 +16,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -113,6 +116,25 @@ public class OrderServiceImpl implements OrderService {
         }
         orderDao.testSuccess(oid);
         return true;
+    }
+
+    @Override
+    public Result getAllOrders(Integer gid,Integer uid,Integer state,Integer pageIndex,Integer pageSize) {
+        Map<String,Object> param = new HashMap<>();
+        param.put("gid",gid);
+        param.put("uid",uid);
+        param.put("state",state);
+        param.put("pageIndex",pageIndex);
+        param.put("pageSize",pageSize);
+        List<Order> orderList = orderDao.findOrders(param);
+        List<OrderDetailDto> orderDetailDtos = new ArrayList<>();
+        for (Order order:orderList){
+            List<OrderPeopleList> orderPeopleLists = orderPeopleListDao.findByOid(order.getOid());
+            OrderDetailDto orderDetailDto = OrderDetailDto.builder().order(order)
+                    .orderPeopleListList(orderPeopleLists).build();
+            orderDetailDtos.add(orderDetailDto);
+        }
+        return ResultUtil.success(orderDetailDtos);
     }
 
 }

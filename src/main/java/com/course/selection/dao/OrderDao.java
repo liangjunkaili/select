@@ -5,10 +5,13 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface OrderDao {
     List<Order> findByUid(@Param("uid") Integer uid);
+
+    List<Order> findOrders(Map<String,Object> param);
 
     Order findByOid(@Param("oid") Integer oid);
 
