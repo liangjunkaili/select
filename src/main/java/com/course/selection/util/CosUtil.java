@@ -46,7 +46,12 @@ public class CosUtil {
         String etag = putObjectResult.getETag();
         return etag;
 	}
-
+	public static String uploadImage0(String key,InputStream inputStream) throws IOException {
+		ObjectMetadata objectMetadata = new ObjectMetadata();
+		objectMetadata.setContentType("image/jpeg");
+		PutObjectResult putObjectResult = cosClient.putObject(BUCKETNAME, key, inputStream,objectMetadata);
+		return IMG_URL+key;
+	}
 
 	public static String getImgUrl(MultipartFile file) throws IOException {
 		long timestemp = new Date().getTime();

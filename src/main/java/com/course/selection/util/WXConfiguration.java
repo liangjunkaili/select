@@ -87,4 +87,6 @@ public class WXConfiguration {
     public static final String TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token";
     public static final String SEND_MEDIA = "https://api.weixin.qq.com/cgi-bin/media/upload";
 
+    //生成二维码
+    public static final String WXACODE = "https://api.weixin.qq.com/wxa/getwxacode?access_token=ACCESS_TOKEN";
 }
