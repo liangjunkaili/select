@@ -167,7 +167,7 @@ public class AdminController {
     @PostMapping("getAllOrders")
     @ApiOperation("后台-我的订单列表")
     public Result getAllOrders(@RequestParam(value = "gid" ,required = false) Integer gid,@RequestParam(value = "uid" ,required = false) Integer uid,
-                               @RequestParam(value = "state" ,required = false) Integer state,@RequestParam("pageIndex") Integer pageIndex
+                               @RequestParam(value = "state" ,required = false,defaultValue = "-1") Integer state,@RequestParam("pageIndex") Integer pageIndex
                                 ,@RequestParam("pageSize") Integer pageSize) {
         return orderService.getAllOrders(gid, uid, state,pageIndex,pageSize);
     }
