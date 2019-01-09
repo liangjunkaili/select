@@ -10,7 +10,8 @@ import java.util.Map;
 
 @Mapper
 public interface GoodsDao {
-    List<Goods> queryGoods(Map<String, Object> param);
+    List<Goods> queryGoods();
+    List<Goods> queryGoodsA(@Param("state") Integer state);
 
     Goods queryGoodsById(@Param("id") Integer id);
 

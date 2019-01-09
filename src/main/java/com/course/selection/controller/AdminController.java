@@ -81,7 +81,8 @@ public class AdminController {
             @RequestParam(value = "num") Integer num,
             @RequestParam(value = "iprice") Integer iprice,
             @RequestParam(value = "attribute") Integer attribute,//有就1没有就0
-            @RequestParam(value = "service") Integer service//有就1没有就0
+            @RequestParam(value = "service") Integer service,//有就1没有就0
+            @RequestParam(value = "recommend") String recommend
     ) {
         String img1 = null;
         String img2 = null;
@@ -132,6 +133,8 @@ public class AdminController {
                     .iprice(iprice)
                     .attribute(attribute)
                     .service(service)
+                    .state(1)
+                    .recommend(recommend)
                     .build();
             goodsService.addGoods(goods);
             return ResultUtil.success();
@@ -142,6 +145,38 @@ public class AdminController {
     @ApiOperation("添加返现理由")
     public Result addReason(@RequestParam("reason") String reason) {
         return reasonService.addReason(reason);
+    }
+
+    /**
+     *
+     * @param state 商品状态
+     * @param currentPage    当前页数
+     * @param pageSize   每页显示的总记录数
+     * @return
+     */
+    @GetMapping("getGoods")
+    @ApiOperation("获取商品信息")
+    public Result getGoods(
+            @RequestParam("state") Integer state,
+            @RequestParam("currentPage") Integer currentPage,
+            @RequestParam("pageSize") Integer pageSize
+    ){
+        return goodsService.getGoodsByAdmin(state,currentPage,pageSize);
+    }
+
+    @GetMapping("upperShelf")
+    @ApiOperation("上架")
+    public Result upperShelf(
+            @RequestParam("gid") Integer gid
+    ){
+        return goodsService.upperShelf(gid);
+    }
+    @GetMapping("lowerShelf")
+    @ApiOperation("下架")
+    public Result lowerShelf(
+            @RequestParam("gid") Integer gid
+    ){
+        return goodsService.lowerShelf(gid);
     }
 
     @GetMapping("getReason")

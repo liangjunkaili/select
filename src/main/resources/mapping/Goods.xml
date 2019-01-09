@@ -21,17 +21,18 @@
         <result column="iprice" property="iprice" jdbcType="INTEGER"/>
         <result column="attribute" property="attribute" jdbcType="INTEGER"/>
         <result column="service" property="service" jdbcType="INTEGER"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="recommend" property="recommend" jdbcType="VARCHAR"/>
     </resultMap>
-    <select id="queryGoods" resultMap="goodsRT" parameterType="java.util.Map">
-        select * from goods
-        <where>
-            <if test="id !=null and id != '' ">
-                id = #{id}
-            </if>
-        </where>
+
+    <select id="queryGoods" resultMap="goodsRT">
+        select * from goods where state = 2
 
     </select>
+    <select id="queryGoodsA" resultMap="goodsRT" >
+        select * from goods where state =#{state}
 
+    </select>
     <select id="queryGoodsById" resultMap="goodsRT">
         select * from goods where id= #{id}
     </select>
@@ -56,7 +57,9 @@ INSERT INTO `goods` (
   num,
   iprice,
   attribute,
-  service
+  service,
+  state,
+  recommend
 )
 VALUES
   (
@@ -75,10 +78,13 @@ VALUES
     #{goods.bamount,jdbcType=INTEGER},
     #{goods.flag,jdbcType=INTEGER},
     #{goods.weight,jdbcType=INTEGER},
-    #{goods.num,jdbcType=INTEGER}),
-    #{goods.iprice,jdbcType=INTEGER}),
-    #{goods.attribute,jdbcType=INTEGER}),
-    #{goods.service,jdbcType=INTEGER})
+    #{goods.num,jdbcType=INTEGER},
+    #{goods.iprice,jdbcType=INTEGER},
+    #{goods.attribute,jdbcType=INTEGER},
+    #{goods.service,jdbcType=INTEGER},
+    #{goods.state,jdbcType=INTEGER},
+    #{goods.recommend,jdbcType=VARCHAR}
+    )
    on  DUPLICATE key update id=#{goods.id,jdbcType=INTEGER}
     </insert>
 
@@ -103,7 +109,9 @@ SET
   `num` = #{goods.num,jdbcType=INTEGER},
   `iprice` = #{goods.iprice,jdbcType=INTEGER},
   `attribute` = #{goods.attribute,jdbcType=INTEGER},
-  `service` = #{goods.service,jdbcType=INTEGER}
+  `service` = #{goods.service,jdbcType=INTEGER},
+  `state` = #{goods.state,jdbcType=INTEGER},
+  `recommend` = #{goods.recommend,jdbcType=VARCHAR}
 WHERE `id` = #{goods.id,jdbcType=INTEGER} ;
 
 

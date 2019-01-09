@@ -70,4 +70,12 @@ public class Goods {
     private int iprice;
     private int attribute;
     private int service;
+    /**
+     * 是否上架 1未上架 2上架3已下架
+     */
+    private int state;
+    /**
+     * 相关推荐 （1,2）对应商品id
+     */
+    private String recommend;
 }

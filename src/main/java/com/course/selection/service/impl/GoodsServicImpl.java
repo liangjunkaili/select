@@ -9,15 +9,15 @@ import com.course.selection.dto.*;
 import com.course.selection.service.GoodsService;
 import com.course.selection.service.HomePageService;
 import com.course.selection.special.SUtil;
+import com.course.selection.util.PageBean;
 import com.course.selection.util.ResultUtil;
+import com.github.pagehelper.PageHelper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @ClassName GoodsServicImpl
@@ -41,14 +41,14 @@ public class GoodsServicImpl implements GoodsService {
     private HomePageService homePageService;
 
     @Override
-    public List<Goods> queryGoods(Map<String, Object> param) {
-        return goodsDao.queryGoods(param);
+    public List<Goods> queryGoods() {
+        return goodsDao.queryGoods();
     }
 
     @Override
     public Result index() {
         //查询首页信息
-        List<Goods> goods = goodsDao.queryGoods(new HashMap<>());
+        List<Goods> goods = goodsDao.queryGoods();
         List<HomePage> homePages = homePageService.queryHomePage();
         List<GoodDto> goodDtos = new ArrayList<>();
         List<ImgDto> imgDtos = new ArrayList<>();
@@ -86,9 +86,7 @@ public class GoodsServicImpl implements GoodsService {
 
     @Override
     public Result getGoodById(Integer id, Integer uid) {
-        Map<String, Object> map = new HashMap<>();
-//        map.put("id", id);
-        List<Goods> goods = goodsDao.queryGoods(map);
+        List<Goods> goods = goodsDao.queryGoods();
         List<GoodDto> goodDtos = new ArrayList<>();
         int i = 0;
         Goods good = null;
@@ -164,5 +162,38 @@ public class GoodsServicImpl implements GoodsService {
                 .list(goodDtos)
                 .build();
         return ResultUtil.success(goodDetails);
+    }
+
+    @Override
+    public Result getGoodsByAdmin(Integer state, Integer currentPage, Integer pageSize) {
+        //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
+        PageHelper.startPage(currentPage, pageSize);
+
+        List<Goods> goods = null;
+        if (state == 0) {
+            goods = goodsDao.queryGoods();
+        }else{
+            goods = goodsDao.queryGoodsA(state);
+        }
+        int countNums = goods.size();        //总记录数
+        PageBean<Goods> pageData = new PageBean<>(currentPage, pageSize, countNums);
+        pageData.setItems(goods);
+        return ResultUtil.success(goods);
+    }
+
+    @Override
+    public Result upperShelf(Integer gid) {
+        Goods goods = goodsDao.queryGoodsById(gid);
+        goods.setState(2);
+        goodsDao.update(goods);
+        return ResultUtil.success();
+    }
+
+    @Override
+    public Result lowerShelf(Integer gid) {
+        Goods goods = goodsDao.queryGoodsById(gid);
+        goods.setState(3);
+        goodsDao.update(goods);
+        return ResultUtil.success();
     }
 }

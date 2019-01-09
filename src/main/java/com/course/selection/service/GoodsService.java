@@ -4,7 +4,6 @@ import com.course.selection.bean.Goods;
 import com.course.selection.dto.Result;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @ClassName GoodsService
@@ -14,7 +13,7 @@ import java.util.Map;
  * @Version 1.0
  **/
 public interface GoodsService {
-    List<Goods> queryGoods(Map<String,Object> param);
+    List<Goods> queryGoods();
 
     Result index();
 
@@ -22,4 +21,10 @@ public interface GoodsService {
     void addGoods(Goods goods);
 
     Result getGoodById(Integer id, Integer uid);
+
+    Result getGoodsByAdmin(Integer state, Integer currentPage, Integer pageSize);
+
+    Result upperShelf(Integer gid);
+
+    Result lowerShelf(Integer gid);
 }

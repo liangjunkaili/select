@@ -30,8 +30,7 @@ public class GoodsController {
     private CouponsService couponsService;
     @RequestMapping("getGoods")
     public Result getGoods() {
-        Map<String, Object> map = new HashMap<>();
-        List<Goods> goods = goodsService.queryGoods(map);
+        List<Goods> goods = goodsService.queryGoods();
         return ResultUtil.success(goods);
     }
 
