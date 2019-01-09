@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -102,5 +104,20 @@ public class WxPayController {
             logger.error(e.getMessage(), e);
         }
         return jsonObject;
+    }
+
+    @RequestMapping("getWXAcode")
+    public String getWXAcode(){
+        String accessToken = TokenSingleton.getInstance().getMap().get(ConstantUtil.access_token);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("path","pages/home/detail/detail");
+        InputStream result = HttpRequest.doWXPost(WXConfiguration.WXACODE.replace("ACCESS_TOKEN",accessToken),jsonObject);
+        String url = "";
+        try {
+            url = CosUtil.uploadImage0("wxcode.jpg",result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return url;
     }
 }

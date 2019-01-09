@@ -14,6 +14,21 @@
         <result column="title" property="title" jdbcType="VARCHAR"/>
         <result column="creattime" property="creattime" jdbcType="TIMESTAMP"/>
     </resultMap>
+    <select id="findOrders" resultMap="orderRT" parameterType="java.util.Map">
+        select * from `order`
+        <where>
+            <if test="uid != null and uid != '' ">
+                uid = #{uid}
+            </if>
+            <if test="gid != null and gid != '' ">
+                and gid = #{gid}
+            </if>
+            <if test="state != -1 ">
+                and state = #{state}
+            </if>
+        </where>
+        limit #{pageIndex},#{pageSize}
+    </select>
     <select id="findByUid" resultMap="orderRT">
         select * from `order`
         where  uid = #{uid}  ORDER BY creattime DESC

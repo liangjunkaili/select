@@ -1,6 +1,15 @@
 package com.course.selection.util;
 
+import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.protocol.HTTP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
@@ -280,6 +289,31 @@ public class HttpRequest {
         } else {
             return request.getRemoteAddr();
         }
+    }
+
+    public static InputStream doWXPost(String url, JSONObject jsonParam) {
+        InputStream instreams = null;
+        HttpPost httpRequst = new HttpPost(url);// 创建HttpPost对象
+        try {
+            StringEntity se = new StringEntity(jsonParam.toString(),"utf-8");
+            se.setContentType("application/json");
+            se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE,"UTF-8"));
+            httpRequst.setEntity(se);
+            HttpResponse httpResponse = new DefaultHttpClient().execute(httpRequst);
+            if (httpResponse.getStatusLine().getStatusCode() == 200) {
+                HttpEntity httpEntity = httpResponse.getEntity();
+                if (httpEntity != null) {
+                    instreams = httpEntity.getContent();
+                }
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return instreams;
     }
 
 }
