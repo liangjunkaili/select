@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +31,8 @@ public class AdminController {
     private HomePageService homePageService;
     @Autowired
     private OrderService orderService;
-
+    @Autowired
+    private ApplyForService applyForService;
     public static final String IMG_URL = "https://qinmi-1258355325.cos.ap-beijing.myqcloud.com/";
 
     @PostMapping("addIncomeRecord")
@@ -201,9 +203,42 @@ public class AdminController {
 
     @PostMapping("getAllOrders")
     @ApiOperation("后台-我的订单列表")
-    public Result getAllOrders(@RequestParam(value = "gid" ,required = false) Integer gid,@RequestParam(value = "uid" ,required = false) Integer uid,
-                               @RequestParam(value = "state" ,required = false,defaultValue = "-1") Integer state,@RequestParam("pageIndex") Integer pageIndex
-                                ,@RequestParam("pageSize") Integer pageSize) {
+    public Result getAllOrders(@RequestParam(value = "gid" ,required = false) Integer gid,
+                               @RequestParam(value = "uid" ,required = false) Integer uid,
+                               @RequestParam(value = "state" ,required = false,defaultValue = "-1") Integer state,
+                               @RequestParam("pageIndex") Integer pageIndex,
+                               @RequestParam("pageSize") Integer pageSize) {
         return orderService.getAllOrders(gid, uid, state,pageIndex,pageSize);
+    }
+
+    @PostMapping("submitApplyFor")
+    @ApiOperation("后台-提交返现申请")
+    public Result submitApplyFor(@RequestParam(value = "reason" ) String reason,
+                                 @RequestParam(value = "phone" ) String phone,
+                                 @RequestParam(value = "money" ) Integer money,
+                                 @RequestParam(value = "detail" ) String detail,
+                                 @RequestParam(value = "certificate" ) MultipartFile certificate,
+                                 @RequestParam(value = "remark" ) String remark) {
+        String url = "";
+        try {
+            url = CosUtil.getImgUrl(certificate);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return applyForService.addApplyFor(url,reason,remark,phone,money,detail);
+    }
+    @GetMapping("getApplyFor")
+    @ApiOperation("返回申请列表")
+    public Result getApplyFor(@RequestParam(value = "state" ,required = false) Integer state,
+                              @RequestParam(value = "reason" ,required = false) String reason,
+                              @RequestParam("pageIndex") Integer pageIndex,
+                              @RequestParam("pageSize") Integer pageSiz) {
+        return applyForService.queryApplyFor(pageIndex,pageSiz,state,reason);
+    }
+    @PostMapping("updateApplyFor")
+    @ApiOperation("审批")
+    public Result updateApplyFor(@RequestParam(value = "state") Integer state,
+                              @RequestParam(value = "id") Integer id) {
+        return applyForService.updateApplyFor(state,id);
     }
 }

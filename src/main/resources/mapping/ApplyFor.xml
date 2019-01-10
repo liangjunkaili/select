@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.course.selection.dao.ApplyForDao">
+    <resultMap id="applyRT" type="com.course.selection.bean.ApplyFor">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="money" property="money" jdbcType="INTEGER"/>
+        <result column="reason" property="reason" jdbcType="VARCHAR"/>
+        <result column="certificate" property="certificate" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="detail" property="detail" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="date" property="date" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="queryApplyFor" resultMap="applyRT" parameterType="java.util.Map">
+        SELECT
+          `id`,
+          `reason`,
+          `phone`,
+          `money`,
+          `detail`,
+          `certificate`,
+          `remark`,
+          `date`,
+          `state`
+        FROM
+          `applyfor`
+        <where>
+            <if test="state != null and state != ''">
+                state =#{state}
+            </if>
+            <if test="reason != null and reason != ''">
+                and reason =#{reason}
+            </if>
+        </where>
+        LIMIT #{pageIndex}, #{pageSize};
+    </select>
+
+    <update id="updateApplyFor">
+        UPDATE
+          `applyfor`
+        SET
+          `state` = #{applyFor.state}
+        WHERE `id` = #{applyFor.id};
+    </update>
+
+    <insert id="addApplyFor"  useGeneratedKeys="true" keyProperty="applyFor.id">
+        INSERT INTO `applyfor` (
+          `reason`,
+          `phone`,
+          `money`,
+          `detail`,
+          `certificate`,
+          `remark`,
+          state,
+          date
+        )
+        VALUES
+          (
+            #{applyFor.reason},
+            #{applyFor.phone},
+            #{applyFor.money},
+            #{applyFor.detail},
+            #{applyFor.certificate},
+            #{applyFor.remark},
+            #{applyFor.state},
+            #{applyFor.date}
+          );
+    </insert>
+</mapper>
