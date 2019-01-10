@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -95,6 +96,11 @@ public class UserServiceImpl implements UserService {
             return ResultUtil.success(userDTO);
         }
         return null;
+    }
+
+    @Override
+    public List<User> queryUsers(Map<String, Object> param) {
+        return userDao.queryUsers(param);
     }
 
     private User buildUser(Map<String, Object> userMap, String channel, String ip, Integer shareId) {

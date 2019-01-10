@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface OrderPeopleListDao {
@@ -13,6 +14,8 @@ public interface OrderPeopleListDao {
     List<OrderPeopleList> findByUid(@Param("uid") Integer uid);
 
     List<OrderPeopleList> findByOid(@Param("oid") Integer oid);
+
+    List<OrderPeopleList> findOrderPeopleList(Map<String,Object> param);
 
     void update(@Param("orderPeopleList") OrderPeopleList orderPeopleList);
 

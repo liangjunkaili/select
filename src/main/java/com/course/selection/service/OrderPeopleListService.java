@@ -1,6 +1,10 @@
 package com.course.selection.service;
 
+import com.course.selection.bean.OrderPeopleList;
 import com.course.selection.dto.Result;
+
+import java.util.List;
+import java.util.Map;
 
 public interface OrderPeopleListService {
     Result getMyPoster(Integer uid);
@@ -18,4 +22,5 @@ public interface OrderPeopleListService {
      * @return
      */
     Result test(Integer id);
+    List<OrderPeopleList> findOrderPeopleList(Map<String,Object> param);
 }

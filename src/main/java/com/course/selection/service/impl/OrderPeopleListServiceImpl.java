@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -101,6 +102,11 @@ public class OrderPeopleListServiceImpl implements OrderPeopleListService {
          */
         Boolean testSuccess = orderService.testSuccess(orderPeopleList.getOid());
         return ResultUtil.success(testSuccess);
+    }
+
+    @Override
+    public List<OrderPeopleList> findOrderPeopleList(Map<String, Object> param) {
+        return orderPeopleListDao.findOrderPeopleList(param);
     }
 
 

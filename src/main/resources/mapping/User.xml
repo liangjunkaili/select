@@ -18,7 +18,25 @@
         <result column="income" property="income" jdbcType="INTEGER"/>
         <result column="orders" property="orders" jdbcType="INTEGER"/>
         <result column="poster" property="poster" jdbcType="VARCHAR"/>
+        <result column="refername" property="refername" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="referrer" property="referrer" jdbcType="VARCHAR"/>
     </resultMap>
+    <select id="queryUsers" resultMap="userResultMap" parameterType="java.util.Map">
+        SELECT
+          *
+        FROM
+          `user`
+        <where>
+            <if test="uid != null and uid != ''">
+                uid =#{uid}
+            </if>
+            <if test="openId != null and openId != ''">
+                and open_id =#{openId}
+            </if>
+        </where>
+        LIMIT #{pageIndex},#{pageSize}
+    </select>
     <select id="findOneByOpenId" resultMap="userResultMap">
         select * from `user` where `open_id` = #{openId}
     </select>
@@ -62,7 +80,7 @@ WHERE `uid` = #{uid} ;
   `country`,
   `income`,
   `orders`,
-  `poster` )
+  `poster`,refername,phone,referrer )
         VALUES (#{user.uid,jdbcType=INTEGER},
                 #{user.openId,jdbcType=VARCHAR},
                 #{user.unionId,jdbcType=VARCHAR},
@@ -78,7 +96,8 @@ WHERE `uid` = #{uid} ;
                 #{user.country,jdbcType=VARCHAR},
                 #{user.income,jdbcType=INTEGER},
                 #{user.orders,jdbcType=INTEGER},
-                #{user.poster,jdbcType=VARCHAR})
+                #{user.poster,jdbcType=VARCHAR},
+                ,#{user.refername,jdbcType=VARCHAR},#{user.phone,jdbcType=VARCHAR},#{user.referrer,jdbcType=VARCHAR},)
  on  DUPLICATE key update uid=#{user.uid,jdbcType=INTEGER}
     </insert>
 </mapper>

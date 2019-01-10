@@ -2,6 +2,8 @@ package com.course.selection.controller;
 
 
 import com.course.selection.bean.Goods;
+import com.course.selection.bean.OrderPeopleList;
+import com.course.selection.bean.User;
 import com.course.selection.dto.Result;
 import com.course.selection.service.*;
 import com.course.selection.util.CosUtil;
@@ -15,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -33,6 +36,10 @@ public class AdminController {
     private OrderService orderService;
     @Autowired
     private ApplyForService applyForService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private OrderPeopleListService orderPeopleListService;
     public static final String IMG_URL = "https://qinmi-1258355325.cos.ap-beijing.myqcloud.com/";
 
     @PostMapping("addIncomeRecord")
@@ -240,5 +247,23 @@ public class AdminController {
     public Result updateApplyFor(@RequestParam(value = "state") Integer state,
                               @RequestParam(value = "id") Integer id) {
         return applyForService.updateApplyFor(state,id);
+    }
+    @GetMapping("getUsers")
+    @ApiOperation("返回注册用户列表")
+    public Result getUsers(@RequestParam("pageIndex") Integer pageIndex,@RequestParam("pageSize") Integer pageSize){
+        Map<String,Object> map = new HashMap<>();
+        map.put("pageIndex",pageIndex);
+        map.put("pageSize",pageSize);
+        List<User> userList = userService.queryUsers(map);
+        return ResultUtil.success(userList);
+    }
+    @GetMapping("getOrderPeopleList")
+    @ApiOperation("返回测评用户列表")
+    public Result getOrderPeopleList(@RequestParam("pageIndex") Integer pageIndex,@RequestParam("pageSize") Integer pageSize){
+        Map<String,Object> map = new HashMap<>();
+        map.put("pageIndex",pageIndex);
+        map.put("pageSize",pageSize);
+        List<OrderPeopleList> orderPeopleLists = orderPeopleListService.findOrderPeopleList(map);
+        return ResultUtil.success(orderPeopleLists);
     }
 }

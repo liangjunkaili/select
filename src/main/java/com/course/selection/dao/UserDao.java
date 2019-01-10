@@ -4,6 +4,8 @@ import com.course.selection.bean.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Mapper
@@ -17,4 +19,6 @@ public interface UserDao {
     User findOneByUid(@Param("uid") Integer uid);
 
     void updateActiveTime(@Param("uids") Set<Integer> activeUids);
+
+    List<User> queryUsers(Map<String,Object> param);
 }

@@ -118,14 +118,6 @@ public class UserController {
         }
     }
 
-
-
-
-//    public Result queryIncomeByUid(){
-//
-//    }
-
-
     @PostMapping("orderGoods")
     @ApiOperation("生成订单")
     public Result orderGoods(

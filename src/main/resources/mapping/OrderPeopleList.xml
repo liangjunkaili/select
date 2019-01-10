@@ -12,6 +12,21 @@
         <result column="state" property="state" jdbcType="INTEGER"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>
     </resultMap>
+    <select id="findOrderPeopleList" resultMap="orderPeopleListRT" parameterType="java.util.Map">
+        SELECT
+          *
+        FROM
+          `order_people_list`
+        <where>
+            <if test="oid != null and oid != ''">
+                oid =#{oid}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone =#{phone}
+            </if>
+        </where>
+        LIMIT #{pageIndex},#{pageSize}
+    </select>
     <select id="findByOid" resultMap="orderPeopleListRT">
         select * from `order_people_list` where
                 oid = #{oid}

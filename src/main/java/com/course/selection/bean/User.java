@@ -35,7 +35,9 @@ public class User {
     private Integer income;//累计收益
     private Integer orders;//推广订单数
     private String poster;//我的海报
-
+    private String phone;
+    private String referrer;
+    private String refername;
 
 
 }
