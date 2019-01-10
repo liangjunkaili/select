@@ -1,6 +1,7 @@
 package com.course.selection.controller;
 
 
+import com.course.selection.bean.BroadCast;
 import com.course.selection.bean.Goods;
 import com.course.selection.bean.OrderPeopleList;
 import com.course.selection.bean.User;
@@ -40,6 +41,8 @@ public class AdminController {
     private UserService userService;
     @Autowired
     private OrderPeopleListService orderPeopleListService;
+    @Autowired
+    private BroadCastService broadCastService;
     public static final String IMG_URL = "https://qinmi-1258355325.cos.ap-beijing.myqcloud.com/";
 
     @PostMapping("addIncomeRecord")
@@ -265,5 +268,27 @@ public class AdminController {
         map.put("pageSize",pageSize);
         List<OrderPeopleList> orderPeopleLists = orderPeopleListService.findOrderPeopleList(map);
         return ResultUtil.success(orderPeopleLists);
+    }
+    @PostMapping("updateBroadCast")
+    @ApiOperation("编辑广播")
+    public Result updateBroadCast(@RequestParam(value = "state") Integer state,
+                                  @RequestParam(value = "title" ) String title,
+                                  @RequestParam(value = "address" ) String address,
+                                 @RequestParam(value = "id") Integer id) {
+        broadCastService.updateBroadCast(title,address,id,state);
+        return ResultUtil.success();
+    }
+    @PostMapping("addBroadCast")
+    @ApiOperation("后台-提交返现申请")
+    public Result addBroadCast(@RequestParam(value = "title" ) String title,
+                               @RequestParam(value = "address" ) String address) {
+        broadCastService.addBroadCast(title,address);
+        return ResultUtil.success();
+    }
+    @GetMapping("getBroadCasts")
+    @ApiOperation("返回广播列表")
+    public Result getBroadCasts() {
+        List<BroadCast> broadCasts = broadCastService.queryBroadCasts();
+        return ResultUtil.success(broadCasts);
     }
 }

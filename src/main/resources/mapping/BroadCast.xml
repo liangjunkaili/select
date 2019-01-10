@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.course.selection.dao.BroadCastDao">
+    <resultMap id="broadCastRT" type="com.course.selection.bean.BroadCast">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="date" property="date" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="queryBroadCasts" resultMap="broadCastRT">
+        SELECT
+          `id`,
+          `date`,
+          `title`,
+          `address`,
+          `state`
+        FROM
+          `broadcast`
+    </select>
+
+    <update id="updateBroadCast">
+        UPDATE
+          `broadcast`
+        <set>
+            <if test="broadCast.title != null and broadCast.title != ''">
+                title = #{broadCast.title},
+            </if>
+            <if test="broadCast.address != null and broadCast.address != ''">
+                address = #{broadCast.address},
+            </if>
+            <if test="broadCast.state != null and broadCast.state != ''">
+                state = #{broadCast.state},
+            </if>
+        </set>
+        WHERE `id` =  #{broadCast.id}
+    </update>
+
+    <insert id="addBroadCast"  useGeneratedKeys="true" keyProperty="broadCast.id">
+        INSERT INTO `broadcast` (
+          `date`,
+          `title`,
+          `address`,
+          `state`
+        )
+        VALUES
+          (
+            #{broadCast.date},
+            #{broadCast.title},
+            #{broadCast.address},
+            #{broadCast.state}
+          );
+    </insert>
+</mapper>
