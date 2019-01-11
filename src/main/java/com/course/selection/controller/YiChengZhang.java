@@ -51,6 +51,6 @@ public class YiChengZhang {
         String secret = EncryptUtil.Encrypt(password+stamp,"MD5");
         String param = "?companyId=141421&stamp="+stamp+"&secret="+secret+"&reportNo="+reportNo;
         String res = HttpRequest.sendGet(ConstantUtil.OTHER_STATUS+param);
-        return ResultUtil.success(res);
+        return ResultUtil.success(JsonUtil.getMapFromJson(res));
     }
 }
