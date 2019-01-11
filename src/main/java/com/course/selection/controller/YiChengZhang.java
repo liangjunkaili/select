@@ -46,10 +46,10 @@ public class YiChengZhang {
     @RequestMapping("status")
     public Result status(@RequestParam(value = "reportNo") Integer reportNo){
         LocalDateTime localDateTime = LocalDateTime.now();
-        String password = "123456ab";
+        String password = ConstantUtil.PASSWORD;
         String stamp = DateUtil.localDateTimeFormat(localDateTime,"MMddHHmmss");
         String secret = EncryptUtil.Encrypt(password+stamp,"MD5");
-        String param = "?companyId=141421&stamp="+stamp+"&secret="+secret+"&reportNo="+reportNo;
+        String param = "?companyId="+ConstantUtil.COMPANYID+"&stamp="+stamp+"&secret="+secret+"&reportNo="+reportNo;
         String res = HttpRequest.sendGet(ConstantUtil.OTHER_STATUS+param);
         return ResultUtil.success(JsonUtil.getMapFromJson(res));
     }

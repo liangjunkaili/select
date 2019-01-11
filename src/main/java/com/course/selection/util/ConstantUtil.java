@@ -5,4 +5,6 @@ public class ConstantUtil {
     public static final String jsapi_ticket = "jsapi_ticket";
     public static final String api_ticket = "api_ticket";
     public static final String OTHER_STATUS = "https://www.yichengzhang.cn/evaluation/status";
+    public static final String PASSWORD = "123456ab";
+    public static final String COMPANYID = "141421";
 }
