@@ -29,8 +29,8 @@ public class JsonUtil {
 	}
 	
 	//json字符串转化为Map
-	public static Map<String,Object> getMapFromJson(String jsonString) {     
-        JSONObject jsonObject = JSONObject.fromObject(jsonString);     
+	public static Map<String,Object> getMapFromJson(String jsonString) {
+        JSONObject jsonObject = JSONObject.fromObject(jsonString);
         Map<String,Object> map = new HashMap<>();
         for(Iterator iter = jsonObject.keys(); iter.hasNext();){     
             String key = (String)iter.next();     

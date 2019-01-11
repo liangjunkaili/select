@@ -2,6 +2,7 @@ package com.course.selection.controller;
 
 import com.course.selection.dto.Result;
 import com.course.selection.service.OrderPeopleListService;
+import com.course.selection.util.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.Enumeration;
 
 /**
@@ -40,5 +42,15 @@ public class YiChengZhang {
 
         }
         log.info("第三方失败回调");
+    }
+    @RequestMapping("status")
+    public Result status(@RequestParam(value = "reportNo") Integer reportNo){
+        LocalDateTime localDateTime = LocalDateTime.now();
+        String password = "123456ab";
+        String stamp = DateUtil.localDateTimeFormat(localDateTime,"MMddHHmmss");
+        String secret = EncryptUtil.Encrypt(password+stamp,"MD5");
+        String param = "?companyId=141421&stamp="+stamp+"&secret="+secret+"&reportNo="+reportNo;
+        String res = HttpRequest.sendGet(ConstantUtil.OTHER_STATUS+param);
+        return ResultUtil.success(res);
     }
 }
