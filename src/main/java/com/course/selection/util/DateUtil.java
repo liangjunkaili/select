@@ -198,4 +198,8 @@ public class DateUtil {
     public static int getTimestamp_10(){
         return (int) (new Date().getTime()/1000);
     }
+
+    public static void main(String[] args) {
+        System.out.println(LocalDateTime.of(2019, 2, 19, 14, 0, 0));
+    }
 }
