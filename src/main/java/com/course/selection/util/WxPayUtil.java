@@ -13,7 +13,7 @@ public class WxPayUtil {
         String out_trade_no = StringUtil.getGlobalId();
         param.put("appid",WXConfiguration.APPID);
         param.put("mch_id",WXConfiguration.mch_id);
-//        param.put("device_info",WXConfiguration.device_info);
+        param.put("device_info",WXConfiguration.device_info);
         param.put("nonce_str",nonce_str);
         param.put("out_trade_no",out_trade_no);
         param.put("notify_url",WXConfiguration.wxpay_success);
@@ -27,7 +27,7 @@ public class WxPayUtil {
                 "<appid>"+WXConfiguration.APPID+"</appid>"+
                 "<attach>"+param.get("attach")+"</attach>"+
                 "<body>"+param.get("body")+"</body>"+
-//                "<device_info>"+WXConfiguration.device_info+"</device_info>"+
+                "<device_info>"+WXConfiguration.device_info+"</device_info>"+
                 "<mch_id>"+WXConfiguration.mch_id+"</mch_id>"+
                 "<nonce_str>"+nonce_str+"</nonce_str>"+
                 "<notify_url>"+WXConfiguration.wxpay_success+"</notify_url>"+
