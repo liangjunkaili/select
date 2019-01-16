@@ -4,7 +4,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * 同步的目的是保证线程安全
@@ -69,7 +71,25 @@ public class LockUtil {
             lock.unlock();
         }
     }
+    static ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+    static Lock read = readWriteLock.readLock();
+    static Lock write = readWriteLock.writeLock();
+    public static final void get(){
+        read.lock();
+        try {
 
+        }finally {
+            read.unlock();
+        }
+    }
+    public static final void put(){
+        write.lock();
+        try {
+
+        }finally {
+            write.unlock();
+        }
+    }
     public static void main(String[] args) {
         LockUtil lockUtil = new LockUtil();
         System.out.println(ThreadPoolUtil.MAXPOOLSIZE);
