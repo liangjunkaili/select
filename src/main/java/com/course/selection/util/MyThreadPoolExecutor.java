@@ -9,12 +9,12 @@ public class MyThreadPoolExecutor extends ThreadPoolExecutor {
 
     @Override
     protected void beforeExecute(Thread t, Runnable r) {
-        System.out.println("beforeExecute thread name:"+r.toString()+t.getId());
+//        System.out.println("beforeExecute thread name:"+r.toString()+t.getId());
     }
 
     @Override
     protected void afterExecute(Runnable r, Throwable t) {
-        System.out.println("afterExecute"+Thread.currentThread().getId()+"==="+this.getPoolSize());
+//        System.out.println("afterExecute"+Thread.currentThread().getId()+"==="+this.getPoolSize());
     }
 
     @Override

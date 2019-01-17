@@ -1,8 +1,10 @@
 package com.course.selection.util;
 
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -91,8 +93,8 @@ public class LockUtil {
         }
     }
     public static void main(String[] args) {
-        LockUtil lockUtil = new LockUtil();
         System.out.println(ThreadPoolUtil.MAXPOOLSIZE);
+        /*LockUtil lockUtil = new LockUtil();
         try{
             Future f = ThreadPoolUtil.USERDEFINED_EXECUTOR.submit(() -> {
                 try {
@@ -114,6 +116,23 @@ public class LockUtil {
             }
         }catch (RejectedExecutionException e){
             System.out.println("RejectedExecutionException");
+        }*/
+
+        Semaphore semaphore = new Semaphore(10);
+        Random random = new Random(47);
+        for(int i=0;i<30;i++){
+            ThreadPoolUtil.USERDEFINED_EXECUTOR.execute(() ->{
+                try {
+                    semaphore.acquire();
+                    System.out.println("enter------");
+                    Thread.sleep(random.nextInt(1000));
+                    semaphore.release();
+                    System.out.println("leaving------");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
         }
+        ThreadPoolUtil.USERDEFINED_EXECUTOR.shutdown();
     }
 }
