@@ -17,7 +17,7 @@ public class ThreadPoolUtil {
     public static final ExecutorService EXECUTOR4 = Executors.newSingleThreadScheduledExecutor();
     public static final ExecutorService EXECUTOR5 = Executors.newScheduledThreadPool(MAXPOOLSIZE);
     public static final ExecutorService EXECUTOR6 = Executors.newWorkStealingPool();
-    public static final ExecutorService USERDEFINED_EXECUTOR = new ThreadPoolExecutor(MAXPOOLSIZE, MAXPOOLSIZE,
+    public static final ExecutorService USERDEFINED_EXECUTOR = new MyThreadPoolExecutor(MAXPOOLSIZE, MAXPOOLSIZE,
             60, TimeUnit.SECONDS, new ArrayBlockingQueue<>(10),
             new MyThreadFactory(),new MyRejected());
 }
