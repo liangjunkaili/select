@@ -3,6 +3,7 @@ package com.course.selection.controller;
 import com.course.selection.service.OrderService;
 import com.course.selection.util.*;
 import lombok.extern.log4j.Log4j2;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -119,5 +121,44 @@ public class WxPayController {
             e.printStackTrace();
         }
         return url;
+    }
+    @RequestMapping("/authorize")
+    public void authorize(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //a-zA-Z0-9的参数值，最多128字节
+        String state = request.getParameter("state");
+        String callbackUrl = WXConfiguration.MYSERVER+"authorize_callback";
+        //snsapi_base 不弹出授权页面，直接跳转，只能获取用户openid
+//        response.sendRedirect(WXConfiguration.authorize.replace("REDIRECT_URI",callbackUrl).replace("STATE",state).replace("SCOPE",WXConfiguration.scope_snsapi_base));
+        //snsapi_userinfo 弹出授权页面，可通过openid拿到昵称、性别、所在地。并且， 即使在未关注的情况下，只要用户授权，也能获取其信息
+        response.sendRedirect(WXConfiguration.authorize.replace("REDIRECT_URI",callbackUrl).replace("STATE",state).replace("SCOPE",WXConfiguration.scope_snsapi_userinfo));
+    }
+
+    @RequestMapping("/authorize_callback")
+    public void authorize_callback(HttpServletRequest request){
+        String code = request.getParameter("code");
+        String result = HttpRequest.sendGet(WXConfiguration.web_access_token.replace("CODE",code));
+        JSONObject jsonObject = JSONObject.fromObject(result);
+        String access_token = jsonObject.getString(ConstantUtil.access_token);
+        String openid = jsonObject.getString("openid");//snsapi_base式的网页授权流程即到此为止
+        String refresh_token = jsonObject.getString("refresh_token");
+        //检验授权凭证（access_token）是否有效
+        String isInvalid = HttpRequest.sendGet(WXConfiguration.isInvalid.replace("ACCESS_TOKEN",access_token).replace("OPENID",openid));
+        JSONObject jsonObject4 = JSONObject.fromObject(isInvalid);
+        if (jsonObject4.getInt("errcode") != 0){
+            String result2 = HttpRequest.sendGet(WXConfiguration.refresh_token.replace("REFRESH_TOKEN",refresh_token));
+            JSONObject jsonObject2 = JSONObject.fromObject(result2);
+            access_token = jsonObject2.getString(ConstantUtil.access_token);
+        }
+        String result3 = HttpRequest.sendGet(WXConfiguration.sns_userInfo.replace("ACCESS_TOKEN",access_token).replace("OPENID",openid));
+        JSONObject jsonObject3 = JSONObject.fromObject(result3);
+        String nickname = jsonObject3.getString("nickname");
+        String sex = jsonObject3.getString("sex");
+        String province = jsonObject3.getString("province");
+        String city = jsonObject3.getString("city");
+        String country = jsonObject3.getString("country");
+        String headimgurl = jsonObject3.getString("headimgurl");
+        JSONArray privilege = jsonObject3.getJSONArray("privilege");
+        //只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段
+//        String unionid = jsonObject3.getString("unionid");
     }
 }
