@@ -11,4 +11,6 @@ public interface UserService {
 
     Result login(String code, String encryptedData, String iv, String channel, String ip, Integer uid) throws IOException;
     List<User> queryUsers(Map<String,Object> param);
+
+//    Result login(String code, String ip) throws Exception;
 }

@@ -52,6 +52,23 @@ public class UserController {
         return result;
     }
 
+//    @ApiOperation("用户登录微信公众号")
+//    @PostMapping("login")
+//    public Result login(@RequestParam(value = "code", required = false) String code,
+////                        @RequestParam(value = "encryptedData", required = false) String encryptedData,
+////                        @RequestParam(value = "iv", required = false) String iv,
+////                        @RequestParam(value = "channel", required = false) String channel,
+////                        @RequestParam(value = "shareId", required = false) Integer uid,
+//                        HttpServletRequest request) throws IOException {
+//        String ip = HttpUtil.getIpAddr(request);
+////        log.info("code :{},encryptedData:{},iv:{},channel:{},ip:{}", code, encryptedData, iv, channel, ip);
+////        if (StringUtil.UNDEFINED.equals(encryptedData) || StringUtil.UNDEFINED.equals(iv)) {
+////            return ResultUtil.error(ResultEnum.PARAM_ERR);
+////        }
+////        Result result = userService.login(code, ip);
+//        return result;
+//    }
+
     @ApiOperation("我的优惠券")
     @PostMapping("getMyCoupons")
     public Result getMyCoupons(
