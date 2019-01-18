@@ -10,6 +10,7 @@ import com.course.selection.service.UserService;
 import com.course.selection.util.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
+import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -101,6 +102,27 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> queryUsers(Map<String, Object> param) {
         return userDao.queryUsers(param);
+    }
+
+    @Override
+    public void insert(String nickname, Integer sex, String province, String city, String country, String headimgurl, String openid, JSONArray privilege,String unionid) {
+        User user = User.builder()
+                .avatar(headimgurl)
+                .channel(null)
+                .gender(sex)
+                .ip(null)
+                .nickname(nickname)
+                .openId(openid)
+                .unionId(unionid)
+                .regTime(LocalDateTime.now())
+                .city(city)
+                .province(province)
+                .country(country)
+                .income(0)
+                .orders(0)
+                .poster("null")
+                .build();
+        userDao.insert(user);
     }
 
     private User buildUser(Map<String, Object> userMap, String channel, String ip, Integer shareId) {

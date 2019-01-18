@@ -1,6 +1,7 @@
 package com.course.selection.controller;
 
 import com.course.selection.service.OrderService;
+import com.course.selection.service.UserService;
 import com.course.selection.util.*;
 import lombok.extern.log4j.Log4j2;
 import net.sf.json.JSONArray;
@@ -26,6 +27,8 @@ import java.util.Map;
 public class WxPayController {
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private UserService userService;
 
     private static final Logger logger = LoggerFactory.getLogger(WxPayController.class);
 
@@ -152,13 +155,15 @@ public class WxPayController {
         String result3 = HttpRequest.sendGet(WXConfiguration.sns_userInfo.replace("ACCESS_TOKEN",access_token).replace("OPENID",openid));
         JSONObject jsonObject3 = JSONObject.fromObject(result3);
         String nickname = jsonObject3.getString("nickname");
-        String sex = jsonObject3.getString("sex");
+        Integer sex = jsonObject3.getInt("sex");
         String province = jsonObject3.getString("province");
         String city = jsonObject3.getString("city");
         String country = jsonObject3.getString("country");
         String headimgurl = jsonObject3.getString("headimgurl");
         JSONArray privilege = jsonObject3.getJSONArray("privilege");
+
         //只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段
-//        String unionid = jsonObject3.getString("unionid");
+        String unionid = jsonObject3.getString("unionid");
+        userService.insert(nickname,sex,province,city,country,headimgurl,openid,privilege,unionid);
     }
 }
