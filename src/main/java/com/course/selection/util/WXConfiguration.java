@@ -3,7 +3,7 @@ package com.course.selection.util;
 public class WXConfiguration {
     public static final String APPID = "wx0dd23ad0cfebd824";
     public static final String APPSECRET = "14c94e3c2e05cc9f9544702b9f01bbe6";
-    public static final String MYSERVER = "https://dis.haohaoxuanke.com/";
+    public static final String MYSERVER = "http://dis.ucharmedu.com:8089/";
     public static final String mch_id = "1517597181";
     public static final String sub_mch_id = "子商户号";
 
