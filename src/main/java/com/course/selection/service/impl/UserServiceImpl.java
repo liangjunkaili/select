@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result insert(String nickname, Integer sex, String province, String city, String country, String headimgurl, String openid, JSONArray privilege,String unionid) {
+    public UserDto insert(String nickname, Integer sex, String province, String city, String country, String headimgurl, String openid, JSONArray privilege,String unionid) {
         User user = User.builder()
                 .avatar(headimgurl)
                 .channel(null)
@@ -134,7 +134,7 @@ public class UserServiceImpl implements UserService {
                 .poster(user.getPoster())
                 .openId(user.getOpenId())
                 .build();
-        return ResultUtil.success(userDTO);
+        return userDTO;
     }
 
     @Override
