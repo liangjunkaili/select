@@ -13,7 +13,7 @@ public interface UserService {
     Result login(String code, String encryptedData, String iv, String channel, String ip, Integer uid) throws IOException;
     List<User> queryUsers(Map<String,Object> param);
 
-    void insert(String nickname, Integer sex, String province, String city, String country, String headimgurl, String openid, JSONArray privilege,String unionid);
+    Result insert(String nickname, Integer sex, String province, String city, String country, String headimgurl, String openid, JSONArray privilege,String unionid);
 
 //    Result login(String code, String ip) throws Exception;
 }

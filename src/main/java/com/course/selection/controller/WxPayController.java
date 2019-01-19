@@ -1,5 +1,6 @@
 package com.course.selection.controller;
 
+import com.course.selection.dto.Result;
 import com.course.selection.service.OrderService;
 import com.course.selection.service.UserService;
 import com.course.selection.util.*;
@@ -137,10 +138,12 @@ public class WxPayController {
     }
 
     @RequestMapping("/authorize_callback")
-    public void authorize_callback(HttpServletRequest request){
+    public Result authorize_callback(HttpServletRequest request){
         String code = request.getParameter("code");
+        log.info("code:{}",code);
         String result = HttpRequest.sendGet(WXConfiguration.web_access_token.replace("CODE",code));
         JSONObject jsonObject = JSONObject.fromObject(result);
+        log.info("jsonObject:{}",jsonObject);
         String access_token = jsonObject.getString(ConstantUtil.access_token);
         String openid = jsonObject.getString("openid");//snsapi_base式的网页授权流程即到此为止
         String refresh_token = jsonObject.getString("refresh_token");
@@ -163,7 +166,9 @@ public class WxPayController {
         JSONArray privilege = jsonObject3.getJSONArray("privilege");
 
         //只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段
-        String unionid = jsonObject3.getString("unionid");
-        userService.insert(nickname,sex,province,city,country,headimgurl,openid,privilege,unionid);
+//        String unionid = jsonObject3.getString("unionid");
+        String unionid = null;
+        log.info("jsonObject3:{}",jsonObject3);
+        return userService.insert(nickname,sex,province,city,country,headimgurl,openid,privilege,unionid);
     }
 }

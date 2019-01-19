@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void insert(String nickname, Integer sex, String province, String city, String country, String headimgurl, String openid, JSONArray privilege,String unionid) {
+    public Result insert(String nickname, Integer sex, String province, String city, String country, String headimgurl, String openid, JSONArray privilege,String unionid) {
         User user = User.builder()
                 .avatar(headimgurl)
                 .channel(null)
@@ -123,6 +123,16 @@ public class UserServiceImpl implements UserService {
                 .poster("null")
                 .build();
         userDao.insert(user);
+        UserDto userDTO = UserDto.builder()
+                .avatar(user.getAvatar())
+//                    .token(token)
+                .nickName(user.getNickname())
+                .uid(user.getUid())
+                .income(user.getIncome())
+                .poster(user.getPoster())
+                .openId(user.getOpenId())
+                .build();
+        return ResultUtil.success(userDTO);
     }
 
     private User buildUser(Map<String, Object> userMap, String channel, String ip, Integer shareId) {

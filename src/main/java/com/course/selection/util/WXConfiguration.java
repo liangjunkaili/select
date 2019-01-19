@@ -1,9 +1,9 @@
 package com.course.selection.util;
 
 public class WXConfiguration {
-    public static final String APPID = "wx0dd23ad0cfebd824";
-    public static final String APPSECRET = "14c94e3c2e05cc9f9544702b9f01bbe6";
-    public static final String MYSERVER = "https://dis.haohaoxuanke.com/";
+    public static final String APPID = "wx1c88a015e4411f8a";
+    public static final String APPSECRET = "45aeb1f1a2573b98ad2579721243d29a";
+    public static final String MYSERVER = "http://dis.ucharmedu.com/";
     public static final String mch_id = "1517597181";
     public static final String sub_mch_id = "子商户号";
 

@@ -97,7 +97,9 @@ WHERE `uid` = #{uid} ;
                 #{user.income,jdbcType=INTEGER},
                 #{user.orders,jdbcType=INTEGER},
                 #{user.poster,jdbcType=VARCHAR},
-                ,#{user.refername,jdbcType=VARCHAR},#{user.phone,jdbcType=VARCHAR},#{user.referrer,jdbcType=VARCHAR},)
+                #{user.refername,jdbcType=VARCHAR},
+                #{user.phone,jdbcType=VARCHAR},
+                #{user.referrer,jdbcType=VARCHAR})
  on  DUPLICATE key update uid=#{user.uid,jdbcType=INTEGER}
     </insert>
 </mapper>
