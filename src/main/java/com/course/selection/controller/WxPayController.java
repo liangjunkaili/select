@@ -140,7 +140,7 @@ public class WxPayController {
     }
 
     @RequestMapping("/authorize_callback")
-    public void authorize_callback(HttpServletRequest request){
+    public void authorize_callback(HttpServletRequest request,HttpServletResponse response){
         String code = request.getParameter("code");
         String result = HttpRequest.sendGet(WXConfiguration.web_access_token.replace("CODE",code));
         JSONObject jsonObject = JSONObject.fromObject(result);
@@ -168,6 +168,12 @@ public class WxPayController {
         //只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段
 //        String unionid = jsonObject3.getString("unionid");
         userService.insert(nickname,sex,province,city,country,headimgurl,openid,privilege,"");
+        try {
+            response.setHeader("openid",openid);
+            response.sendRedirect("https://dis.ucharmedu.com/");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @GetMapping("/init")
