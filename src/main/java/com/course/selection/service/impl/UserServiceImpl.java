@@ -108,23 +108,33 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto insert(String nickname, Integer sex, String province, String city, String country, String headimgurl, String openid, JSONArray privilege,String unionid) {
-        User user = User.builder()
-                .avatar(headimgurl)
-                .channel(null)
-                .gender(sex)
-                .ip(null)
-                .nickname(nickname)
-                .openId(openid)
-                .unionId(unionid)
-                .regTime(LocalDateTime.now())
-                .city(city)
-                .province(province)
-                .country(country)
-                .income(0)
-                .orders(0)
-                .poster("null")
-                .build();
-        userDao.insert(user);
+        //查询该用户是否存在
+        User user = userDao.findOneByOpenId(openid);
+        if(user==null) {
+            user = User.builder()
+                    .avatar(headimgurl)
+                    .channel(null)
+                    .gender(sex)
+                    .ip(null)
+                    .nickname(nickname)
+                    .openId(openid)
+                    .unionId(unionid)
+                    .regTime(LocalDateTime.now())
+                    .city(city)
+                    .province(province)
+                    .country(country)
+                    .income(0)
+                    .orders(0)
+                    .poster("null")
+                    .build();
+            userDao.insert(user);
+        }else{
+            //跟新头像 昵称
+            user.setAvatar(headimgurl);
+            user.setNickname(nickname);
+            user.setGender(sex);
+            userDao.update(user.getAvatar(), user.getNickname(), user.getGender(), user.getUid());
+        }
         UserDto userDTO = UserDto.builder()
                 .avatar(user.getAvatar())
 //                    .token(token)

@@ -155,6 +155,7 @@ public class WxPayController {
         String access_token = jsonObject.getString(ConstantUtil.access_token);
         String openid = jsonObject.getString("openid");//snsapi_base式的网页授权流程即到此为止
         String refresh_token = jsonObject.getString("refresh_token");
+
         //检验授权凭证（access_token）是否有效
         String isInvalid = HttpRequest.sendGet(WXConfiguration.isInvalid.replace("ACCESS_TOKEN",access_token).replace("OPENID",openid));
         JSONObject jsonObject4 = JSONObject.fromObject(isInvalid);
