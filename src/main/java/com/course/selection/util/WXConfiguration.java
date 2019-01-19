@@ -1,15 +1,15 @@
 package com.course.selection.util;
 
 public class WXConfiguration {
-    public static final String APPID = "wx0dd23ad0cfebd824";
-    public static final String APPSECRET = "14c94e3c2e05cc9f9544702b9f01bbe6";
-    public static final String MYSERVER = "http://dis.ucharmedu.com:8089/";
+    public static final String APPID = "wx1c88a015e4411f8a";
+    public static final String APPSECRET = "45aeb1f1a2573b98ad2579721243d29a";
+    public static final String MYSERVER = "http://dis.ucharmedu.com/";
     public static final String mch_id = "1517597181";
     public static final String sub_mch_id = "子商户号";
 
 //    public static final String key="361662e6dc3a43bbb754ea6acabd751a";
     public static final String key="5ApCn4hSHDoM8HCsjWZJlMEXnAUd51sd";
-    public static final String token="magicabc";
+    public static final String token="Ucharm123";
     //获取access_token
     public static final String ACCESS_TOKEN = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+APPID+"&secret="+APPSECRET;
     //获取jsapi_ticket
