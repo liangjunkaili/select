@@ -1,6 +1,7 @@
 package com.course.selection.controller;
 
 import com.course.selection.dto.Result;
+import com.course.selection.dto.UserDto;
 import com.course.selection.service.OrderService;
 import com.course.selection.service.UserService;
 import com.course.selection.util.*;
@@ -10,6 +11,7 @@ import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -138,7 +142,11 @@ public class WxPayController {
     }
 
     @RequestMapping("/authorize_callback")
-    public Result authorize_callback(HttpServletRequest request){
+
+//    public Result authorize_callback(HttpServletRequest request){
+
+    public void authorize_callback(HttpServletRequest request,HttpServletResponse response){
+
         String code = request.getParameter("code");
         log.info("code:{}",code);
         String result = HttpRequest.sendGet(WXConfiguration.web_access_token.replace("CODE",code));
@@ -167,8 +175,41 @@ public class WxPayController {
 
         //只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段
 //        String unionid = jsonObject3.getString("unionid");
-        String unionid = null;
-        log.info("jsonObject3:{}",jsonObject3);
-        return userService.insert(nickname,sex,province,city,country,headimgurl,openid,privilege,unionid);
+
+//        String unionid = null;
+//        log.info("jsonObject3:{}",jsonObject3);
+//        return userService.insert(nickname,sex,province,city,country,headimgurl,openid,privilege,unionid);
+
+        UserDto user = userService.insert(nickname, sex, province, city, country, headimgurl, openid, privilege, "");
+        try {
+            response.setHeader("avatar",user.getAvatar());
+            response.setHeader("nickname",user.getNickName());
+            response.setHeader("openId",user.getOpenId());
+            response.setHeader("poster",user.getPoster());
+            response.setHeader("income",user.getIncome().toString());
+            response.setHeader("uid",user.getUid().toString());
+            response.sendRedirect("https://dis.ucharmedu.com/");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @GetMapping("/init")
+    public void init_get(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String signature = request.getParameter("signature");
+        String timestamp = request.getParameter("timestamp");
+        String nonce = request.getParameter("nonce");
+        String echostr = request.getParameter("echostr");
+        String[] arr = new String[]{WXConfiguration.token,timestamp,nonce};
+        Arrays.sort(arr);
+        StringBuffer content = new StringBuffer();
+        for(int i=0;i<arr.length;i++){
+            content.append(arr[i]);
+        }
+        String sign = EncryptUtil.Encrypt(content.toString(),"sha1");
+        PrintWriter out = response.getWriter();
+        if(sign.equals(signature)){
+            out.print(echostr);
+        }
     }
 }

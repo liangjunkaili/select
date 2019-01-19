@@ -9,7 +9,7 @@ public class WXConfiguration {
 
 //    public static final String key="361662e6dc3a43bbb754ea6acabd751a";
     public static final String key="5ApCn4hSHDoM8HCsjWZJlMEXnAUd51sd";
-    public static final String token="magicabc";
+    public static final String token="Ucharm123";
     //获取access_token
     public static final String ACCESS_TOKEN = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+APPID+"&secret="+APPSECRET;
     //获取jsapi_ticket

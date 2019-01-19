@@ -14,11 +14,11 @@ import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.security.MessageDigest;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author L.W
@@ -26,6 +26,8 @@ import java.util.Map;
 @Service
 @Log4j2
 public class UserServiceImpl implements UserService {
+    private static final char[] HEX_DIGITS = {'0', '1', '2', '3', '4', '5',
+            '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
     @Autowired
     private ObjectMapper objectMapper;
     //    @Autowired
@@ -133,6 +135,48 @@ public class UserServiceImpl implements UserService {
                 .openId(user.getOpenId())
                 .build();
         return ResultUtil.success(userDTO);
+    }
+
+    @Override
+    public boolean checkSignature(HttpServletRequest request) {
+        String signature = request.getParameter("signature");
+        String timestamp = request.getParameter("timestamp");
+        String nonce = request.getParameter("nonce");
+        List<String> params = new ArrayList<String>(3);
+        params.add(WXConfiguration.token);
+        params.add(timestamp);
+        params.add(nonce);
+        params.sort(Comparator.naturalOrder());
+        String temp = encode(params.get(0) + params.get(1) + params.get(2));
+        if (temp.equals(signature)) {
+            log.info("signature verification true");
+            return true;
+        }
+        log.info("signature verification false");
+        return false;
+    }
+    private static String encode(String str) {
+        try {
+            if (str != null) {
+                MessageDigest messageDigest = MessageDigest.getInstance("SHA1");
+                messageDigest.update(str.getBytes("UTF-8"));
+                return getFormattedText(messageDigest.digest());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    private static String getFormattedText(byte[] bytes) {
+        int len = bytes.length;
+        StringBuilder buf = new StringBuilder(len * 2);
+        // 把密文转换成十六进制的字符串形式
+        for (int j = 0; j < len; j++) {
+            buf.append(HEX_DIGITS[(bytes[j] >> 4) & 0x0f]);
+            buf.append(HEX_DIGITS[bytes[j] & 0x0f]);
+        }
+        return buf.toString();
     }
 
     private User buildUser(Map<String, Object> userMap, String channel, String ip, Integer shareId) {
