@@ -4,6 +4,7 @@ import com.course.selection.bean.User;
 import com.course.selection.dto.Result;
 import net.sf.json.JSONArray;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,8 @@ public interface UserService {
     List<User> queryUsers(Map<String,Object> param);
 
     void insert(String nickname, Integer sex, String province, String city, String country, String headimgurl, String openid, JSONArray privilege,String unionid);
+
+    boolean checkSignature(HttpServletRequest request);
 
 //    Result login(String code, String ip) throws Exception;
 }
