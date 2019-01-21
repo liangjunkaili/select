@@ -189,7 +189,13 @@ public class WxPayController {
             response.setHeader("poster",user.getPoster());
             response.setHeader("income",user.getIncome().toString());
             response.setHeader("uid",user.getUid().toString());
-            response.sendRedirect("https://dis.ucharmedu.com/");
+            response.sendRedirect("https://dis.ucharmedu.com/?avatar="+user.getAvatar()
+                    +"&nickname=" +user.getNickName()
+                    +"&openId=" +user.getOpenId()
+                    +"&poster=" +user.getPoster()
+                    +"&income=" +user.getIncome().toString()
+                    +"&uid=" +user.getUid().toString()
+            );
         } catch (IOException e) {
             e.printStackTrace();
         }
