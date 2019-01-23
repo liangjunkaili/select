@@ -45,7 +45,7 @@ public class OrderPeopleListServiceImpl implements OrderPeopleListService {
                 .title(order.getTitle())
                 .build();
         orderPeopleListDao.insert(orderPeopleList);
-        return ResultUtil.success();
+        return ResultUtil.success(orderPeopleList);
     }
 
     @Override
@@ -80,16 +80,19 @@ public class OrderPeopleListServiceImpl implements OrderPeopleListService {
 
     @Override
     public Result updatePeople(Integer id, String name, Integer gender, String phone, String birthdayTime, String address) {
+        OrderPeopleList byId = orderPeopleListDao.findById(id);
         OrderPeopleList orderPeopleList = OrderPeopleList.builder()
                 .address(address)
                 .birthdayTime(birthdayTime)
                 .gender(gender)
                 .name(name)
                 .phone(phone)
+                .state(byId.getState())
                 .id(id)
                 .build();
         orderPeopleListDao.update(orderPeopleList);
-        return ResultUtil.success();
+
+        return ResultUtil.success(orderPeopleList);
     }
 
     @Override

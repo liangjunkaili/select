@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -189,13 +190,26 @@ public class WxPayController {
             response.setHeader("poster",user.getPoster());
             response.setHeader("income",user.getIncome().toString());
             response.setHeader("uid",user.getUid().toString());
-            response.sendRedirect("https://dis.ucharmedu.com/?avatar="+user.getAvatar()
+            String urlr = "";
+            String url = "https://dis.ucharmedu.com/?avatar="+user.getAvatar()
                     +"&nickname=" +user.getNickName()
                     +"&openId=" +user.getOpenId()
                     +"&poster=" +user.getPoster()
                     +"&income=" +user.getIncome().toString()
-                    +"&uid=" +user.getUid().toString()
-            );
+                    +"&uid=" +user.getUid().toString();
+            int index = url.indexOf("?");
+            urlr = url.substring(0,index+1);
+            String temp = url.substring(index+1);
+                //URLEncode转码会将& ： / = 等一些特殊字符转码,(但是这个字符  只有在作为参数值  时需要转码;例如url中的&具有参数连接的作用，此时就不能被转码)
+                String encode = URLEncoder.encode(temp, "utf-8");
+                System.out.println(encode);
+                encode = encode.replace("%3D",  "=");
+                encode = encode.replace("%2F", "/");
+                encode = encode.replace("+", "%20");
+                encode = encode.replace("%26", "&");
+                urlr += encode;
+                log.info("urlr");
+            response.sendRedirect(urlr);
         } catch (IOException e) {
             e.printStackTrace();
         }

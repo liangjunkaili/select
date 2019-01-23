@@ -69,8 +69,9 @@ public class UserController {
     @ApiOperation("我的优惠券")
     @PostMapping("getMyCoupons")
     public Result getMyCoupons(
-            @RequestParam(value = "uid", required = false) Integer uid
+            @RequestParam(value = "uid", required = true) Integer uid
     ) {
+        log.info("获取我的优惠券");
         return userCouponService.getMyCoupons(uid);
     }
 
