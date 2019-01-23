@@ -1,6 +1,7 @@
 package com.course.selection.config;
 
 import com.github.pagehelper.StringUtil;
+import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+@Log4j2
 public class RewriteFilter implements Filter {
     /**
      * 需要rewrite到的目的地址
@@ -29,10 +31,12 @@ public class RewriteFilter implements Filter {
     public void init(FilterConfig cfg) throws ServletException {
         //初始化拦截配置
         rewriteTo = cfg.getInitParameter(REWRITE_TO);
+        log.info("rewriteTo:{}",rewriteTo);
         String exceptUrlString = cfg.getInitParameter(REWRITE_PATTERNS);
         if (StringUtil.isNotEmpty(exceptUrlString)) {
             urlPatterns = Collections.unmodifiableSet(
                     new HashSet<>(Arrays.asList(exceptUrlString.split(";", 0))));
+            log.info("urlPatterns:{}",urlPatterns);
         } else {
             urlPatterns = Collections.emptySet();
         }
@@ -43,9 +47,12 @@ public class RewriteFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         String servletPath = request.getServletPath();
         String context = request.getContextPath();
+        log.info("servletPath:{}",servletPath);
+        log.info("context:{}",context);
         //匹配的路径重写
         if (isMatches(urlPatterns, servletPath)) {
             req.getRequestDispatcher(context+"/"+rewriteTo).forward(req, resp);
+            log.info("context:{}",context+"/"+rewriteTo);
         }else{
             chain.doFilter(req, resp);
         }
