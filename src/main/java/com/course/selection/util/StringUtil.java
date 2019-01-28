@@ -16,4 +16,23 @@ public class StringUtil {
 	public static Boolean isNullOrEmpty(String string) {
 		return string == null || string.length() == 0;
 	}
+	public static void main(String[] args){
+		String type = "T1";
+		SomeTypeEnum someTypeEnum = SomeTypeEnum.valueOf(type);
+		switch (someTypeEnum){
+			case T1:{
+				SomeTypeEnum.executeT1();break;
+			}
+			case T2:{
+				SomeTypeEnum.executeT2();break;
+			}
+			case T3:{
+				SomeTypeEnum.executeT3();break;
+			}
+			default:{
+				SomeTypeEnum.executeT4();
+			}
+		}
+
+	}
 }
