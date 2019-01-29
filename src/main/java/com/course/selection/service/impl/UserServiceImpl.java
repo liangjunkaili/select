@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto insert(String nickname, Integer sex, String province, String city, String country, String headimgurl, String openid, JSONArray privilege,String unionid) {
+    public UserDto insert(String nickname, Integer sex, String province, String city, String country, String headimgurl, String openid, JSONArray privilege,String unionid,String referrer) {
         //查询该用户是否存在
         User user = userDao.findOneByOpenId(openid);
         if(user==null) {
@@ -126,6 +126,7 @@ public class UserServiceImpl implements UserService {
                     .income(0)
                     .orders(0)
                     .poster("null")
+                    .referrer(referrer)
                     .build();
             userDao.insert(user);
         }else{

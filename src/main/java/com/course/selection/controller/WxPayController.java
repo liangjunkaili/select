@@ -134,8 +134,9 @@ public class WxPayController {
     @RequestMapping("/authorize")
     public void authorize(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //a-zA-Z0-9的参数值，最多128字节
-        String state = request.getParameter("state");
-        String callbackUrl = WXConfiguration.MYSERVER+"authorize_callback";
+        String state = request.getParameter("state");//uid
+        String gid = request.getParameter("gid");
+        String callbackUrl = WXConfiguration.MYSERVER+"authorize_callback?gid="+gid;
         //snsapi_base 不弹出授权页面，直接跳转，只能获取用户openid
 //        response.sendRedirect(WXConfiguration.authorize.replace("REDIRECT_URI",callbackUrl).replace("STATE",state).replace("SCOPE",WXConfiguration.scope_snsapi_base));
         //snsapi_userinfo 弹出授权页面，可通过openid拿到昵称、性别、所在地。并且， 即使在未关注的情况下，只要用户授权，也能获取其信息
@@ -148,6 +149,8 @@ public class WxPayController {
 
     public void authorize_callback(HttpServletRequest request,HttpServletResponse response){
 
+        String uid = request.getParameter("state");//uid
+        String gid = request.getParameter("gid");
         String code = request.getParameter("code");
         log.info("code:{}",code);
         String result = HttpRequest.sendGet(WXConfiguration.web_access_token.replace("CODE",code));
@@ -182,7 +185,7 @@ public class WxPayController {
 //        log.info("jsonObject3:{}",jsonObject3);
 //        return userService.insert(nickname,sex,province,city,country,headimgurl,openid,privilege,unionid);
 
-        UserDto user = userService.insert(nickname, sex, province, city, country, headimgurl, openid, privilege, "");
+        UserDto user = userService.insert(nickname, sex, province, city, country, headimgurl, openid, privilege, "",uid);
         try {
             response.setHeader("avatar",user.getAvatar());
             response.setHeader("nickname",user.getNickName());
@@ -209,7 +212,12 @@ public class WxPayController {
                 encode = encode.replace("%26", "&");
                 urlr += encode;
                 log.info("urlr");
-            response.sendRedirect(urlr);
+                if("1".equals(uid)&&"1".equals(gid)){
+                    response.sendRedirect(urlr);
+                }else{
+                    String content = "https://dis.ucharmedu.com/ui/detail/"+gid+"/"+uid;
+                    response.sendRedirect(content);
+                }
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -142,9 +142,9 @@ public class UserController {
             @RequestParam(value = "price") Integer price,
             @RequestParam(value = "type1") String type1,
             @RequestParam(value = "type2") String type2,
-            @RequestParam(value = "cid",required = false) Integer cid
-
+            @RequestParam(value = "cid",required = false) Integer cid,
+            @RequestParam(value = "shareid",required = false) Integer shareid
     ) {
-        return orderService.orderGoods(uid, gid, num, price, type1, type2,cid);
+        return orderService.orderGoods(uid, gid, num, price, type1, type2,cid,shareid);
     }
 }
