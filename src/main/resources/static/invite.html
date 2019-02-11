@@ -3,23 +3,43 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>邀请卡</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@1.6/lib/index.css">
+
+    <!-- 引入组件 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vant@1.6/lib/vant.min.js"></script>
+
     <style>
         body{margin: 0}
         .title{
             background: #A4F1F1;
-            height: 5rem;
+            height: 28px;
             font-family: PingFangSC-Regular;
-            font-size: 2rem;
+            font-size: 12px;
             color: #00A5A5;
             text-align: center;
-            line-height: 5rem;
+            line-height: 30px;
         }
         .pic{
             width: 85%;
             height: auto;
-            margin: 40px auto;
+            margin: 20px auto;
         }
         .pic img{
+            width: 100%;
+            height: 100%;
+        }
+        .note{
+            position: absolute;
+            right: 0;
+            top: 80px;
+            width: 110px;
+            height: 35px;
+        }
+        .note img{
             width: 100%;
             height: 100%;
         }
@@ -30,6 +50,7 @@
     <div class="title">
         长按下方图片，保存图片 或 发送给朋友
     </div>
+    <div class="note" id="app" @click="note"><img src="https://dis.ucharmedu.com/image/note.png"></div>
     <div class='pic'>
         <canvas id="myCanvas" style="display: none"></canvas>
         <img src="" id="img" style="width: 100%;">
@@ -44,8 +65,9 @@
         var txt = '我发现一个很棒的测评，你也来试试吧！'
         // localStorage.setItem('avtor','https://wx.qlogo.cn/mmopen/vi_32/ahxELat57Wicnl4EfEzvVViakdV5RoW8eLozTId4a40LdOXFv5pYq40icJ8w2KEXx0Bob0v7kHatcl5OR8eEiapv8w/132')
         // localStorage.setItem('ewm','https://dis.ucharmedu.com/img/wxcode.jpg')
-        document.getElementById("avatar").src = localStorage.getItem('avator')
-        console.log(localStorage.getItem('openid'))
+
+        document.getElementById("avatar").src = localStorage.getItem('avatar')
+
         // document.getElementById("ewm").src = localStorage.getItem('ewm')
         var ewm = localStorage.getItem('ewm')
 
@@ -53,8 +75,11 @@
         function canvasImg() {
 
             var bgimg = new Image();
-            // bgimg.crossOrigin = "Anonymous";
-            bgimg.src="https://dis.ucharmedu.com/image/bg.png";
+            var pid = localStorage.getItem('bgid') ? localStorage.getItem('bgid') : 7
+            // alert(localStorage.getItem('bgid'))
+            var bgname = "https://dis.ucharmedu.com/image/bg"+pid+'.png';
+            bgname = bgname.toString()
+
 
             bgimg.onload = function () {
 
@@ -66,10 +91,10 @@
                 ctx.drawImage(bgimg, 0, 0, 600, 1064);   //里面的参数无非就是图片放置的位置即图片的横纵坐标，图片的宽高
 
                 ctx.font = "28px PingFangSC-Light";
-                ctx.fillStyle = "#fff";
-                ctx.fillText(nickname, 150, 104);            //150:canvas画布宽300，取1/2，中间，280：纵向位置
-                ctx.font = "24px PingFangSC-Light";
-                ctx.fillText(txt, 150, 150);
+                ctx.fillStyle = "#919091";
+                ctx.fillText(nickname, 150, 390);            //150:canvas画布宽300，取1/2，中间，280：纵向位置
+                // ctx.font = "24px PingFangSC-Light";
+                // ctx.fillText(txt, 150, 150);
 
                 var avatarimg=document.getElementById("avatar");
                 // var ewmimg=document.getElementById("ewm");
@@ -81,13 +106,13 @@
                 ewmimg.setAttribute('crossorigin', 'anonymous');
                 ewmimg.src= localStorage.getItem('ewm');
                 ewmimg.onload=function () {
-                    ctx.drawImage(ewmimg, 413, 850, 133, 135);
+                    ctx.drawImage(ewmimg, 260, 630, 133, 135);
 
                     // var aimg = new Image();
                     // aimg.setAttribute('crossorigin', 'anonymous');
                     // aimg.src = 'https://wx.qlogo.cn/mmopen/vi_32/ahxELat57Wicnl4EfEzvVViakdV5RoW8eLozTId4a40LdOXFv5pYq40icJ8w2KEXx0Bob0v7kHatcl5OR8eEiapv8w/132'
                     // aimg.onload = function () {
-                    //     circleImg(ctx, avatarimg, 50, 50, 40);
+                        circleImg(ctx, avatarimg, 80, 350, 30);
 
 
                         canvas.style.width = '100%' //css控制大小
@@ -102,6 +127,7 @@
 
             }
 
+            bgimg.src= bgname;
 
         }
 
@@ -115,6 +141,29 @@
             ctx.clip();
             ctx.drawImage(img, x, y, d, d);
         }
+
+        // import { Dialog } from 'vant';
+        // Vue.use(Dialog);
+
+        new Vue({
+            el: '#app',
+            data: function() {
+                return { visible: false }
+            },
+            methods:{
+                note:function () {
+                    this.$dialog.alert({
+                        title: '参与须知',
+                        message: "* 每成功邀请一位好友报名，将获得支<br>&nbsp;&nbsp;付金额的20%收益，上不封顶。<br>* 奖励金直接存入“微信钱包”。",
+                        messageAlign:'left'
+                    }).then(() => {
+                        // on close
+                    });
+                }
+
+            }
+        })
+
     </script>
 
 </body>
