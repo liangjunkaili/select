@@ -8,6 +8,7 @@ import com.course.selection.dao.*;
 import com.course.selection.dto.OrderDetailDto;
 import com.course.selection.dto.OrderDto;
 import com.course.selection.dto.Result;
+import com.course.selection.service.IncomeRecordService;
 import com.course.selection.service.OrderService;
 import com.course.selection.util.DateUtil;
 import com.course.selection.util.ResultUtil;
@@ -32,6 +33,8 @@ public class OrderServiceImpl implements OrderService {
     private OrderPeopleListDao orderPeopleListDao;
     @Autowired
     private UserCouponDao userCouponDao;
+    @Autowired
+    private IncomeRecordService incomeRecordService;
     @Override
     public Result getMyOrders(Integer uid) {
         List<Order> orders =  orderDao.findByUid(uid);
@@ -63,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Result orderGoods(Integer uid, Integer gid, Integer num, Integer price, String type1, String type2, Integer cid) {
+    public Result orderGoods(Integer uid, Integer gid, Integer num, Integer price, String type1, String type2, Integer cid,Integer shareid) {
         Goods goods = goodsDao.queryGoodsById(gid);
         goods.setNum(goods.getNum() + num);
         goodsDao.update(goods);
@@ -90,6 +93,15 @@ public class OrderServiceImpl implements OrderService {
 //                .build();
         if(cid!=null&&cid!=0) {
             userCouponDao.update(uid, cid);
+        }
+        if(shareid!=null&&shareid!=0) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("uid", uid);
+            map.put("price", 99);
+            map.put("regTime", LocalDateTime.now());
+            map.put("other", shareid);
+            map.put("type", 1);
+            incomeRecordService.addIncomeRecord(map);
         }
         orderDao.insert(order);
         return ResultUtil.success(order.getOid());

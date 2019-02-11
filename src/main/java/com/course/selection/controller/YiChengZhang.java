@@ -3,6 +3,7 @@ package com.course.selection.controller;
 import com.course.selection.dto.Result;
 import com.course.selection.service.OrderPeopleListService;
 import com.course.selection.util.*;
+import com.google.zxing.WriterException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Enumeration;
 
@@ -52,5 +55,11 @@ public class YiChengZhang {
         String param = "?companyId="+ConstantUtil.COMPANYID+"&stamp="+stamp+"&secret="+secret+"&reportNo="+reportNo;
         String res = HttpRequest.sendGet(ConstantUtil.OTHER_STATUS+param);
         return ResultUtil.success(JsonUtil.getMapFromJson(res));
+    }
+    @RequestMapping(value = "make")
+    public void readZxing(HttpServletResponse response, @RequestParam(value = "gid") Integer gid,
+                          @RequestParam(value = "uid") Integer uid) throws WriterException, IOException {
+        String content = "http://dis.ucharmedu.com/authorize?state="+uid+"&gid="+gid;
+        ZxingUtil.createZxing(response, 200, 200, 0, "L", "gif", content);
     }
 }

@@ -6,7 +6,7 @@ import com.course.selection.dto.Result;
 public interface OrderService {
     Result getMyOrders(Integer uid);
 
-    Result orderGoods(Integer uid, Integer gid, Integer num, Integer price, String type1, String type2, Integer cid);
+    Result orderGoods(Integer uid, Integer gid, Integer num, Integer price, String type1, String type2, Integer cid,Integer shareid);
 
     /**
      * 支付完成
