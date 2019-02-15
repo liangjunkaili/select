@@ -32,6 +32,19 @@ public class AccountController {
         return adminService.addAccount(name,role,account,password);
     }
 
+    /**
+     * 登陆
+     * @param account
+     * @param password
+     * @return
+     */
+    @PostMapping("login")
+    public Result login(
+            @RequestParam(value = "account",required = false) String account,
+            @RequestParam(value = "password",required = false) String password
+            ){
+        return adminService.login(account, password);
+    }
     @PostMapping("findByAccount")
     public Result findByAccount(
             @RequestParam(value = "account",required = false) String account

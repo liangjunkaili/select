@@ -1,5 +1,8 @@
 package com.course.selection.bean;
 
+import lombok.Data;
+
+@Data
 public class Function {
     private Integer id;
     private String path;
