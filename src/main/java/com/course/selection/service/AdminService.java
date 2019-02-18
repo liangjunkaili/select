@@ -13,4 +13,6 @@ public interface AdminService {
     Result update(String name, String role, String account, String password);
 
     Result login(String account, String password);
+
+    Result deleteByAccount(String account);
 }

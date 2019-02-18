@@ -49,4 +49,12 @@ WHERE `account` = #{admin.account,jdbcType=VARCHAR} ;
         select * from admin where `account` = #{account}
     </select>
 
+    <delete id="delete">
+
+DELETE
+FROM
+  `admin`  where
+  `account` = #{account}
+    </delete>
+
 </mapper>

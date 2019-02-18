@@ -21,6 +21,12 @@ public class AccountController {
         return adminService.findAdminByType(type);
     }
 
+    @PostMapping("deleteAccount")
+    public Result deleteAccount(
+            @RequestParam(value = "account",required = false) String account
+    ){
+        return adminService.deleteByAccount(account);
+    }
 
     @PostMapping("addAccount")
     public Result addAccount(

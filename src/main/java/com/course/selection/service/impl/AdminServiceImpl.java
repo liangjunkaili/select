@@ -106,5 +106,11 @@ public class AdminServiceImpl implements AdminService {
         return ResultUtil.error(ResultEnum.PASSWORD_ERROR);
     }
 
+    @Override
+    public Result deleteByAccount(String account) {
+        adminDao.delete(account);
+        return ResultUtil.success();
+    }
+
 
 }
