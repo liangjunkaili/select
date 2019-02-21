@@ -9,6 +9,8 @@ import com.course.selection.dto.Result;
 import com.course.selection.service.*;
 import com.course.selection.util.CosUtil;
 import com.course.selection.util.ResultUtil;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +75,12 @@ public class AdminController {
     }
 
     @PostMapping("addGoods")
-    @ApiOperation("添加商品")
+    @ApiOperation(value = "添加商品",notes = "添加商品")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "title",value = "标题",required = true,dataType = "String"),
+            @ApiImplicitParam(name = "detail",value = "详情",required = true,dataType = "String"),
+            @ApiImplicitParam(name = "file1",value = "轮播图1",required = false,dataType = "File")
+    })
     public Result addGoods(
             @RequestParam(value = "title") String title,
             @RequestParam(value = "detail") String detail,
