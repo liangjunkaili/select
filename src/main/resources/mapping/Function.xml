@@ -8,5 +8,18 @@
         <result column="title2" property="title2" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <select id="findByRole" resultMap="functionRT">
+        SELECT
+  `id`,
+  `path`,
+  `title1`,
+  `title2`
+FROM
+  `function`
+  WHERE id IN (SELECT fid FROM `admin_function` WHERE `roleid` =
+   #{roleid}
+   )
+LIMIT 0, 1000 ;
 
+    </select>
 </mapper>

@@ -13,4 +13,6 @@ public interface AdminDao {
     void update(@Param("admin") Admin admin);
 
     Admin findByAccount(@Param("account") String account);
+
+    void delete(@Param("account") String account);
 }

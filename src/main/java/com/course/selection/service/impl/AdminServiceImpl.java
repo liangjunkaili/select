@@ -1,11 +1,14 @@
 package com.course.selection.service.impl;
 
 import com.course.selection.bean.Admin;
+import com.course.selection.bean.Function;
 import com.course.selection.bean.Role;
 import com.course.selection.dao.AdminDao;
+import com.course.selection.dao.FunctionDao;
 import com.course.selection.dao.RoleDao;
 import com.course.selection.dto.AccountDto;
 import com.course.selection.dto.Result;
+import com.course.selection.enums.ResultEnum;
 import com.course.selection.service.AdminService;
 import com.course.selection.util.MD5Util;
 import com.course.selection.util.ResultUtil;
@@ -20,6 +23,8 @@ public class AdminServiceImpl implements AdminService {
     private AdminDao adminDao;
     @Autowired
     private RoleDao roleDao;
+    @Autowired
+    private FunctionDao functionDao;
 
     @Override
     public Result findAdminByType(String type) {
@@ -82,6 +87,28 @@ public class AdminServiceImpl implements AdminService {
             admin.setRole(role);
         }
         adminDao.update(admin);
+        return ResultUtil.success();
+    }
+
+    @Override
+    public Result login(String account, String password) {
+        String passwd = null;
+        try {
+            passwd = MD5Util.md5(password);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Admin admin = adminDao.findByAccount(account);
+        if(admin.getPassword().equals(passwd)){
+            List<Function> functions = functionDao.findByRole(admin.getRole());
+            return ResultUtil.success(functions);
+        }
+        return ResultUtil.error(ResultEnum.PASSWORD_ERROR);
+    }
+
+    @Override
+    public Result deleteByAccount(String account) {
+        adminDao.delete(account);
         return ResultUtil.success();
     }
 

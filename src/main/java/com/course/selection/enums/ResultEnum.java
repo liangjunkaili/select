@@ -17,7 +17,7 @@ public enum ResultEnum {
 
     SERVER_ERROR(500, "服务器错误"),
 
-    CODE_ERROR(10001, "微信code不正确"),
+    PASSWORD_ERROR(10001, "密码不正确"),
 
     NOT_LOGIN(10002, "用户未登录"),
 

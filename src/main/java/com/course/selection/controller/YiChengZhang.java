@@ -4,6 +4,8 @@ import com.course.selection.dto.Result;
 import com.course.selection.service.OrderPeopleListService;
 import com.course.selection.util.*;
 import com.google.zxing.WriterException;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +32,9 @@ public class YiChengZhang {
     @Autowired
     private OrderPeopleListService orderPeopleListService;
     @RequestMapping("urlOk")
-    public Result urlOk(@RequestParam(value = "id", required = false) Integer id,
+    @ApiOperation(value = "第三方成功回调接口")
+    @ApiImplicitParam(name = "id",value = "orderPeopleListID",required = true,dataType = "int")
+    public Result urlOk(@RequestParam(value = "id") Integer id,
                         HttpServletRequest request){
         log.info("第三方成功回调"+id);
         return orderPeopleListService.test(id);
