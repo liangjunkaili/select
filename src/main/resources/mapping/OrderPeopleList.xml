@@ -24,6 +24,18 @@
             <if test="phone != null and phone != ''">
                 and phone =#{phone}
             </if>
+            <if test="name != null and name != ''">
+                and name =#{name}
+            </if>
+            <if test="birthday_time != null and birthday_time != ''">
+                and birthday_time =#{birthday_time}
+            </if>
+            <if test="address != null and address != ''">
+                and address =#{address}
+            </if>
+            <if test="state != null and state != ''">
+                and state =#{state}
+            </if>
         </where>
         LIMIT #{pageIndex},#{pageSize}
     </select>

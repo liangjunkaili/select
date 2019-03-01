@@ -34,6 +34,18 @@
             <if test="openId != null and openId != ''">
                 and open_id =#{openId}
             </if>
+            <if test="nickname != null and nickname != ''">
+                and nickname =#{nickname}
+            </if>
+            <if test="channel != null and channel != ''">
+                and channel =#{channel}
+            </if>
+            <if test="referrer != null and referrer != ''">
+                and referrer =#{referrer}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone =#{phone}
+            </if>
         </where>
         LIMIT #{pageIndex},#{pageSize}
     </select>

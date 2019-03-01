@@ -260,19 +260,39 @@ public class AdminController {
     }
     @GetMapping("getUsers")
     @ApiOperation("返回注册用户列表")
-    public Result getUsers(@RequestParam("pageIndex") Integer pageIndex,@RequestParam("pageSize") Integer pageSize){
+    public Result getUsers(@RequestParam("pageIndex") Integer pageIndex,@RequestParam("pageSize") Integer pageSize,
+                           @RequestParam(value = "nickname",required = false) Integer nickname,
+                           @RequestParam(value = "channel",required = false) Integer channel,
+                           @RequestParam(value = "referrer",required = false) Integer referrer,
+                           @RequestParam(value = "phone",required = false) Integer phone){
         Map<String,Object> map = new HashMap<>();
         map.put("pageIndex",pageIndex);
         map.put("pageSize",pageSize);
+        map.put("nickname",nickname);
+        map.put("channel",channel);
+        map.put("referrer",referrer);
+        map.put("phone",phone);
         List<User> userList = userService.queryUsers(map);
         return ResultUtil.success(userList);
     }
     @GetMapping("getOrderPeopleList")
     @ApiOperation("返回测评用户列表")
-    public Result getOrderPeopleList(@RequestParam("pageIndex") Integer pageIndex,@RequestParam("pageSize") Integer pageSize){
+    public Result getOrderPeopleList(@RequestParam("pageIndex") Integer pageIndex,@RequestParam("pageSize") Integer pageSize,
+                                     @RequestParam(value = "oid",required = false) Integer oid,
+                                     @RequestParam(value = "name",required = false) Integer name,
+                                     @RequestParam(value = "birthday_time",required = false) Integer birthday_time,
+                                     @RequestParam(value = "address",required = false) Integer address,
+                                     @RequestParam(value = "state",required = false) Integer state,
+                                     @RequestParam(value = "phone",required = false) Integer phone){
         Map<String,Object> map = new HashMap<>();
         map.put("pageIndex",pageIndex);
         map.put("pageSize",pageSize);
+        map.put("oid",oid);
+        map.put("name",name);
+        map.put("birthday_time",birthday_time);
+        map.put("address",address);
+        map.put("state",state);
+        map.put("phone",phone);
         List<OrderPeopleList> orderPeopleLists = orderPeopleListService.findOrderPeopleList(map);
         return ResultUtil.success(orderPeopleLists);
     }
