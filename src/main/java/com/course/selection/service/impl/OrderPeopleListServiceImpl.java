@@ -112,5 +112,18 @@ public class OrderPeopleListServiceImpl implements OrderPeopleListService {
         return orderPeopleListDao.findOrderPeopleList(param);
     }
 
+    @Override
+    public void updatePeople2(Integer oid, String title, String rurl) {
+        OrderPeopleList byId = orderPeopleListDao.findById(oid);
+        OrderPeopleList orderPeopleList = OrderPeopleList.builder()
+                .title(title)
+                .rurl(rurl)
+                .id(oid)
+                .build();
+        orderPeopleListDao.update(orderPeopleList);
+
+//        return ResultUtil.success(orderPeopleList);
+    }
+
 
 }

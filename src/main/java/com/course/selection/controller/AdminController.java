@@ -260,7 +260,8 @@ public class AdminController {
     }
     @GetMapping("getUsers")
     @ApiOperation("返回注册用户列表")
-    public Result getUsers(@RequestParam("pageIndex") Integer pageIndex,@RequestParam("pageSize") Integer pageSize,
+    public Result getUsers(@RequestParam("pageIndex") Integer pageIndex,
+                           @RequestParam("pageSize") Integer pageSize,
                            @RequestParam(value = "nickname",required = false) Integer nickname,
                            @RequestParam(value = "channel",required = false) Integer channel,
                            @RequestParam(value = "referrer",required = false) Integer referrer,
@@ -277,7 +278,8 @@ public class AdminController {
     }
     @GetMapping("getOrderPeopleList")
     @ApiOperation("返回测评用户列表")
-    public Result getOrderPeopleList(@RequestParam("pageIndex") Integer pageIndex,@RequestParam("pageSize") Integer pageSize,
+    public Result getOrderPeopleList(@RequestParam("pageIndex") Integer pageIndex,
+                                     @RequestParam("pageSize") Integer pageSize,
                                      @RequestParam(value = "oid",required = false) Integer oid,
                                      @RequestParam(value = "name",required = false) Integer name,
                                      @RequestParam(value = "birthday_time",required = false) Integer birthday_time,
@@ -295,6 +297,25 @@ public class AdminController {
         map.put("phone",phone);
         List<OrderPeopleList> orderPeopleLists = orderPeopleListService.findOrderPeopleList(map);
         return ResultUtil.success(orderPeopleLists);
+    }
+
+
+    @GetMapping("updateOrderPeopleList")
+    @ApiOperation("编辑测评用户列表")
+    public Result updateOrderPeopleList(
+
+                                     @RequestParam(value = "oid",required = false) Integer oid,
+                                     @RequestParam(value = "name",required = false) String name,
+                                     @RequestParam(value = "sex",required = false) Integer sex,
+                                     @RequestParam(value = "phone",required = false) String phone,
+                                     @RequestParam(value = "birthday_time",required = false) String birthday_time,
+                                     @RequestParam(value = "address",required = false) String address,
+                                     @RequestParam(value = "title",required = false) String title,
+                                     @RequestParam(value = "rurl",required = false) String rurl//报告地址
+    ){
+        orderPeopleListService.updatePeople(oid,name,sex,phone,birthday_time,address);
+        orderPeopleListService.updatePeople2(oid,title,rurl);
+        return ResultUtil.success();
     }
     @PostMapping("updateBroadCast")
     @ApiOperation("编辑广播")
