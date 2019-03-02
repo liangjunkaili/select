@@ -340,10 +340,10 @@ public class AdminController {
     @ApiOperation("返回注册用户列表")
     public Result getUsers(@RequestParam("pageIndex") Integer pageIndex,
                            @RequestParam("pageSize") Integer pageSize,
-                           @RequestParam(value = "nickname",required = false) Integer nickname,
-                           @RequestParam(value = "channel",required = false) Integer channel,
-                           @RequestParam(value = "referrer",required = false) Integer referrer,
-                           @RequestParam(value = "phone",required = false) Integer phone){
+                           @RequestParam(value = "nickname",required = false) String nickname,
+                           @RequestParam(value = "channel",required = false) String channel,
+                           @RequestParam(value = "referrer",required = false) String referrer,
+                           @RequestParam(value = "phone",required = false) String phone){
         Map<String,Object> map = new HashMap<>();
         map.put("pageIndex",pageIndex);
         map.put("pageSize",pageSize);
@@ -369,11 +369,11 @@ public class AdminController {
     public Result getOrderPeopleList(@RequestParam("pageIndex") Integer pageIndex,
                                      @RequestParam("pageSize") Integer pageSize,
                                      @RequestParam(value = "oid",required = false) Integer oid,
-                                     @RequestParam(value = "name",required = false) Integer name,
-                                     @RequestParam(value = "birthday_time",required = false) Integer birthday_time,
-                                     @RequestParam(value = "address",required = false) Integer address,
+                                     @RequestParam(value = "name",required = false) String name,
+                                     @RequestParam(value = "birthday_time",required = false) String birthday_time,
+                                     @RequestParam(value = "address",required = false) String address,
                                      @RequestParam(value = "state",required = false) Integer state,
-                                     @RequestParam(value = "phone",required = false) Integer phone){
+                                     @RequestParam(value = "phone",required = false) String phone){
         Map<String,Object> map = new HashMap<>();
         map.put("pageIndex",pageIndex);
         map.put("pageSize",pageSize);
