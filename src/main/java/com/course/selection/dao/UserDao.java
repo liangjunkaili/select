@@ -21,4 +21,5 @@ public interface UserDao {
     void updateActiveTime(@Param("uids") Set<Integer> activeUids);
 
     List<User> queryUsers(Map<String,Object> param);
+    Integer findSize();
 }

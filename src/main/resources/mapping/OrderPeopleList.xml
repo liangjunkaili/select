@@ -49,7 +49,9 @@
                 oid in (select oid from `order` where uid = #{uid})
                 and state = 1
     </select>
-
+    <select id="findSize" resultType="java.lang.Integer">
+        SELECT COUNT(id) FROM  `order_people_list` ;
+    </select>
     <insert id="insert" useGeneratedKeys="true" keyProperty="orderPeopleList.id">
         INSERT INTO `order_people_list` (
   `id`,

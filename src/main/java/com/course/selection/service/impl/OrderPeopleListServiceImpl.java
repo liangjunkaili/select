@@ -125,5 +125,10 @@ public class OrderPeopleListServiceImpl implements OrderPeopleListService {
 //        return ResultUtil.success(orderPeopleList);
     }
 
+    @Override
+    public Integer findAll() {
+        return orderPeopleListDao.findSize();
+    }
+
 
 }

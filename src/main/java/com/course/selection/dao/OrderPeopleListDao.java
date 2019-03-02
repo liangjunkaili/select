@@ -20,4 +20,6 @@ public interface OrderPeopleListDao {
     void update(@Param("orderPeopleList") OrderPeopleList orderPeopleList);
 
     OrderPeopleList findById(@Param("id") Integer id);
+
+    Integer findSize();
 }

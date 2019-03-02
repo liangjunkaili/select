@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.course.selection.dao.ConfigDao">
+    <resultMap id="configRT" type="com.course.selection.bean.Config">
+        <result column="quan1" property="quan1" jdbcType="VARCHAR"/>
+        <result column="quan2" property="quan2" jdbcType="VARCHAR"/>
+        <result column="bzzx" property="bzzx" jdbcType="VARCHAR"/>
+        <result column="jycp" property="jycp" jdbcType="VARCHAR"/>
+        <result column="cpz" property="cpz" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="configRT">
+
+        SELECT
+        `quan1`,
+        `quan2`,
+        `bzzx`,
+        `jycp`,
+        `cpz`
+        FROM
+        `config`
+LIMIT 0, 1 ;
+
+    </select>
+
+    <update id="update">
+       UPDATE
+  `config`
+SET
+  `quan1` = #{config.quan1,jdbcType=VARCHAR},
+  `quan2` =#{config.quan2,jdbcType=VARCHAR},
+  `bzzx` = #{config.bzzx,jdbcType=VARCHAR},
+  `jycp` = #{config.jycp,jdbcType=VARCHAR},
+  `cpz` = #{config.cpz,jdbcType=VARCHAR}
+
+
+
+    </update>
+
+
+</mapper>

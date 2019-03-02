@@ -52,7 +52,9 @@
     <select id="findOneByOpenId" resultMap="userResultMap">
         select * from `user` where `open_id` = #{openId}
     </select>
-
+    <select id="findSize" resultType="java.lang.Integer">
+        select count(uid) from `user`
+    </select>
     <update id="update">
     UPDATE
 `user`
