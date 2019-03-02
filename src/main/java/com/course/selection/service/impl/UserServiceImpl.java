@@ -166,6 +166,12 @@ public class UserServiceImpl implements UserService {
         log.info("signature verification false");
         return false;
     }
+
+    @Override
+    public int findSize() {
+        return userDao.findSize();
+    }
+
     private static String encode(String str) {
         try {
             if (str != null) {

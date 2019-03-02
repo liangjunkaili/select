@@ -23,4 +23,8 @@ public interface OrderPeopleListService {
      */
     Result test(Integer id);
     List<OrderPeopleList> findOrderPeopleList(Map<String,Object> param);
+
+    void updatePeople2(Integer oid, String title, String rurl);
+
+    Integer findAll();
 }

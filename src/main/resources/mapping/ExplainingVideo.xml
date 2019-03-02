@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.course.selection.dao.ExplainingVideoDao">
+    <resultMap id="configRT" type="com.course.selection.bean.ExplainingVideo">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="video" property="video" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="configRT">
+
+       SELECT
+  `id`,
+  `title`,
+  `video`
+FROM
+  `explainingVideo`
+LIMIT 0, 1000 ;
+
+
+
+    </select>
+
+    <update id="update">
+    UPDATE
+  `explainingVideo`
+SET
+  `title` = #{explainingVideo.title,jdbcType=VARCHAR},
+  `video` =  #{explainingVideo.video,jdbcType=VARCHAR}
+WHERE `id` =  #{explainingVideo.id,jdbcType=INTEGER};
+
+
+    </update>
+
+
+</mapper>

@@ -19,5 +19,7 @@ public interface UserService {
 
     boolean checkSignature(HttpServletRequest request);
 
+    int findSize();
+
 //    Result login(String code, String ip) throws Exception;
 }

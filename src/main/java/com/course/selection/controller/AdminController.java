@@ -1,10 +1,9 @@
 package com.course.selection.controller;
 
 
-import com.course.selection.bean.BroadCast;
-import com.course.selection.bean.Goods;
-import com.course.selection.bean.OrderPeopleList;
-import com.course.selection.bean.User;
+import com.course.selection.bean.*;
+import com.course.selection.dao.ConfigDao;
+import com.course.selection.dao.ExplainingVideoDao;
 import com.course.selection.dto.Result;
 import com.course.selection.service.*;
 import com.course.selection.util.CosUtil;
@@ -45,6 +44,10 @@ public class AdminController {
     private OrderPeopleListService orderPeopleListService;
     @Autowired
     private BroadCastService broadCastService;
+    @Autowired
+    private ConfigDao configDao;
+    @Autowired
+    private ExplainingVideoDao explainingVideoDao;
     public static final String IMG_URL = "https://qinmi-1258355325.cos.ap-beijing.myqcloud.com/";
 
     @PostMapping("addIncomeRecord")
@@ -74,6 +77,81 @@ public class AdminController {
         return ResultUtil.success();
     }
 
+    /**
+     * 上传图片接口
+     * @param file
+     * @return
+     */
+    @PostMapping("uploadImg")
+    public Result uploadImg(
+            @RequestParam(value = "file",required = false) MultipartFile file
+    ){
+        String img = null;
+        if(file!=null) {
+            try {
+                img = CosUtil.getImgUrl(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return ResultUtil.success(img);
+    }
+
+    /**
+     * 获取全局变量
+     * @return
+     * quan1  默认成分比例
+     * quan2  预约专家总部电话
+     * bzzx   帮助中心
+     * jycp  基因测评
+     * cpz 线下测评站
+     */
+    @PostMapping("getConfig")
+    public Result getConfig(
+    ){
+        Config config = configDao.findAll();
+        return ResultUtil.success(config);
+    }
+    @PostMapping("updateConfig")
+    public Result updateConfig(
+            @RequestParam(value = "quan1",required = false) String quan1,
+            @RequestParam(value = "quan2",required = false) String quan2,
+            @RequestParam(value = "bzzx",required = false) String bzzx,
+            @RequestParam(value = "jycp",required = false) String jycp,
+            @RequestParam(value = "cpz",required = false) String cpz
+    ){
+        Config config = Config.builder()
+                .bzzx(bzzx)
+                .cpz(cpz)
+                .jycp(jycp)
+                .quan1(quan1)
+                .quan2(quan2)
+                .build();
+        configDao.update(config);
+        return ResultUtil.success(config);
+    }
+
+    @PostMapping("getVideo")
+    public Result getVideo(
+    ){
+        List<ExplainingVideo> videoList = explainingVideoDao.findAll();
+        return ResultUtil.success(videoList);
+    }
+    @PostMapping("updateVideo")
+    public Result updateVideo(
+            @RequestParam(value = "id",required = false) Integer id,
+            @RequestParam(value = "video",required = false) String video,
+            @RequestParam(value = "title",required = false) String title
+    ){
+        ExplainingVideo explainingVideo = ExplainingVideo.builder()
+                .id(id)
+                .video(video)
+                .title(title)
+                .build();
+        explainingVideoDao.update(explainingVideo);
+        return ResultUtil.success(explainingVideo);
+    }
+
     @PostMapping("addGoods")
     @ApiOperation(value = "添加商品",notes = "添加商品")
     @ApiImplicitParams({
@@ -84,11 +162,11 @@ public class AdminController {
     public Result addGoods(
             @RequestParam(value = "title") String title,
             @RequestParam(value = "detail") String detail,
-            @RequestParam(value = "file1",required = false) MultipartFile file1,//轮播图1
-            @RequestParam(value = "file2",required = false) MultipartFile file2,//轮播图2
-            @RequestParam(value = "file3",required = false) MultipartFile file3,//轮播图3
-            @RequestParam(value = "file4",required = false) MultipartFile file4,//主图
-            @RequestParam(value = "file5",required = false) MultipartFile file5,//邀请卡
+            @RequestParam(value = "file1",required = false) String file1,//轮播图1
+            @RequestParam(value = "file2",required = false) String file2,//轮播图2
+            @RequestParam(value = "file3",required = false) String file3,//轮播图3
+            @RequestParam(value = "file4",required = false) String file4,//主图
+            @RequestParam(value = "file5",required = false) String file5,//邀请卡
             @RequestParam(value = "oprice") Integer oprice,
             @RequestParam(value = "price") Integer price,
             @RequestParam(value = "label") String label,
@@ -102,30 +180,30 @@ public class AdminController {
             @RequestParam(value = "service") Integer service,//有就1没有就0
             @RequestParam(value = "recommend") String recommend
     ) {
-        String img1 = null;
-        String img2 = null;
-        String img3 = null;
-        String img = null;
-        String icard = null;
-        try {
-            if(file1!=null) {
-                img1 = CosUtil.getImgUrl(file1);
-            }
-            if(file2!=null) {
-                img2 = CosUtil.getImgUrl(file2);
-            }
-            if(file3!=null) {
-                img3 = CosUtil.getImgUrl(file3);
-            }
-            if(file4!=null) {
-                img = CosUtil.getImgUrl(file4);
-            }
-            if(file5!=null) {
-                icard = CosUtil.getImgUrl(file5);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String img1 = file1;
+        String img2 = file2;
+        String img3 = file3;
+        String img = file4;
+        String icard = file5;
+//        try {
+//            if(file1!=null) {
+//                img1 = CosUtil.getImgUrl(file1);
+//            }
+//            if(file2!=null) {
+//                img2 = CosUtil.getImgUrl(file2);
+//            }
+//            if(file3!=null) {
+//                img3 = CosUtil.getImgUrl(file3);
+//            }
+//            if(file4!=null) {
+//                img = CosUtil.getImgUrl(file4);
+//            }
+//            if(file5!=null) {
+//                icard = CosUtil.getImgUrl(file5);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         if (img3 == null) {
             img1 = img1 + "|" + img2 ;
         } else if (img2 == null) {
@@ -234,14 +312,14 @@ public class AdminController {
                                  @RequestParam(value = "phone" ) String phone,
                                  @RequestParam(value = "money" ) Integer money,
                                  @RequestParam(value = "detail" ) String detail,
-                                 @RequestParam(value = "certificate" ) MultipartFile certificate,
+                                 @RequestParam(value = "certificate" ) String certificate,
                                  @RequestParam(value = "remark" ) String remark) {
-        String url = "";
-        try {
-            url = CosUtil.getImgUrl(certificate);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String url = certificate;
+//        try {
+//            url = CosUtil.getImgUrl(certificate);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         return applyForService.addApplyFor(url,reason,remark,phone,money,detail);
     }
     @GetMapping("getApplyFor")
@@ -260,21 +338,82 @@ public class AdminController {
     }
     @GetMapping("getUsers")
     @ApiOperation("返回注册用户列表")
-    public Result getUsers(@RequestParam("pageIndex") Integer pageIndex,@RequestParam("pageSize") Integer pageSize){
+    public Result getUsers(@RequestParam("pageIndex") Integer pageIndex,
+                           @RequestParam("pageSize") Integer pageSize,
+                           @RequestParam(value = "nickname",required = false) String nickname,
+                           @RequestParam(value = "channel",required = false) String channel,
+                           @RequestParam(value = "referrer",required = false) String referrer,
+                           @RequestParam(value = "phone",required = false) String phone){
         Map<String,Object> map = new HashMap<>();
         map.put("pageIndex",pageIndex);
         map.put("pageSize",pageSize);
+        map.put("nickname",nickname);
+        map.put("channel",channel);
+        map.put("referrer",referrer);
+        map.put("phone",phone);
         List<User> userList = userService.queryUsers(map);
-        return ResultUtil.success(userList);
+        int size = userService.findSize();
+        int pages = 0;
+        if (userList.size() != 0) {
+            pages = size/pageSize;
+        }
+        pages += 1;
+        Map<String,Object> obj = new HashMap<>();
+        obj.put("userList", userList);
+        obj.put("pageIndex", pageIndex);
+        obj.put("pages", pages);
+        return ResultUtil.success(obj);
     }
     @GetMapping("getOrderPeopleList")
     @ApiOperation("返回测评用户列表")
-    public Result getOrderPeopleList(@RequestParam("pageIndex") Integer pageIndex,@RequestParam("pageSize") Integer pageSize){
+    public Result getOrderPeopleList(@RequestParam("pageIndex") Integer pageIndex,
+                                     @RequestParam("pageSize") Integer pageSize,
+                                     @RequestParam(value = "oid",required = false) Integer oid,
+                                     @RequestParam(value = "name",required = false) String name,
+                                     @RequestParam(value = "birthday_time",required = false) String birthday_time,
+                                     @RequestParam(value = "address",required = false) String address,
+                                     @RequestParam(value = "state",required = false) Integer state,
+                                     @RequestParam(value = "phone",required = false) String phone){
         Map<String,Object> map = new HashMap<>();
         map.put("pageIndex",pageIndex);
         map.put("pageSize",pageSize);
+        map.put("oid",oid);
+        map.put("name",name);
+        map.put("birthday_time",birthday_time);
+        map.put("address",address);
+        map.put("state",state);
+        map.put("phone",phone);
         List<OrderPeopleList> orderPeopleLists = orderPeopleListService.findOrderPeopleList(map);
-        return ResultUtil.success(orderPeopleLists);
+        int size = orderPeopleListService.findAll();
+        int pages = 0;
+        if (orderPeopleLists.size() != 0) {
+            pages = size/pageSize;
+        }
+        pages += 1;
+        Map<String,Object> obj = new HashMap<>();
+        obj.put("orderPeopleLists", orderPeopleLists);
+        obj.put("pageIndex", pageIndex);
+        obj.put("pages", pages);
+        return ResultUtil.success(obj);
+    }
+
+
+    @PostMapping("updateOrderPeopleList")
+    @ApiOperation("编辑测评用户列表")
+    public Result updateOrderPeopleList(
+
+                                     @RequestParam(value = "oid",required = false) Integer oid,
+                                     @RequestParam(value = "name",required = false) String name,
+                                     @RequestParam(value = "sex",required = false) Integer sex,
+                                     @RequestParam(value = "phone",required = false) String phone,
+                                     @RequestParam(value = "birthday_time",required = false) String birthday_time,
+                                     @RequestParam(value = "address",required = false) String address,
+                                     @RequestParam(value = "title",required = false) String title,
+                                     @RequestParam(value = "rurl",required = false) String rurl//报告地址
+    ){
+        orderPeopleListService.updatePeople(oid,name,sex,phone,birthday_time,address);
+        orderPeopleListService.updatePeople2(oid,title,rurl);
+        return ResultUtil.success();
     }
     @PostMapping("updateBroadCast")
     @ApiOperation("编辑广播")

@@ -147,4 +147,5 @@ public class UserController {
     ) {
         return orderService.orderGoods(uid, gid, num, price, type1, type2,cid,shareid);
     }
+
 }
