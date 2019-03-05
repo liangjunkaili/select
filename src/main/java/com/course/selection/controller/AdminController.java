@@ -156,8 +156,7 @@ public class AdminController {
     @ApiOperation(value = "添加商品",notes = "添加商品")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "title",value = "标题",required = true,dataType = "String"),
-            @ApiImplicitParam(name = "detail",value = "详情",required = true,dataType = "String"),
-            @ApiImplicitParam(name = "file1",value = "轮播图1",required = false,dataType = "File")
+            @ApiImplicitParam(name = "detail",value = "详情",required = true,dataType = "String")
     })
     public Result addGoods(
             @RequestParam(value = "title") String title,
