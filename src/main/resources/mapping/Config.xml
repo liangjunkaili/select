@@ -12,28 +12,38 @@
     <select id="findAll" resultMap="configRT">
 
         SELECT
-        `quan1`,
-        `quan2`,
-        `bzzx`,
-        `jycp`,
-        `cpz`
-        FROM
-        `config`
-LIMIT 0, 1 ;
+                `quan1`,
+                `quan2`,
+                `bzzx`,
+                `jycp`,
+                `cpz`
+                FROM
+                `config`
+        LIMIT 0, 1 ;
 
     </select>
 
     <update id="update">
        UPDATE
-  `config`
-SET
-  `quan1` = #{config.quan1,jdbcType=VARCHAR},
-  `quan2` =#{config.quan2,jdbcType=VARCHAR},
-  `bzzx` = #{config.bzzx,jdbcType=VARCHAR},
-  `jycp` = #{config.jycp,jdbcType=VARCHAR},
-  `cpz` = #{config.cpz,jdbcType=VARCHAR}
-
-
+          `config`
+        <set>
+            <if test="config.quan1 != null and config.quan1 != '' ">
+                `quan1` = #{config.quan1,jdbcType=VARCHAR},
+            </if>
+            <if test="config.quan2 != null and config.quan2 != '' ">
+                `quan2` =#{config.quan2,jdbcType=VARCHAR},
+            </if>
+            <if test="config.bzzx != null and config.bzzx != '' ">
+                `bzzx` = #{config.bzzx,jdbcType=VARCHAR},
+            </if>
+            <if test="config.jycp != null and config.jycp != '' ">
+                `jycp` = #{config.jycp,jdbcType=VARCHAR},
+            </if>
+            <if test="config.cpz != null and config.cpz != '' ">
+                `cpz` = #{config.cpz,jdbcType=VARCHAR}
+            </if>
+        </set>
+        SET
 
     </update>
 

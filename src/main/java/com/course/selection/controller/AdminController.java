@@ -295,6 +295,13 @@ public class AdminController {
         return ResultUtil.success(homePageService.queryHomePage());
     }
 
+    @GetMapping("updateHomePage")
+    @ApiOperation("首页轮播图上下架")
+    public Result getHomePage(@RequestParam(value = "id" ,required = false) Integer id,
+                              @RequestParam(value = "state" ,required = false) Integer state) {
+        return ResultUtil.success(homePageService.updateHomePage(id,state,0,null,null));
+    }
+
     @PostMapping("getAllOrders")
     @ApiOperation("后台-我的订单列表")
     public Result getAllOrders(@RequestParam(value = "gid" ,required = false) Integer gid,
@@ -303,6 +310,13 @@ public class AdminController {
                                @RequestParam("pageIndex") Integer pageIndex,
                                @RequestParam("pageSize") Integer pageSize) {
         return orderService.getAllOrders(gid, uid, state,pageIndex,pageSize);
+    }
+
+    @PostMapping("updateOrder")
+    @ApiOperation("确认付款")
+    public Result getAllOrders(@RequestParam(value = "oid" ,required = false) Integer oid) {
+        orderService.paySuccess(oid);
+        return ResultUtil.success();
     }
 
     @PostMapping("submitApplyFor")
