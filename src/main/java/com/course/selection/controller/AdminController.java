@@ -114,11 +114,11 @@ public class AdminController {
     }
     @PostMapping("updateConfig")
     public Result updateConfig(
-            @RequestParam(value = "quan1",required = false) String quan1,
-            @RequestParam(value = "quan2",required = false) String quan2,
-            @RequestParam(value = "bzzx",required = false) String bzzx,
-            @RequestParam(value = "jycp",required = false) String jycp,
-            @RequestParam(value = "cpz",required = false) String cpz
+            @RequestParam(value = "quan1",required = false) String quan1,//默认成分比例
+            @RequestParam(value = "quan2",required = false) String quan2,//预约专家总部电话
+            @RequestParam(value = "bzzx",required = false) String bzzx,//帮助中心
+            @RequestParam(value = "jycp",required = false) String jycp,//专业基因测评
+            @RequestParam(value = "cpz",required = false) String cpz//线下测评站
     ){
         Config config = Config.builder()
                 .bzzx(bzzx)
@@ -159,25 +159,25 @@ public class AdminController {
             @ApiImplicitParam(name = "detail",value = "详情",required = true,dataType = "String")
     })
     public Result addGoods(
-            @RequestParam(value = "title") String title,
-            @RequestParam(value = "detail") String detail,
+            @RequestParam(value = "title") String title,//标题
+            @RequestParam(value = "detail") String detail,//详情
             @RequestParam(value = "file1",required = false) String file1,//轮播图1
             @RequestParam(value = "file2",required = false) String file2,//轮播图2
             @RequestParam(value = "file3",required = false) String file3,//轮播图3
             @RequestParam(value = "file4",required = false) String file4,//主图
             @RequestParam(value = "file5",required = false) String file5,//邀请卡
-            @RequestParam(value = "oprice") Integer oprice,
-            @RequestParam(value = "price") Integer price,
-            @RequestParam(value = "label") String label,
-            @RequestParam(value = "intro") String intro,
-            @RequestParam(value = "bamount") Integer bamount,
-            @RequestParam(value = "flag") Integer flag,
-            @RequestParam(value = "weight") Integer weight,
-            @RequestParam(value = "num") Integer num,
-            @RequestParam(value = "iprice") Integer iprice,
-            @RequestParam(value = "attribute") Integer attribute,//有就1没有就0
-            @RequestParam(value = "service") Integer service,//有就1没有就0
-            @RequestParam(value = "recommend") String recommend
+            @RequestParam(value = "oprice") Integer oprice,//原价
+            @RequestParam(value = "price") Integer price,//现价
+            @RequestParam(value = "label") String label,//标签
+            @RequestParam(value = "intro") String intro,//简介
+            @RequestParam(value = "bamount") Integer bamount,//返现金额
+            @RequestParam(value = "flag") Integer flag,//是否有优惠券
+            @RequestParam(value = "weight") Integer weight,//轮播图的权重
+            @RequestParam(value = "num") Integer num,//商品数量
+            @RequestParam(value = "iprice") Integer iprice,//递增价
+            @RequestParam(value = "attribute") Integer attribute,//有就1没有就0 属性
+            @RequestParam(value = "service") Integer service,//有就1没有就0  服务
+            @RequestParam(value = "recommend") String recommend //相关推荐
     ) {
         String img1 = file1;
         String img2 = file2;
@@ -295,6 +295,13 @@ public class AdminController {
         return ResultUtil.success(homePageService.queryHomePage());
     }
 
+    @GetMapping("updateHomePage")
+    @ApiOperation("首页轮播图上下架")
+    public Result getHomePage(@RequestParam(value = "id" ,required = false) Integer id,
+                              @RequestParam(value = "state" ,required = false) Integer state) {
+        return ResultUtil.success(homePageService.updateHomePage(id,state,0,null,null));
+    }
+
     @PostMapping("getAllOrders")
     @ApiOperation("后台-我的订单列表")
     public Result getAllOrders(@RequestParam(value = "gid" ,required = false) Integer gid,
@@ -302,7 +309,14 @@ public class AdminController {
                                @RequestParam(value = "state" ,required = false,defaultValue = "-1") Integer state,
                                @RequestParam("pageIndex") Integer pageIndex,
                                @RequestParam("pageSize") Integer pageSize) {
-        return orderService.getAllOrders(gid, uid, state,pageIndex,pageSize);
+        return orderService.getAllOrders(gid, uid, state,pageIndex-1,pageSize);
+    }
+
+    @PostMapping("updateOrder")
+    @ApiOperation("确认付款")
+    public Result getAllOrders(@RequestParam(value = "oid" ,required = false) Integer oid) {
+        orderService.paySuccess(oid);
+        return ResultUtil.success();
     }
 
     @PostMapping("submitApplyFor")
@@ -327,7 +341,7 @@ public class AdminController {
                               @RequestParam(value = "reason" ,required = false) String reason,
                               @RequestParam("pageIndex") Integer pageIndex,
                               @RequestParam("pageSize") Integer pageSiz) {
-        return applyForService.queryApplyFor(pageIndex,pageSiz,state,reason);
+        return applyForService.queryApplyFor(pageIndex-1,pageSiz,state,reason);
     }
     @PostMapping("updateApplyFor")
     @ApiOperation("审批")
@@ -344,7 +358,7 @@ public class AdminController {
                            @RequestParam(value = "referrer",required = false) String referrer,
                            @RequestParam(value = "phone",required = false) String phone){
         Map<String,Object> map = new HashMap<>();
-        map.put("pageIndex",pageIndex);
+        map.put("pageIndex",pageIndex-1);
         map.put("pageSize",pageSize);
         map.put("nickname",nickname);
         map.put("channel",channel);
@@ -374,7 +388,7 @@ public class AdminController {
                                      @RequestParam(value = "state",required = false) Integer state,
                                      @RequestParam(value = "phone",required = false) String phone){
         Map<String,Object> map = new HashMap<>();
-        map.put("pageIndex",pageIndex);
+        map.put("pageIndex",pageIndex-1);
         map.put("pageSize",pageSize);
         map.put("oid",oid);
         map.put("name",name);

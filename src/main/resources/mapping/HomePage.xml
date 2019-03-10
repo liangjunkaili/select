@@ -16,7 +16,7 @@
     <update id="updateHomePage">
         UPDATE `homepage`
         <set>
-            <if test="homepage.state != null and homepage.state != ''">
+            <if test="homepage.state != null">
                 state = #{homepage.state},
             </if>
             <if test="homepage.weight != null and homepage.weight != ''">
