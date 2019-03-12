@@ -43,7 +43,6 @@
                 `cpz` = #{config.cpz,jdbcType=VARCHAR}
             </if>
         </set>
-        SET
 
     </update>
 
