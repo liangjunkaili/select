@@ -77,4 +77,5 @@ public class GoodsDto {
      * 服务
      */
     private List<Service>  service;
+    private Integer  state;
 }

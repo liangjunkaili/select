@@ -169,14 +169,41 @@ public class GoodsServicImpl implements GoodsService {
         //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
         PageHelper.startPage(currentPage, pageSize);
 
-        List<Goods> goods = null;
+        List<Goods> goodsList = null;
         if (state == 0) {
-            goods = goodsDao.queryGoods();
+            goodsList = goodsDao.queryGoods();
         }else{
-            goods = goodsDao.queryGoodsA(state);
+            goodsList = goodsDao.queryGoodsA(state);
         }
-        int countNums = goods.size();        //总记录数
-        PageBean<Goods> pageData = new PageBean<>(currentPage, pageSize, countNums);
+        List<GoodsDto> goods = new ArrayList<>();
+        for (Goods good : goodsList){
+            String[] split = good.getLabel().split("\\|");
+            GoodsDto goodsDto = GoodsDto.builder()
+                    .bamount(good.getBamount())
+                    .detail(good.getDetail())
+                    .flag(good.getFlag())
+                    .icard(good.getIcard())
+                    .img(good.getImg())
+                    .img1(good.getImg1().split("\\|"))
+                    .img2(good.getImg2())
+                    .img3(good.getImg3())
+                    .intro(good.getIntro())
+                    .id(good.getId())
+                    .label(split)
+                    .num(good.getNum())
+                    .weight(good.getWeight())
+                    .title(good.getTitle())
+                    .oprice(good.getOprice())
+                    .price(good.getPrice())
+                    .iprice(good.getIprice())
+                    .state(good.getState())
+//                .attribute(SUtil.toListA())
+//                .service(SUtil.toListS())
+                    .build();
+            goods.add(goodsDto);
+        }
+        int countNums = goodsList.size();        //总记录数
+        PageBean<GoodsDto> pageData = new PageBean<>(currentPage, pageSize, countNums);
         pageData.setItems(goods);
         return ResultUtil.success(goods);
     }
