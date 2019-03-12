@@ -309,7 +309,7 @@ public class AdminController {
                                @RequestParam(value = "state" ,required = false,defaultValue = "-1") Integer state,
                                @RequestParam("pageIndex") Integer pageIndex,
                                @RequestParam("pageSize") Integer pageSize) {
-        return orderService.getAllOrders(gid, uid, state,pageIndex-1,pageSize);
+        return orderService.getAllOrders(gid, uid, state,(pageIndex-1)*pageSize,pageSize);
     }
 
     @PostMapping("updateOrder")
@@ -340,8 +340,8 @@ public class AdminController {
     public Result getApplyFor(@RequestParam(value = "state" ,required = false) Integer state,
                               @RequestParam(value = "reason" ,required = false) String reason,
                               @RequestParam("pageIndex") Integer pageIndex,
-                              @RequestParam("pageSize") Integer pageSiz) {
-        return applyForService.queryApplyFor(pageIndex-1,pageSiz,state,reason);
+                              @RequestParam("pageSize") Integer pageSize) {
+        return applyForService.queryApplyFor((pageIndex-1)*pageSize,pageSize,state,reason);
     }
     @PostMapping("updateApplyFor")
     @ApiOperation("审批")
@@ -358,7 +358,7 @@ public class AdminController {
                            @RequestParam(value = "referrer",required = false) String referrer,
                            @RequestParam(value = "phone",required = false) String phone){
         Map<String,Object> map = new HashMap<>();
-        map.put("pageIndex",pageIndex-1);
+        map.put("pageIndex",(pageIndex-1)*pageSize);
         map.put("pageSize",pageSize);
         map.put("nickname",nickname);
         map.put("channel",channel);
@@ -388,7 +388,7 @@ public class AdminController {
                                      @RequestParam(value = "state",required = false) Integer state,
                                      @RequestParam(value = "phone",required = false) String phone){
         Map<String,Object> map = new HashMap<>();
-        map.put("pageIndex",pageIndex-1);
+        map.put("pageIndex",(pageIndex-1)*pageSize);
         map.put("pageSize",pageSize);
         map.put("oid",oid);
         map.put("name",name);
@@ -425,7 +425,7 @@ public class AdminController {
                                      @RequestParam(value = "rurl",required = false) String rurl//报告地址
     ){
         orderPeopleListService.updatePeople(oid,name,sex,phone,birthday_time,address);
-        orderPeopleListService.updatePeople2(oid,title,rurl);
+//        orderPeopleListService.updatePeople2(oid,title,rurl);
         return ResultUtil.success();
     }
     @PostMapping("updateBroadCast")
