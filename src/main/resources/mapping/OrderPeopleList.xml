@@ -33,7 +33,7 @@
             <if test="address != null and address != ''">
                 and address =#{address}
             </if>
-            <if test="state != null and state != ''">
+            <if test="state != null ">
                 and state =#{state}
             </if>
         </where>
