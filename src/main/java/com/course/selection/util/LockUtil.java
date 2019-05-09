@@ -93,7 +93,7 @@ public class LockUtil {
         }
     }
     public static void main(String[] args) {
-        System.out.println(ThreadPoolUtil.MAXPOOLSIZE);
+//        System.out.println(ThreadPoolUtil.MAXPOOLSIZE);
         /*LockUtil lockUtil = new LockUtil();
         try{
             Future f = ThreadPoolUtil.USERDEFINED_EXECUTOR.submit(() -> {
@@ -129,10 +129,11 @@ public class LockUtil {
                     semaphore.release();
                     System.out.println("leaving------");
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    System.out.println("error");
                 }
             });
         }
         ThreadPoolUtil.USERDEFINED_EXECUTOR.shutdown();
     }
+
 }

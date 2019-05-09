@@ -3,7 +3,10 @@ package com.course.selection.util;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class DateUtil {
     public final static String FORMAT_PATTERN1="yyyy-MM-dd HH:mm:ss";
@@ -200,6 +203,17 @@ public class DateUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(LocalDateTime.of(2019, 2, 19, 14, 0, 0));
+//        System.out.println(LocalDateTime.of(2019, 2, 19, 14, 0, 0));
+//        System.out.println(minusToMillsLocalDateTime(LocalDateTime.parse("2019-03-14 10:18:36",
+//                DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")),LocalDateTime.now()));
+
+//        LocalDateTime local1 = LocalDateTime.parse("2019-03-14 14:54:36",DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+//        long l1 = local1.toInstant(ZoneOffset.of("+8")).toEpochMilli();
+//        long l2 = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
+//        System.out.println(l1+"-"+l2+"-"+Math.abs(l1-l2));
+//        if(Math.abs(l1-l2)<60*1000) {
+//            System.out.println(l1+"-"+l2+"-=="+Math.abs(l1-l2));
+//        }
+        System.out.println( getBetwwenDays(LocalDate.now(),LocalDate.now()));
     }
 }
